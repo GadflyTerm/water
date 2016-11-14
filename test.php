@@ -5,18 +5,28 @@
  * Date: 2016/11/11
  * Time: 下午5:36
  */
-$hostname = "10.211.55.3";
-$dbname = "water";
-$username = "sa";
-$pwd = "weA3#q7*";
-try{
-	$dsn="sqlsrv:Server=$hostname;database=$dbname";
-	$dbh = new PDO ($dsn,$username,$pwd);
-	//$dbh = new PDO('sqlsrv:host=10.211.55.3;dbname=water',$username,$pwd);
-	$sqlstri = "select * from dbo.onethink_action";
-	foreach ($dbh->query($sqlstri) as $row){
-		print_r($row);
-	}
-}catch (PDOException $e){
-	print "Error:".$e->getMessage()."<br>";
-}
+if(version_compare(PHP_VERSION,'5.3.0','<'))  die('require PHP > 5.3.0 !');
+
+/**
+ * 系统调试设置
+ * 项目正式部署后请设置为false
+ */
+define ( 'APP_DEBUG', true );
+define ( 'BIND_MODULE','Test');
+/**
+ * 应用目录设置
+ * 安全期间，建议安装调试完成后移动到非WEB目录
+ */
+define ( 'APP_PATH', './Application/' );
+
+/**
+ * 缓存目录设置
+ * 此目录必须可写，建议移动到非WEB目录
+ */
+define ( 'RUNTIME_PATH', './Runtime/' );
+
+/**
+ * 引入核心入口
+ * ThinkPHP亦可移动到WEB以外的目录
+ */
+require './ThinkPHP/ThinkPHP.php';
