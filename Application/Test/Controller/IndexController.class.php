@@ -8,8 +8,8 @@ class IndexController extends Controller {
     }
     
     public function mssql(){
-		$data = M('St_dayev_r')->select();
-		dump(array('data' => $data, 'sql' => M('St_dayev_r')->getLastSql()));
+		$data = M('Member')->select();
+		dump(array('data' => $data, 'sql' => M('Onethink_member')->getLastSql()));
 			
 	}
 	
