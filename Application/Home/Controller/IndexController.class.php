@@ -20,8 +20,8 @@ class IndexController extends CommonController {
 	
 	public function mssql(){
 		try{
-			dump(D('Test')->mssql());
-		}catch(PDOException $e){
+			dump(D('Tests')->mssql());
+		}catch(Exception $e){
 			echo 'Connection failed: ' . $e->getMessage();
 		}
 	}
