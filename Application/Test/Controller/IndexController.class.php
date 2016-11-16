@@ -1,6 +1,8 @@
 <?php
 namespace Test\Controller;
 use Think\Controller;
+use Common\Model;
+
 class IndexController extends Controller {
     public function index(){
 		echo U('Index/mssql');
@@ -16,5 +18,11 @@ class IndexController extends Controller {
 	public function info(){
 		phpinfo();
 	}
+	
+	public function test(){
+		dump(new TreeModel());
+			
+	}
+
 	
 }

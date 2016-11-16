@@ -15,7 +15,7 @@ return array(
     /* 模块相关配置 */
     'AUTOLOAD_NAMESPACE' => array('Addons' => ONETHINK_ADDON_PATH), //扩展模块列表
     'DEFAULT_MODULE'     => 'Home',
-    'MODULE_DENY_LIST'   => array('Common','User','Admin','Install'),
+    'MODULE_DENY_LIST'   => array('Common','User','Admin','Install', 'Test'),
     //'MODULE_ALLOW_LIST'  => array('Home','Admin'),
 
     /* 系统数据加密设置 */
@@ -35,12 +35,12 @@ return array(
     'DEFAULT_FILTER' => '', //全局过滤函数
 
     /* 数据库配置 */
-    'DB_TYPE'   => 'sqlsrv', // 数据库类型
-    'DB_HOST'   => '10.211.55.3', // 服务器地址
+    'DB_TYPE'   => 'mysql', // 数据库类型
+    'DB_HOST'   => 'localhost', // 服务器地址
     'DB_NAME'   => 'water', // 数据库名
-    'DB_USER'   => 'sa', // 用户名
-    'DB_PWD'    => 'weA3#q7*',  // 密码
-    'DB_PORT'   => '1433', // 端口
+    'DB_USER'   => 'root', // 用户名
+    'DB_PWD'    => 'root',  // 密码
+    'DB_PORT'   => '3306', // 端口
     'DB_PREFIX' => 'onethink_', // 数据库表前缀
 
     /* 文档模型配置 (文档模型核心配置，请勿更改) */
