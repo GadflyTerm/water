@@ -14,6 +14,7 @@ if(version_compare(PHP_VERSION,'5.3.0','<'))  die('require PHP > 5.3.0 !');
  * 项目正式部署后请设置为false
  */
 define('APP_DEBUG', true );
+define('BIND_MODULE','Home');
 
 /**
  * 应用目录设置
@@ -25,7 +26,7 @@ define ( 'APP_PATH', './Application/' );
  * 缓存目录设置
  * 此目录必须可写，建议移动到非WEB目录
  */
-define ( 'RUNTIME_PATH', '../Runtime/gadfly.cn/' );
+define ( 'RUNTIME_PATH', '../Runtime/water.com/' );
 
 /**
  * 引入核心入口

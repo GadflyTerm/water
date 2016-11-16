@@ -20,7 +20,7 @@ class IndexController extends CommonController {
 	
 	public function mssql(){
 		try{
-			dump(D('Tests')->mssql());
+			dump(D('Test')->mssql());
 		}catch(Exception $e){
 			echo 'Connection failed: ' . $e->getMessage();
 		}
