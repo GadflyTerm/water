@@ -10,7 +10,7 @@ class IndexController extends Controller {
     }
     
     public function mssql(){
-		dump(D('Test')->mssql());
+		dump(M('StFieldD')->select());
 			
 	}
 	
