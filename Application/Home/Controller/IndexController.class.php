@@ -19,12 +19,8 @@ class IndexController extends CommonController {
 	}
 	
 	public function mssql(){
-		$dsn = 'dblib:host=114.55.231.186:1433;dbname=Hydrology_pygq';
-		$user = 'PYGQ';
-		$password = 'lonhwin@2011sql';
 		try{
-			$dbh = new \PDO($dsn, $user, $password);
-			dump($dbh);
+			dump(D('Test')->mssql());
 		}catch(PDOException $e){
 			echo 'Connection failed: ' . $e->getMessage();
 		}
