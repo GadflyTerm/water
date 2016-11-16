@@ -10,8 +10,7 @@ class IndexController extends Controller {
     }
     
     public function mssql(){
-		$data = M('Member')->select();
-		dump(array('data' => $data, 'sql' => M('Onethink_member')->getLastSql()));
+		dump(D('Test')->mssql());
 			
 	}
 	
@@ -23,6 +22,4 @@ class IndexController extends Controller {
 		dump(new TreeModel());
 			
 	}
-
-	
 }
