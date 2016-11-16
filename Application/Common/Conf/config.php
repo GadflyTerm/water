@@ -1,7 +1,7 @@
 <?php
 return array(
 	//'配置项'=>'配置值'
-	'URL_MODEL'		=> '2',
+	'URL_MODEL'		=> '3',
 	'DB_TYPE'   => 'sqlsrv', 			// 数据库类型
 	'DB_HOST'   => '114.55.231.186', 	// 服务器地址
 	'DB_NAME'   => 'Hydrology_pygq', 	// 数据库名
