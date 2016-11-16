@@ -5,13 +5,21 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<link rel="stylesheet" href="/Public/bootstrap/bootstrap.min.css" media="screen">
+	<link rel="stylesheet" href="/Public/awesome/css/font-awesome.min.css">
 	<title>Title</title>
+	<script src="/Public/plugins/jquery.min.js" type="text/javascript"></script>
+	<script src="/Public/bootstrap/js/bootstrap.min.js" type="text/javascript"></script>
 </head>
 <body>
 <div class="container">
+	<div class="page-header">
+		<h1>{$nav.library.title} <small>Subtext for header</small></h1>
+	</div>
+	<ol class="breadcrumb">
+		<li><a href="{$nav.home.url}">{$nav.home.title}</a></li>
+		<li><a href="{$nav.library.url}" class="active">{$nav.library.title}</a></li>
+	</ol>
 	{__CONTENT__}
 </div>
-<script src="/Public/plugins/jquery.min.js" type="text/javascript"></script>
-<script src="/Public/bootstrap/js/bootstrap.min.js" type="text/javascript"></script>
 </body>
 </html>

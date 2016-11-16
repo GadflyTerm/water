@@ -1,0 +1,89 @@
+<div class="panel panel-warning">
+	<div class="panel-heading">
+		添加新的监测站
+	</div>
+	<div class="panel-body">
+		<form class="form-horizontal" role="form" method="post" action="__SELF__">
+			<div class="form-group">
+				<label for="inputSTCD" class="col-sm-2 control-label">测站编码</label>
+				<div class="col-sm-4">
+					<input type="text" class="form-control" id="inputSTCD" name="STCD" placeholder="测站编码">
+				</div>
+				<label for="inputSTNM" class="col-sm-2 control-label">测站名称</label>
+				<div class="col-sm-4">
+					<input type="text" class="form-control" id="inputSTNM" name="STNM" placeholder="测站名称">
+				</div>
+			</div>
+			<div class="form-group">
+				<label for="inputRVNM" class="col-sm-2 control-label">河流名称</label>
+				<div class="col-sm-4">
+					<input type="text" class="form-control" id="inputRVNM" name="RVNM" placeholder="河流名称">
+				</div>
+				<label for="inputHNNM" class="col-sm-2 control-label">水系名称</label>
+				<div class="col-sm-4">
+					<input type="text" class="form-control" id="inputHNNM" name="HNNM" placeholder="水系名称">
+				</div>
+			</div>
+			<div class="form-group">
+				<label for="inputRVNM" class="col-sm-2 control-label">流域名称</label>
+				<div class="col-sm-4">
+					<input type="text" class="form-control" id="inputBSNM" name="BSNM" placeholder="河流名称">
+				</div>
+				<label for="inputFRGRD" class="col-sm-2 control-label">报汛等级</label>
+				<div class="col-sm-4">
+					<input type="text" class="form-control" id="inputFRGRD" name="FRGRD" placeholder="报汛等级">
+				</div>
+			</div>
+			<div class="form-group">
+				<label for="inputLGTD" class="col-sm-2 control-label">经度</label>
+				<div class="col-sm-4">
+					<input type="text" class="form-control" id="inputLGTD" name="LGTD" placeholder="经度">
+				</div>
+				<label for="inputLTTD" class="col-sm-2 control-label">纬度</label>
+				<div class="col-sm-4">
+					<input type="text" class="form-control" id="inputLTTD" name="LTTD" placeholder="纬度">
+				</div>
+			</div>
+			<div class="form-group">
+				<label for="inputDTMNM" class="col-sm-2 control-label">基面名称</label>
+				<div class="col-sm-4">
+					<input type="text" class="form-control" id="inputDTMNM" name="DTMNM" placeholder="基面名称">
+				</div>
+				<label for="inputDTMEL" class="col-sm-2 control-label">基面高程</label>
+				<div class="col-sm-4">
+					<input type="text" class="form-control" id="inputDTMEL" name="DTMEL" placeholder="基面高程">
+				</div>
+			</div>
+			<div class="form-group">
+				<label for="inputDTPR" class="col-sm-2 control-label">基面修正值</label>
+				<div class="col-sm-4">
+					<input type="text" class="form-control" id="inputDTPR" name="DTPR" placeholder="基面修正值">
+				</div>
+				<label for="inputESSTYM" class="col-sm-2 control-label">建站年月</label>
+				<div class="col-sm-4">
+					<input type="text" class="form-control" id="inputESSTYM" name="ESSTYM" placeholder="建站年月">
+				</div>
+			</div>
+			<div class="form-group">
+				<label for="inputSTLC" class="col-sm-2 control-label">站址</label>
+				<div class="col-sm-10">
+					<input type="text" class="form-control" id="inputSTLC" name="STLC" placeholder="站址">
+				</div>
+			</div>
+			<div class="form-group">
+				<label for="inputCOMMENTS" class="col-sm-2 control-label">备注</label>
+				<div class="col-sm-10">
+					<textarea class="form-control" rows="3" id="inputCOMMENTS" name="COMMENTS" placeholder="备注"></textarea>
+				</div>
+			</div>
+			<div class="form-group">
+				<div class="col-sm-offset-2 col-sm-5">
+					<button type="submit" class="btn btn-default btn-block">添加</button>
+				</div>
+				<div class="col-sm-5">
+					<a href="{:U('station/lists')}" class="btn btn-info btn-block">取消</a>
+				</div>
+			</div>
+		</form>
+	</div>
+</div>
