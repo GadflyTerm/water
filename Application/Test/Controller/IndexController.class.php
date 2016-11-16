@@ -10,8 +10,8 @@ class IndexController extends Controller {
     }
     
     public function mssql(){
-		dump(M('StFieldD')->select());
-			
+		//dump(M('StFieldD')->select());
+		echo 'dddd';	
 	}
 	
 	public function info(){
