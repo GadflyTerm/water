@@ -6,6 +6,7 @@
  * Time: 下午2:21
  */
 if(version_compare(PHP_VERSION,'5.3.0','<'))  die('require PHP > 5.3.0 !');
+define('APP_ROOT', rtrim(dirname(__FILE__), '/\\') . DIRECTORY_SEPARATOR);
 
 /**
  * 系统调试设置
