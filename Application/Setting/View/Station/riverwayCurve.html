@@ -1,0 +1,82 @@
+<div class="well">
+	<table class="table table-bordered table-hover table-condensed">
+		<caption>
+			<div class="col md-4 col-md-offset-8">
+				<button class="btn btn-info btn-block"><i class="fa fa-file-excel-o"></i> 通过Excal导入库容曲线数据</button>
+			</div>
+		</caption>
+		<tr style="font-weight: bold" class="">
+			<th class="text-center vertical-center-30">曲线名称</th>
+			<th class="text-center vertical-center-30">启用时间</th>
+			<th class="text-center vertical-center-30">点序号</th>
+			<th class="text-center vertical-center-30">水位</th>
+			<th class="text-center vertical-center-30">流量</th>
+			<th class="text-center vertical-center-30">备注</th>
+			<th class="text-center col-md-2 vertical-center-30">
+				<button type="button" class="btn btn-default btn-block btn-sm" ng-click="addReservoirCurve()">
+					<i class="fa fa-plus-circle"></i> 添加曲线数据
+				</button>
+			</th>
+		</tr>
+		<tr ng-repeat="val in ZVARL">
+			<td class="vertical-center-30">
+				<span editable-text="val.LNNM" e-name="LNNM" e-form="rowform" onbeforesave="checkName($data, val.id)">
+					{{val.MSTM||'empty'}}
+				</span>
+			</td>
+			<td class="vertical-center-30">
+				<span editable-date="val.BGTM" e-name="BGTM" e-form="rowform" onbeforesave="checkName($data, val.id)">
+					{{val.PTNO||'empty'}}
+				</span>
+			</td>
+			<td class="vertical-center-30">
+				<span editable-number="val.PTNO" e-name="PTNO" e-form="rowform" onbeforesave="checkName($data, val.id)">
+					{{val.RZ||'empty'}}
+				</span>
+			</td>
+			<td class="vertical-center-30">
+				<span editable-number="val.Z" e-name="Z" e-form="rowform" onbeforesave="checkName($data, val.id)">
+					{{val.W||'empty'}}
+				</span>
+			</td>
+			<td class="vertical-center-30">
+				<span editable-number="val.Q" e-name="Q" e-form="rowform" onbeforesave="checkName($data, val.id)">
+					{{val.WSFA||'empty'}}
+				</span>
+			</td>
+			<td class="vertical-center-30">
+				<span editable-text="val.COMMENTS" e-name="COMMENTS" e-form="rowform" 
+					  onbeforesave="checkName($data, val.id)">
+					{{val.WSFA||'empty'}}
+				</span>
+			</td>
+			<td style="white-space: nowrap" class="text-center">
+				<form editable-form name="rowform" onbeforesave="saveUser($data, val.id)" ng-show="rowform.$visible" class="form-buttons form-inline" shown="inserted == val">
+					<button type="submit" ng-disabled="rowform.$waiting" class="btn btn-primary"><i class="fa fa-check-circle"></i> 保存</button>
+					<button type="button" ng-disabled="rowform.$waiting" ng-click="rowform.$cancel()" class="btn btn-default"><i class="fa fa-minus-circle"></i> 取消</button>
+				</form>
+				<div class="buttons vertical-center-30" ng-show="!rowform.$visible">
+					<button type="button" class="btn btn-sm btn-primary" ng-click="rowform.$show()"><i class="fa fa-edit"></i> 编辑</button>
+					<button type="button" class="btn btn-sm btn-danger" ng-click="removeUser($index)"><i class="fa fa-trash"></i> 删除</button>
+				</div>
+			</td>
+		</tr>
+		<tr>
+			<td colspan="7">
+				<nav class="row" style="margin-right: 5px;">
+					<ul class="pagination pagination-sm pull-right" style="margin: 0; padding-right: 10px;">
+						<li><a href="#">第一页</a></li>
+						<li><a href="#">上一页</a></li>
+						<li><a href="#">1</a></li>
+						<li><a href="#">2</a></li>
+						<li><a href="#">3</a></li>
+						<li><a href="#">4</a></li>
+						<li><a href="#">5</a></li>
+						<li><a href="#">下一页</a></li>
+						<li><a href="#">最后一页</a></li>
+					</ul>
+				</nav>
+			</td>
+		</tr>
+	</table>
+</div>

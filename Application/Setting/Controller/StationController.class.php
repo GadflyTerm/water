@@ -13,14 +13,16 @@ class StationController extends CommonController{
 	
 	public function __construct(){
 		parent::__construct();
-		$this->nav['home'] = array('url' => U('station/index'), 'title' => '检测站管理');
+		$this->nav = array(
+			'home'		=> array('url' => U('station/index'), 'title' => '监测站管理'),
+			'library'	=> array('url' => U('station/lists'), 'title' => '监测站列表')
+		);
 	}
 	
 	/**
 	 * 检测站列表
 	 */
 	public function lists(){
-		$this->nav['library'] = array('url' => U('station/lists'), 'title' => '检测站列表');
 		$this->assign('nav', $this->nav);
 		$this->display();
 	}
@@ -36,8 +38,16 @@ class StationController extends CommonController{
 			else
 				$this->error($add['msg'], U('Station/lists'));
 		}else{
-			$this->nav['library'] = array('url' => U('station/lists'), 'title' => '检测站列表');
-			$this->assign('nav', $this->nav);
+			$this->nav['sublib'] = array('url' => U('station/lists'), 'title' => '添加监测站');
+			$this->assign(array(
+				'nav'		=> $this->nav,
+				'LOCALITY'	=> C('OPT.LOCALITY'),
+				'STTP'		=> C('OPT.STTP'),
+				'TASK'		=> C('OPT.TASK'),
+				'FRGRD'		=> C('OPT.FRGRD'),
+				'STBK'		=> C('OPT.STBK'),
+				'USFL'		=> C('OPT.USFL'),
+			));
 			$this->display();
 		}
 	}
@@ -49,6 +59,7 @@ class StationController extends CommonController{
 		if(IS_POST){
 			$this->success('成功编辑检测站',  U('Station/lists'));
 		}else{
+			$this->nav['sublib'] = array('url' => U('station/lists'), 'title' => '编辑监测站');
 			$this->assign('info', D('Station')->infoStation());
 			$this->display();
 		}
