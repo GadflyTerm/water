@@ -6,11 +6,17 @@
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<link rel="stylesheet" href="/node_modules/bootswatch/slate/bootstrap.min.css" media="screen">
 	<link rel="stylesheet" href="/node_modules/font-awesome/css/font-awesome.min.css">
+	<link rel="stylesheet" href="/node_modules/angular-busy/dist/angular-busy.min.css">
+	<link rel="stylesheet" href="/node_modules/angular-toastr/dist/angular-toastr.min.css">
+	<link rel="stylesheet" href="/node_modules/font-awesome/css/font-awesome.min.css">
 	<link rel="stylesheet" href="/node_modules/angular-xeditable/dist/css/xeditable.min.css">
 	<title>{$nav.home.title}</title>
 	<script type="text/javascript" src="/node_modules/jquery/dist/jquery.min.js"></script>
 	<script type="text/javascript" src="/node_modules/bootstrap/dist/js/bootstrap.min.js"></script>
 	<script type="text/javascript" src="/node_modules/angular/angular.min.js"></script>
+	<script type="text/javascript" src="/node_modules/angular-animate/angular-animate.min.js"></script>
+	<script type="text/javascript" src="/node_modules/angular-busy/dist/angular-busy.min.js"></script>
+	<script type="text/javascript" src="/node_modules/angular-toastr/dist/angular-toastr.tpls.min.js"></script>
 	<script type="text/javascript" src="/node_modules/angular-i18n/angular-locale_zh-cn.js"></script>
 	<script type="text/javascript" src="/node_modules/angular-route/angular-route.min.js"></script>
 	<script type="text/javascript" src="/node_modules/angular-sanitize/angular-sanitize.js"></script>
@@ -19,6 +25,7 @@
 	<script type="text/javascript" src="/node_modules/angular-dialog-service/dist/dialogs.min.js"></script>
 	<script type="text/javascript" src="/node_modules/angular-dialog-service/dist/dialogs-default-translations.min.js"></script>
 	<script type="text/javascript" src="/node_modules/angular-xeditable/dist/js/xeditable.min.js"></script>
+	<script type="text/javascript" src="/node_modules/ng-file-upload/dist/ng-file-upload-all.min.js"></script>
 	<script type="text/javascript" src="/Public/javascript.js"></script>
 </head>
 <body ng-app="starter">
@@ -33,7 +40,7 @@
 					系统功能列表 <span class="caret"></span>
 				</button>
 				<ul class="dropdown-menu" uib-dropdown-menu role="menu" aria-labelledby="single-button">
-					<li role="menuitem"><a href="{:U('Station/list')}">测站管理</a></li>
+					<li role="menuitem"><a href="{:U('Station/lists')}">测站管理</a></li>
 					<li role="menuitem"><a href="#">Another action</a></li>
 					<li role="menuitem"><a href="#">Something else here</a></li>
 					<li class="divider"></li>

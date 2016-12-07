@@ -6,37 +6,64 @@
  * Time: 下午7:23
  */
 
-namespace Common\Controller;
+namespace Restful\Controller;
 use Think\Controller\RestController;
 
 class AjaxController extends RestController{
+	public function test(){
+		$this->response(array('errcode' => 10000, 'msg' => ''), 'json');
+	}
 	
-	public function angular($rsa=null){
-		$param = I('param.');
-		if(is_null($rsa)){
-			$decrypt = json_decode($this->_privateKeyDecode($param['rsa'], $key), true);
-			$module = (isset($decrypt['ac']))?$decrypt['ac'].'Ajax':'angular';
-			$model = (isset($decrypt['mo']))?ucfirst($decrypt['mo']):ucfirst(MODULE_NAME);
-			$op = ucfirst($decrypt['op']).'_'.$this->_method;
-		}else{
-			$module = (isset($param['ac']))?$param['ac'].'Ajax':'angular';
-			$model = (isset($param['op']))?ucfirst($param['op']):ucfirst(MODULE_NAME);
-			$op = ucfirst($param['op']).'_'.$this->_method;
-		}
+	public function angular(){
+		$param = I('post.');
+		$module = isset($param['ac'])?$param['ac'].'Ajax':'angular';
+		$model = isset($param['mo'])?ucfirst($param['mo']):ucfirst(CONTROLLER_NAME);
+		$op = ucfirst($param['op']).'_'.$this->_method;
 		if($module == 'angular'){
-			$msg = '系统在'.$model.'模型中没有找到'.$decrypt['op'].'方法';
-			if(method_exists(D($model), $decrypt['op']))
+			$msg = '系统在'.$model.'模型中没有找到'.$op.'方法';
+			if(method_exists(D($model), $op))
 				$return = call_user_func(array(D($model), $op), $param);
 			else
-				$return = array('errcode' => 10001, 'msg' => $msg, 'public' => $key);
+				$return = array('errcode' => 10001, 'msg' => $msg);
 		}else{
 			$msg = '系统在'.$model.'控制器中没有找到'.$module.'方法';
 			if(method_exists($this, $module))
 				$return = call_user_func(array(&$this, $module), $param);
 			else
-				$return = array('errcode' => 10002, 'msg' => $msg, 'public' => $key);
+				$return = array('errcode' => 10002, 'msg' => $msg);
 		}
-		$this->response(is_array($return)?$return:array('errcode' => 10000, 'msg' => '', 'data' => $return));
+		$this->response(is_array($return)?$return:array('errcode' => 10000, 'msg' => '', 'data' => $return), 'json');
+	}
+	
+	protected function stationAjax($param){
+		switch ($param['op']){
+			case 'getZZlist':
+				return array(
+					'type'	=> 'Success',
+					'msg'	=> '河道测站数据列表读取成功！',
+					'data'	=> array(
+						array('label' => '请选择所关联的河道测站'),
+						array('label' => '测试用河道一', 'value' => 'hd1'),
+						array('label' => '测试用河道二', 'value' => 'hd2'),
+						array('label' => '测试用河道三', 'value' => 'hd3'),
+						array('label' => '测试用河道四', 'value' => 'hd4'),
+					)
+				);
+			case 'getRRlist':
+				return array(
+					'type'	=> 'Success',
+					'msg'	=> '河道测站数据列表读取成功！',
+					'data'	=> array(
+						array('label' => '请选择所关联的水库测站'),
+						array('label' => '测试用水库一', 'value' => 'sk1'),
+						array('label' => '测试用水库二', 'value' => 'sk2'),
+						array('label' => '测试用水库三', 'value' => 'sk3'),
+						array('label' => '测试用水库四', 'value' => 'sk4'),
+						array('label' => '测试用水库五', 'value' => 'sk5'),
+						array('label' => '测试用水库六', 'value' => 'sk6'),
+					)
+				);
+		}
 	}
 
 	protected function memcache($type, $key, $value=null, $expire=3600){

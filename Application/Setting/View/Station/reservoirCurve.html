@@ -1,11 +1,14 @@
 <style>
 	.vertical-center-30 {line-height:30px!important;}
 </style>
-<div class="well">
+<div class="well" ng-controller="reservoirCurveCtrl">
 	<table class="table table-bordered table-hover table-condensed">
 		<caption>
 			<div class="col md-4 col-md-offset-8">
-				<button class="btn btn-info btn-block"><i class="fa fa-file-excel-o"></i> 通过Excal导入库容曲线数据</button>
+				<div class="button btn btn-info btn-block" ngf-select ng-model="file" name="file"
+					 ngf-max-size="5MB" ngf-min-height="100" ng-change="uploadFile()">
+					<i class="fa fa-file-excel-o"></i> 选择Excal库容曲线数据文件
+				</div>
 			</div>
 		</caption>
 		<tr style="font-weight: bold" class="">

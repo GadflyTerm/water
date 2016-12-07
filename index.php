@@ -9,6 +9,9 @@
 
 if(version_compare(PHP_VERSION,'5.3.0','<'))  die('require PHP > 5.3.0 !');
 
+$protocol = strpos(strtolower($_SERVER['SERVER_PROTOCOL']),'https')  === false ? 'http' : 'https';  //apache 下面注意区分大小写，不然会报错 server_protocol
+define('APP_ROOT', rtrim(dirname(__FILE__), '/\\') . DIRECTORY_SEPARATOR);
+define('APP_URL', $protocol.'://'.$_SERVER['SERVER_NAME'].(($_SERVER['SERVER_PORT']==80)?'':':'.$_SERVER['SERVER_PORT']));
 /**
  * 系统调试设置
  * 项目正式部署后请设置为false

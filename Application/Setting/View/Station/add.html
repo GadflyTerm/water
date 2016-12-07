@@ -1,8 +1,9 @@
 <div class="panel panel-warning" ng-controller="StationAddCtrl">
 	<div class="panel-heading">
-		<i class="fa fa-plus-circle"></i> 添加新的监测站
+		<i class="fa fa-plus-circle"></i> 添加新的{{tab.heading}}监测站
 	</div>
 	<div class="panel-body">
+		<div cg-busy="{promise:promise, message: '请等待，正在向服务器请求数据...', backdrop:true, delay:0, minDuration:10}">
 		<uib-tabset active="activeJustified" justified="true">
 			<uib-tab index="0" heading="{{tab.STBPRP_title}}">
 				<div class="well">
@@ -50,29 +51,29 @@
 						<div class="form-group" ng-show="tab.DD_tab">
 							<label class="col-sm-2 control-label">堰闸关系标志</label>
 							<div class="col-sm-3 btn-group">
-								<label class="btn btn-success active" ng-model="station.STBPRP.USFL" uib-btn-radio="{$vo.value}">闸下站</label>
-								<label class="btn btn-success" ng-model="station.STBPRP.USFL" uib-btn-radio="{$vo.value}">闸上站</label>
-								<label class="btn btn-success" ng-model="station.STBPRP.USFL" uib-btn-radio="{$vo.value}">同断面</label>
+								<label class="btn btn-success" ng-model="station.WASRL.RLMRK" uib-btn-radio="'D'">闸下站</label>
+								<label class="btn btn-success" ng-model="station.WASRL.RLMRK" uib-btn-radio="'U'">闸上站</label>
+								<label class="btn btn-success" ng-model="station.WASRL.RLMRK" uib-btn-radio="'L'">同断面</label>
 							</div>
 							<div class="col-sm-3 btn-group">
-								<label class="btn btn-success active" ng-model="station.STBPRP.USFL" uib-btn-radio="{$vo.value}">关联河道</label>
-								<label class="btn btn-success" ng-model="station.STBPRP.USFL" uib-btn-radio="{$vo.value}">关联库（湖）</label>
+								<label class="btn btn-success" ng-change="relevance()" ng-model="ajax.relev" uib-btn-radio="0">关联河道
+								</label>
+								<label class="btn btn-success" ng-change="relevance()" ng-model="ajax.relev" uib-btn-radio="1">关联库（湖）</label>
 							</div>
 							<div class="col-sm-4">
-								<select class="form-control" ng-model="station.STBPRP.STTP" name="STTP" 
-										ng-change="mySTTP()">
-									<option value="">请选择所关联的测站</option>
-								</select>
+								<select class="form-control" ng-model="station.WASRL.RLSTCD" name="RLSTCD" ng-options="item.label for item in RLSTCD track by item.value"></select>
 							</div>
 						</div>
 						<div class="form-group">
 							<label class="col-sm-2 control-label">测站联系人</label>
 							<div class="col-sm-4">
-								<input type="text" class="form-control" ng-model="station.STSMTASK.OFFICER" name="OFFICER" placeholder="测站代表点所在地理位置的东经度">
+								<input type="text" class="form-control" ng-model="station.STSMTASK.OFFICER" 
+									   name="OFFICER" placeholder="测站联系人的姓名">
 							</div>
 							<label class="col-sm-2 control-label">联系人手机</label>
 							<div class="col-sm-4">
-								<input type="text" class="form-control" ng-model="station.STSMTASK.MPHONE" name="MPHONE" placeholder="测站代表点所在地理位置的北纬度">
+								<input type="text" class="form-control" ng-model="station.STSMTASK.MPHONE" 
+									   name="MPHONE" placeholder="测站联系人的手机号码">
 							</div>
 						</div>
 						<div class="form-group">
@@ -222,7 +223,9 @@
 						</div>-->
 						<div class="form-group">
 							<div class="col-sm-offset-2 col-sm-5">
-								<button type="submit" class="btn btn-default btn-block" ng-hide="tab.step"><i class="fa fa-check-circle"></i> 添加</button>
+								<button type="button" class="btn btn-default btn-block" ng-hide="tab.step" ng-click="submit()">
+									<i class="fa fa-check-circle"></i> 添加
+								</button>
 								<button type="button" class="btn btn-default btn-block" ng-show="tab.step" ng-click="nextStep()">
 									<i class="fa fa-long-arrow-right"></i> 下一步
 								</button>
@@ -391,7 +394,9 @@
 						</div>
 						<div class="form-group">
 							<div class="col-sm-offset-2 col-sm-5">
-								<button type="submit" class="btn btn-default btn-block"><i class="fa fa-check-circle"></i> 添加</button>
+								<button type="button" class="btn btn-default btn-block" ng-show="tab.step" ng-click="nextStep(2)">
+									<i class="fa fa-long-arrow-right"></i> 下一步
+								</button>
 							</div>
 							<div class="col-sm-5">
 								<a href="#" ng-click="jumpToUrl()" class="btn btn-info btn-block"><i class="fa fa-times-circle"></i> 取消</a>
@@ -402,6 +407,16 @@
 			</uib-tab>
 			<uib-tab index="2" heading="第三步 设置河道水位流量曲线" ng-show="tab.ZQ_tab">
 				<include file="Station/riverwayCurve" />
+				<div class="form-group">
+					<div class="col-sm-offset-2 col-sm-5">
+						<button type="button" class="btn btn-default btn-block" ng-click="submit()">
+							<i class="fa fa-check-circle"></i> 添加
+						</button>
+					</div>
+					<div class="col-sm-5">
+						<a href="#" ng-click="jumpToUrl()" class="btn btn-info btn-block"><i class="fa fa-times-circle"></i> 取消</a>
+					</div>
+				</div>
 			</uib-tab>
 			<uib-tab index="3" heading="第二步 库(湖)防洪指标、水文特征" ng-show="tab.RR_tab">
 				<div class="well">
@@ -528,7 +543,9 @@
                         </div>
 						<div class="form-group">
 							<div class="col-sm-offset-2 col-sm-5">
-								<button type="submit" class="btn btn-default btn-block"><i class="fa fa-check-circle"></i> 添加</button>
+								<button type="button" class="btn btn-default btn-block" ng-show="tab.step" ng-click="nextStep(4)">
+									<i class="fa fa-long-arrow-right"></i> 下一步
+								</button>
 							</div>
 							<div class="col-sm-5">
 								<a href="{:U('station/lists')}" class="btn btn-info btn-block"><i class="fa fa-times-circle"></i> 取消</a>
@@ -539,10 +556,94 @@
 			</uib-tab>
 			<uib-tab index="4" heading="第三步 设置库(湖)容量曲线" ng-show="tab.RR_tab">
 				<include file="Station/reservoirCurve" />
+				<div class="form-group">
+					<div class="col-sm-offset-2 col-sm-5">
+						<button type="button" class="btn btn-default btn-block" ng-click="submit()">
+							<i class="fa fa-check-circle"></i> 添加
+						</button>
+					</div>
+					<div class="col-sm-5">
+						<a href="#" ng-click="jumpToUrl()" class="btn btn-info btn-block"><i class="fa fa-times-circle"></i> 取消</a>
+					</div>
+				</div>
 			</uib-tab>
 			<uib-tab index="5" heading="第二步 设置墒情特征值" ng-show="tab.SS_tab">
 				<div class="well">
 					<form class="form-horizontal" role="form" method="post" action="__SELF__">
+						<div class="form-group">
+							<label class="col-sm-3 control-label">土壤类别</label>
+							<div class="col-sm-3">
+								<select class="form-control" ng-model="station.SOILCH.SLTP" name="SLTP">
+									<foreach name="SLTP" item="vo" >
+										<present name="vo.selected">
+											<option value="{$vo.value}" selected>{$vo.lable}</option>
+											<else />
+											<option value="{$vo.value}">{$vo.lable}</option>
+										</present>
+									</foreach>
+								</select>
+							</div>
+							<label class="col-sm-3 control-label">土壤质地</label>
+							<div class="col-sm-3">
+								<select class="form-control" ng-model="station.SOILCH.SLTX" name="SLTX">
+									<foreach name="SLTX" item="vo" >
+										<present name="vo.selected">
+											<option value="{$vo.value}" selected>{$vo.lable}</option>
+											<else />
+											<option value="{$vo.value}">{$vo.lable}</option>
+										</present>
+									</foreach>
+								</select>
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="col-sm-3 control-label">土壤结构</label>
+							<div class="col-sm-3">
+								<input type="text" class="form-control" ng-model="station.SOILCH.SFBR" name="SFBR" placeholder="描述土壤为何种结构层次">
+							</div>
+							<label class="col-sm-3 control-label">土壤比重</label>
+							<div class="col-sm-3">
+								<input type="text" class="form-control" ng-model="station.SOILCH.SSPG" name="SSPG" placeholder="描述土壤比重">
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="col-sm-3 control-label">土壤干容重</label>
+							<div class="col-sm-3">
+								<input type="text" class="form-control" ng-model="station.SOILCH.DSD" name="DSD" placeholder="描述土壤干容重">
+							</div>
+							<label class="col-sm-3 control-label">土壤孔隙度</label>
+							<div class="col-sm-3">
+								<input type="text" class="form-control" ng-model="station.SOILCH.SPOR" name="SPOR" placeholder="描述土壤孔隙度">
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="col-sm-3 control-label">饱和含水量</label>
+							<div class="col-sm-3">
+								<input type="text" class="form-control" ng-model="station.SOILCH.SHWC" name="SHWC" placeholder="描述饱和含水量">
+							</div>
+							<label class="col-sm-3 control-label">田间持水量</label>
+							<div class="col-sm-3">
+								<input type="text" class="form-control" ng-model="station.SOILCH.FDCP" name="FDCP" placeholder="描述田间持水量">
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="col-sm-3 control-label">凋萎含水量</label>
+							<div class="col-sm-3">
+								<input type="text" class="form-control" ng-model="station.SOILCH.WLCP" name="WLCP" placeholder="描述凋萎含水量">
+							</div>
+							<label class="col-sm-3 control-label">备注</label>
+							<div class="col-sm-3">
+								<input type="text" class="form-control" ng-model="station.SOILCH.COMMENTS" name="COMMENTS" placeholder="土壤墒情备注信息">
+							</div>
+						</div>
+						<div class="form-group">
+							<div class="col-sm-offset-2 col-sm-5">
+								<button type="button" class="btn btn-default btn-block" ng-click="submit()"><i class="fa fa-check-circle"></i> 添加</button>
+							</div>
+							<div class="col-sm-5">
+								<a href="{:U('station/lists')}" class="btn btn-info btn-block"><i class="fa fa-times-circle"></i> 取消</a>
+							</div>
+						</div> 
 					</form>
 				</div>
 			</uib-tab>

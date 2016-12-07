@@ -47,6 +47,8 @@ class StationController extends CommonController{
 				'FRGRD'		=> C('OPT.FRGRD'),
 				'STBK'		=> C('OPT.STBK'),
 				'USFL'		=> C('OPT.USFL'),
+				'SLTP'		=> C('OPT.SLTP'),
+				'SLTX'		=> C('OPT.SLTX'),
 			));
 			$this->display();
 		}
@@ -70,5 +72,47 @@ class StationController extends CommonController{
 	 */
 	public function del(){
 		
+	}
+
+	public function xlsUpload(){
+		$targetPath = dirname(C('UPLOAD_PATH')).I('post.targetPath');
+		if(!file_exists($targetPath)) $this->_mkdirs($targetPath, 0755, true);
+		if(move_uploaded_file($_FILES['file']['tmp_name'] , $targetPath.$_FILES['file']['name'])){
+			$return = array(
+				'type'		=> 'success',
+				'reason' 	=> '上传文件成功！',
+				'target'	=> $targetPath.$_FILES['file']['name'],
+				'src'		=> 'http://'.C('STATIC_URL').I('post.targetPath').$_FILES['file']['name'],
+				'record'	=> $this->importExecl($targetPath.$_FILES['file']['name'], 1)
+			);
+		}else{
+			$return = array(
+				'type'		=> 'error',
+				'reason'	=> 'Error while uploading images. Contact the system administrator',
+				'target'	=> $targetPath.$_FILES['file']['name'],
+				'src'		=> 'http://'.C('STATIC_URL').I('post.targetPath').$_FILES['file']['name'],
+				'record'	=> null
+			);
+		}
+
+		$this->ajaxReturn($return);
+	}
+
+	/**
+	 * 创建目录
+	 * @param $dir
+	 *
+	 * @return bool
+	 */
+	private function _mkdirs($dir){
+		if(!is_dir($dir)){
+			if(!$this->_mkdirs(dirname($dir))){
+				return false;
+			}
+			if(!mkdir($dir,0777)){
+				return false;
+			}
+		}
+		return true;
 	}
 }
