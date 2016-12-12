@@ -52,7 +52,7 @@ class AjaxController extends RestController{
 			case 'getRRlist':
 				return array(
 					'type'	=> 'Success',
-					'msg'	=> '河道测站数据列表读取成功！',
+					'msg'	=> '水库测站数据列表读取成功！',
 					'data'	=> array(
 						array('label' => '请选择所关联的水库测站'),
 						array('label' => '测试用水库一', 'value' => 'sk1'),
