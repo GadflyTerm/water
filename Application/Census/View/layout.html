@@ -11,7 +11,7 @@
 	<link rel="stylesheet" href="/node_modules/angular-toastr/dist/angular-toastr.min.css">
 	<link rel="stylesheet" href="/node_modules/font-awesome/css/font-awesome.min.css">
 	<title>{$nav.home.title}</title>
-	<!--<script type="text/javascript" src="/node_modules/jquery/dist/jquery.min.js"></script>
+	<script type="text/javascript" src="/node_modules/jquery/dist/jquery.min.js"></script>
 	<script type="text/javascript" src="/node_modules/bootstrap/dist/js/bootstrap.min.js"></script>
 	<script type="text/javascript" src="/node_modules/angular/angular.min.js"></script>
 	<script type="text/javascript" src="/node_modules/angular-animate/angular-animate.min.js"></script>
@@ -20,10 +20,10 @@
 	<script type="text/javascript" src="/node_modules/angular-i18n/angular-locale_zh-cn.js"></script>
 	<script type="text/javascript" src="/node_modules/angular-route/angular-route.min.js"></script>
 	<script type="text/javascript" src="/node_modules/angular-ui-bootstrap/dist/ui-bootstrap-tpls.js"></script>
-	<script type="text/javascript" src="/Public/javascript.js"></script>-->
-	<!--<script type="text/javascript" src="/Public/controller/{$Think.MODULE_NAME}/{$ctrl}.js"></script>-->
+	<script type="text/javascript" src="/Public/javascript.js"></script>
+	<script type="text/javascript" src="/Public/controller/{$Think.MODULE_NAME}/{$ctrl}.js"></script>
 </head>
-<body>
+<body ng-app="starter">
 <div class="container">
 	<div cg-busy="myPromise"></div>
 	<div class="row">
@@ -50,7 +50,7 @@
 		<present name="nav.sublib">
 			<li><a href="{$nav.library.url}">{$nav.library.title}</a></li>
 			<li class="active">{$nav.sublib.title}</li>
-			<else />
+		<else />
 			<li class="active">{$nav.library.title}</li>
 		</present>
 	</ol>
@@ -58,8 +58,5 @@
 		{__CONTENT__}
 	</div>
 </div>
-<script type="text/javascript" src="/node_modules/requirejs/require.js"
-		data-main="/node_modules/require_conf"
-		data-container="{$Think.MODULE_NAME}_{$ctrl}"></script>
 </body>
 </html>

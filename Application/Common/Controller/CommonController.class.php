@@ -9,10 +9,11 @@ namespace Common\Controller;
 use Think\Controller;
 
 class CommonController extends Controller{
-	protected $nav;
+	protected $nav, $ctrl;
 
 	public function __construct(){
 		parent::__construct();
+		$this->assign('ctrl', CONTROLLER_NAME.ucfirst(ACTION_NAME));
 	}
 	
 	public function info(){

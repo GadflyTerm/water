@@ -19,12 +19,16 @@ class StationController extends CommonController{
 		);
 	}
 	
+	public function index(){
+		$this->lists();
+	}
+	
 	/**
 	 * 检测站列表
 	 */
 	public function lists(){
 		$this->assign('nav', $this->nav);
-		$this->display();
+		$this->display('lists');
 	}
 
 	/**

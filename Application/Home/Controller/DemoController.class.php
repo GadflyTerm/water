@@ -13,4 +13,7 @@ class DemoController extends CommonController{
 	public function index(){
 		$this->display();
 	}
+	public function test(){
+		$this->display();
+	}
 }

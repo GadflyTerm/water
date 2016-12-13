@@ -27,10 +27,11 @@
 	<script type="text/javascript" src="/node_modules/angular-xeditable/dist/js/xeditable.min.js"></script>
 	<script type="text/javascript" src="/node_modules/ng-file-upload/dist/ng-file-upload-all.min.js"></script>
 	<script type="text/javascript" src="/Public/javascript.js"></script>
-	<script type="text/javascript" src="/Public/controller/{$Think.MODULE_NAME}/{$Think.CONTROLLER_NAME}.js"></script>
+	<script type="text/javascript" src="/Public/controller/{$Think.MODULE_NAME}/{$ctrl}.js"></script>
 </head>
 <body ng-app="starter">
 <div class="container">
+	<div cg-busy="myPromise"></div>
 	<div class="row">
 		<div class="col-md-10">
 			<h1>{$nav.library.title} <small>Subtext for header</small></h1>
@@ -41,7 +42,7 @@
 					系统功能列表 <span class="caret"></span>
 				</button>
 				<ul class="dropdown-menu" uib-dropdown-menu role="menu" aria-labelledby="single-button">
-					<li role="menuitem"><a href="{:U('Station/lists')}">测站管理</a></li>
+					<li role="menuitem"><a href="{:U('Station/index')}">测站管理</a></li>
 					<li role="menuitem"><a href="#">Another action</a></li>
 					<li role="menuitem"><a href="#">Something else here</a></li>
 					<li class="divider"></li>
@@ -59,7 +60,9 @@
 			<li class="active">{$nav.library.title}</li>
 		</present>
 	</ol>
-	{__CONTENT__}
+	<div class="row" ng-controller="{$ctrl}Ctrl">
+		{__CONTENT__}
+	</div>
 </div>
 </body>
 </html>
