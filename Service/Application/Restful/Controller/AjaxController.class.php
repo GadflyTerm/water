@@ -14,8 +14,9 @@ class AjaxController extends RestController{
 	public function angular($rsa=null){
 		header("Content-type: json; charset=utf-8");
 		header('Access-Control-Allow-Origin:*');
-		header('Access-Control-Allow-Methods:POST, GET, PUT, DELETE');
+		header('Access-Control-Allow-Methods:POST, GET, PUT, OPTIONS, DELETE');
 		header('Access-Control-Allow-Headers:x-requested-with,content-type');
+		header("Access-Control-Allow-Credentials: true");
 		$param = I('param.');
 		switch ($this->_method){
 			case 'post':
@@ -62,6 +63,12 @@ class AjaxController extends RestController{
 		$this->response(array_merge($return, $debug), 'json');
 	}
 
+	public function getBase(){
+		return array(
+			'data' => C('OPT')
+		);
+	}
+	
 	/**
 	 * 创建生成服务器和客户端RSA密钥
 	 *

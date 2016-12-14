@@ -1,0 +1,88 @@
+	<div class="form-group">
+		<label class="col-sm-2 control-label">测站编码</label>
+		<div class="col-sm-4">
+			<input type="text" class="form-control" ng-model="station.STBPRP.STCD" name="STCD" placeholder="具有唯一性，由数字和大写字母组成的8位字符串">
+		</div>
+		<label class="col-sm-2 control-label">测站名称</label>
+		<div class="col-sm-4">
+			<input type="text" class="form-control" ng-model="station.STBPRP.STNM" name="STNM" placeholder="测站编码所代表测站的中文名称">
+		</div>
+	</div>
+	<div class="form-group">
+		<label class="col-sm-2 control-label">经度</label>
+		<div class="col-sm-4">
+			<input type="text" class="form-control" ng-model="station.STBPRP.GTD" name="LGTD" placeholder="测站代表点所在地理位置的东经度">
+		</div>
+		<label class="col-sm-2 control-label">纬度</label>
+		<div class="col-sm-4">
+			<input type="text" class="form-control" ng-model="station.STBPRP.LTTD" name="LTTD" placeholder="测站代表点所在地理位置的北纬度">
+		</div>
+	</div>
+	<div class="form-group">
+		<label class="col-sm-2 control-label">测站类别</label>
+		<div class="col-sm-4">
+			<select class="form-control" ng-model="station.STBPRP.STTP" name="STTP" ng-change="mySTTP()">
+				<foreach name="STTP" item="vo" >
+					<present name="vo.selected">
+						<option value="{$vo.value}" selected>{$vo.lable}</option>
+						<else />
+						<option value="{$vo.value}">{$vo.lable}</option>
+					</present>
+				</foreach>
+			</select>
+		</div>
+		<label class="col-sm-2 control-label">启用标志</label>
+		<div class="col-sm-4 btn-group">
+			<foreach name="USFL" item="vo" >
+				<label class="btn btn-success" ng-model="station.STBPRP.USFL" uib-btn-radio="{$vo.value}">{$vo.lable}</label>
+			</foreach>
+		</div>
+	</div>
+	<div class="form-group" ng-show="tab.DD_tab">
+		<label class="col-sm-2 control-label">堰闸关系标志</label>
+		<div class="col-sm-3 btn-group">
+			<label class="btn btn-success" ng-model="station.WASRL.RLMRK" uib-btn-radio="'D'">闸下站</label>
+			<label class="btn btn-success" ng-model="station.WASRL.RLMRK" uib-btn-radio="'U'">闸上站</label>
+			<label class="btn btn-success" ng-model="station.WASRL.RLMRK" uib-btn-radio="'L'">同断面</label>
+		</div>
+		<div class="col-sm-3 btn-group">
+			<label class="btn btn-success" ng-change="relevance()" ng-model="ajax.relev" uib-btn-radio="0">关联河道
+			</label>
+			<label class="btn btn-success" ng-change="relevance()" ng-model="ajax.relev" uib-btn-radio="1">关联库（湖）</label>
+		</div>
+		<div class="col-sm-4">
+			<select class="form-control" ng-model="station.WASRL.RLSTCD" name="RLSTCD" ng-options="item.label for item in RLSTCD track by item.value"></select>
+		</div>
+	</div>
+	<div class="form-group">
+		<label class="col-sm-2 control-label">测站联系人</label>
+		<div class="col-sm-4">
+			<input type="text" class="form-control" ng-model="station.STSMTASK.OFFICER"
+				   name="OFFICER" placeholder="测站联系人的姓名">
+		</div>
+		<label class="col-sm-2 control-label">联系人手机</label>
+		<div class="col-sm-4">
+			<input type="text" class="form-control" ng-model="station.STSMTASK.MPHONE"
+				   name="MPHONE" placeholder="测站联系人的手机号码">
+		</div>
+	</div>
+	<div class="form-group">
+		<label class="col-sm-2 control-label">报送任务</label>
+		<div class="col-sm-10">
+			<foreach name="TASK" item="vo" >
+				<div class="col-md-3">
+					<label class="checkbox-inline">
+						<input type="checkbox" value="1" ng-model="station.STSMTASK.{$vo.value}" name="{$vo.value}">
+						{$vo.lable}
+					</label>
+				</div>
+			</foreach>
+		</div>
+	</div>
+	<div class="form-group">
+		<label class="col-sm-2 control-label">测站地址</label>
+		<div class="col-sm-10">
+			<input type="text" class="form-control" ng-model="station.STBPRP.STLC" name="STLC" placeholder="测站代表点所在地县级以下详细地址">
+		</div>
+	</div>
+	

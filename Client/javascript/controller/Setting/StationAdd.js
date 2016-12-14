@@ -6,8 +6,10 @@ define(function (require){
 	var app = angular.module('starter.controllers', ['xeditable', 'ng_file_upload']);
 	app.run(function(editableOptions) {
 		editableOptions.theme = 'bs3'; // bootstrap3 theme. Can be also 'bs2', 'default'
+		$window.sessionStorage.setItem("theme", 'bs3');
 	});
-	app.controller('StationAddCtrl', function($scope, $http, xhr){
+	app.controller('StationAddCtrl', function($scope, $http, $window, xhr){
+		console.log($window.sessionStorage.getItem("baseData"));
 		"添加新的监测站控制器";
 		$scope.ajax = {
 			relev: 2

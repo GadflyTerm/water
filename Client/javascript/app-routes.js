@@ -2,15 +2,15 @@
  * Created by gadfly on 2016/12/12.
  */
 define(function (require){
-	var app = require('../javascript/app');
-	var baseUrl = 'http://water.cn/restful.php?s=/Ajax/angular.html';
+	var app = require('./app');
+	var baseUrl = 'http://water.cn/Service/restful.php?s=/Ajax/angular.html';
 	function isNull(param){
 		return (typeof(param) != 'undefined' && param && param !=0)?false:true;
 	}
 	function isUndefined(param){
 		return (typeof(param) != 'undefined')?false:true;
 	}
-	app.config(function($stateProvider, $urlRouterProvider, $httpProvider, toastrConfig){
+	app.config(function($httpProvider, $urlRouterProvider, $stateProvider, toastrConfig){
 		$httpProvider.defaults.headers = {
 			post: {'Content-Type': 'application/x-www-form-urlencoded'},
 			get: {'Content-Type': 'application/x-www-form-urlencoded'},
@@ -27,7 +27,7 @@ define(function (require){
 		angular.extend(toastrConfig, {
 			closeButton: true,
 			closeHtml: '<button>&times;</button>',
-			extendedTimeOut: 1000,
+			extendedTimeOut: 1001,
 			autoDismiss: false,
 			containerId: 'toast-container',
 			maxOpened: 0,
@@ -39,21 +39,39 @@ define(function (require){
 			target: 'body'
 		});
 		//路由
-		$stateProvider.state('StationIndex', {
+		$stateProvider.state('Home', {
+			url: "/Home",
+			template: '<h1>首页</h1>'
+		}).state('StationIndex', {
 			url: "/StationIndex",
-			abstract: true,
 			templateUrl: "templates/Station/index.html",
-			controllerUrl: 'javascript/Station/stationCtrl',
-			controller: 'StationIndexCtrl'
-		})
-		.state('StationAdd', {            // 登陆
+			controller: 'StationIndexCtrl',
+			resolve: {
+				StationIndexCtrl: ["$q", function($q){
+					var deferred = $q.defer();
+					require(['../javascript/controller/stationCtrl'], function(){	//异步加载controller／directive/filter/service
+						deferred.resolve(); 
+					});
+					return deferred.promise;
+				}]
+			}
+		}).state('StationAdd', {            // 登陆
 			url: '/StationAdd',
 			templateUrl: 'templates/Station/add.html',
-			controllerUrl: 'javascript/contraller/stationCtrl',
-			controller: 'StationAddCtrl'
-		})
+			controller: 'StationAddCtrl',
+			resolve: {
+				StationAddCtrl: ["$q", function($q){
+					var deferred = $q.defer();
+					require(['../javascript/controller/stationCtrl'], function(){	//异步加载controller／directive/filter/service
+						deferred.resolve();
+					});
+					return deferred.promise;
+				}]
+			}
+		});
+		$urlRouterProvider.otherwise('/Home');
 	});
-	app.factory('xhr', function($http, toastr){
+	app.factory('xhr', function($http, $window, toastr){
 		return {
 			service: function(method, param, callback){
 				var config = {
@@ -90,22 +108,15 @@ define(function (require){
 					}
 					if(typeof(callback) == 'function') callback(resp);
 				});
+			},
+			getBase: function(){
+				this.service('get', {action: 'Ajax', module: 'getBase'}, function(resp){
+					$window.sessionStorage.setItem("baseData", JSON.stringify(resp));
+				})
 			}
 		}
 	});
-	require('Home_DemoIndex');
-	/*switch($('script[data-container]').data('container')){
-		case 'Home_DemoIndex':
-			require('Home_DemoIndex');
-			break;
-		case 'Setting_StationIndex':
-			require('Setting_StationIndex');
-			break;
-		case 'Setting_StationAdd':
-			require('Setting_StationAdd');
-			break;
-		case 'Census_IndexIndex':
-			require('Census_IndexIndex');
-			break;
-	}*/
+	app.run(function(xhr) {
+		xhr.getBase();
+	});
 });
