@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<link rel="stylesheet" href="/node_modules/bootswatch/slate/bootstrap.min.css">
+	<title>{$nav.home.title}</title>
+</head>
+<body>
+<div class="container">
+	<div cg-busy="myPromise"></div>
+	<div class="row">
+		<div class="col-md-1">
+			<div class="btn-group" uib-dropdown is-open="status.isopen" style="margin-top: 15px;">
+				<button id="single-button" type="button" class="btn btn-primary btn-block" uib-dropdown-toggle ng-disabled="disabled">
+					系统功能列表 <span class="caret"></span>
+				</button>
+				<ul class="dropdown-menu" uib-dropdown-menu role="menu" aria-labelledby="single-button">
+					<li role="menuitem"><a href="{:U('Station/index')}">测站管理</a></li>
+					<li role="menuitem"><a href="#">Another action</a></li>
+					<li role="menuitem"><a href="#">Something else here</a></li>
+					<li class="divider"></li>
+					<li role="menuitem"><a href="#">Separated link</a></li>
+				</ul>
+			</div>
+		</div>
+		<div class="col-md-11">
+			<h1>{$nav.library.title} <small>Subtext for header</small></h1>
+		</div>
+	</div>
+	<ol class="breadcrumb">
+		<li><a href="{$nav.home.url}">{$nav.home.title}</a></li>
+		<present name="nav.sublib">
+			<li><a href="{$nav.library.url}">{$nav.library.title}</a></li>
+			<li class="active">{$nav.sublib.title}</li>
+		<else />
+			<li class="active">{$nav.library.title}</li>
+		</present>
+	</ol>
+	<div class="row" ng-controller="{$ctrl}Ctrl">
+		{__CONTENT__}
+	</div>
+</div>
+<script type="text/javascript" src="/node_modules/requirejs/require.js"
+		data-main="/node_modules/require_conf"
+		data-container="{$Think.MODULE_NAME}_{$ctrl}"></script>
+</body>
+</html>
