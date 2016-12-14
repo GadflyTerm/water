@@ -2,7 +2,7 @@
  * Created by gadfly on 2016/12/12.
  */
 define(function (require){
-	var app = require('../Public/app');
+	var app = require('../javascript/app');
 	var baseUrl = 'http://water.cn/restful.php?s=/Ajax/angular.html';
 	function isNull(param){
 		return (typeof(param) != 'undefined' && param && param !=0)?false:true;
@@ -10,7 +10,7 @@ define(function (require){
 	function isUndefined(param){
 		return (typeof(param) != 'undefined')?false:true;
 	}
-	app.config(function($httpProvider, toastrConfig){
+	app.config(function($stateProvider, $urlRouterProvider, $httpProvider, toastrConfig){
 		$httpProvider.defaults.headers = {
 			post: {'Content-Type': 'application/x-www-form-urlencoded'},
 			get: {'Content-Type': 'application/x-www-form-urlencoded'},
@@ -38,6 +38,20 @@ define(function (require){
 			timeOut: 5000,
 			target: 'body'
 		});
+		//路由
+		$stateProvider.state('StationIndex', {
+			url: "/StationIndex",
+			abstract: true,
+			templateUrl: "templates/Station/index.html",
+			controllerUrl: 'javascript/Station/stationCtrl',
+			controller: 'StationIndexCtrl'
+		})
+		.state('StationAdd', {            // 登陆
+			url: '/StationAdd',
+			templateUrl: 'templates/Station/add.html',
+			controllerUrl: 'javascript/contraller/stationCtrl',
+			controller: 'StationAddCtrl'
+		})
 	});
 	app.factory('xhr', function($http, toastr){
 		return {
@@ -79,11 +93,12 @@ define(function (require){
 			}
 		}
 	});
-	switch($('script[data-container]').data('container')){
+	require('Home_DemoIndex');
+	/*switch($('script[data-container]').data('container')){
 		case 'Home_DemoIndex':
 			require('Home_DemoIndex');
 			break;
-		/*case 'Setting_StationIndex':
+		case 'Setting_StationIndex':
 			require('Setting_StationIndex');
 			break;
 		case 'Setting_StationAdd':
@@ -91,6 +106,6 @@ define(function (require){
 			break;
 		case 'Census_IndexIndex':
 			require('Census_IndexIndex');
-			break;*/
-	}
+			break;
+	}*/
 });
