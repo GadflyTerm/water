@@ -4,12 +4,6 @@
 define(function (require){
 	var app = require('./app');
 	var baseUrl = 'http://water.cn/Service/restful.php?s=/Ajax/angular.html';
-	function isNull(param){
-		return (typeof(param) != 'undefined' && param && param !=0)?false:true;
-	}
-	function isUndefined(param){
-		return (typeof(param) != 'undefined')?false:true;
-	}
 	app.config(function($httpProvider, $urlRouterProvider, $stateProvider, toastrConfig){
 		$httpProvider.defaults.headers = {
 			post: {'Content-Type': 'application/x-www-form-urlencoded'},
@@ -109,14 +103,22 @@ define(function (require){
 					if(typeof(callback) == 'function') callback(resp);
 				});
 			},
-			getBase: function(){
-				this.service('get', {action: 'Ajax', module: 'getBase'}, function(resp){
-					$window.sessionStorage.setItem("baseData", JSON.stringify(resp));
-				})
+			getBase: function(refresh){
+				if(!$window.sessionStorage.getItem('baseData') || refresh){
+					$http({
+						url: baseUrl,
+						cache: false,
+						method: 'get',
+						params: {action: 'Ajax', module: 'getBase'},
+						timeout: 30000
+					}).success(function(resp){
+						$window.sessionStorage.setItem("baseData", JSON.stringify(resp.data));
+					});
+				}
 			}
 		}
 	});
 	app.run(function(xhr) {
-		xhr.getBase();
+		xhr.getBase(true);
 	});
 });

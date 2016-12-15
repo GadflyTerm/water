@@ -1,0 +1,64 @@
+<form class="form-horizontal" role="form" method="post" action="__SELF__">
+	<div class="form-group">
+		<label class="col-sm-3 control-label">土壤类别</label>
+		<div class="col-sm-3">
+			<select class="form-control" ng-model="station.SOILCH.SLTP" name="SLTP" ng-options="item.lable for item in option.SLTP track by item.value">
+				<option value="">请选择土壤类别</option>
+			</select>
+		</div>
+		<label class="col-sm-3 control-label">土壤质地</label>
+		<div class="col-sm-3">
+			<select class="form-control" ng-model="station.SOILCH.SLTX" name="SLTX" ng-options="item.lable for item in option.SLTX track by item.value">
+				<option value="">请选择土壤质地</option>
+			</select>
+		</div>
+	</div>
+	<div class="form-group">
+		<label class="col-sm-3 control-label">土壤结构</label>
+		<div class="col-sm-3">
+			<input type="text" class="form-control" ng-model="station.SOILCH.SFBR" name="SFBR" placeholder="描述土壤为何种结构层次">
+		</div>
+		<label class="col-sm-3 control-label">土壤比重</label>
+		<div class="col-sm-3">
+			<input type="text" class="form-control" ng-model="station.SOILCH.SSPG" name="SSPG" placeholder="描述土壤比重">
+		</div>
+	</div>
+	<div class="form-group">
+		<label class="col-sm-3 control-label">土壤干容重</label>
+		<div class="col-sm-3">
+			<input type="text" class="form-control" ng-model="station.SOILCH.DSD" name="DSD" placeholder="描述土壤干容重">
+		</div>
+		<label class="col-sm-3 control-label">土壤孔隙度</label>
+		<div class="col-sm-3">
+			<input type="text" class="form-control" ng-model="station.SOILCH.SPOR" name="SPOR" placeholder="描述土壤孔隙度">
+		</div>
+	</div>
+	<div class="form-group">
+		<label class="col-sm-3 control-label">饱和含水量</label>
+		<div class="col-sm-3">
+			<input type="text" class="form-control" ng-model="station.SOILCH.SHWC" name="SHWC" placeholder="描述饱和含水量">
+		</div>
+		<label class="col-sm-3 control-label">田间持水量</label>
+		<div class="col-sm-3">
+			<input type="text" class="form-control" ng-model="station.SOILCH.FDCP" name="FDCP" placeholder="描述田间持水量">
+		</div>
+	</div>
+	<div class="form-group">
+		<label class="col-sm-3 control-label">凋萎含水量</label>
+		<div class="col-sm-3">
+			<input type="text" class="form-control" ng-model="station.SOILCH.WLCP" name="WLCP" placeholder="描述凋萎含水量">
+		</div>
+		<label class="col-sm-3 control-label">备注</label>
+		<div class="col-sm-3">
+			<input type="text" class="form-control" ng-model="station.SOILCH.COMMENTS" name="COMMENTS" placeholder="土壤墒情备注信息">
+		</div>
+	</div>
+	<div class="form-group">
+		<div class="col-sm-offset-2 col-sm-5">
+			<button type="button" class="btn btn-default btn-block" ng-click="submit()"><i class="fa fa-check-circle"></i> 添加</button>
+		</div>
+		<div class="col-sm-5">
+			<a href="{:U('station/lists')}" class="btn btn-info btn-block"><i class="fa fa-times-circle"></i> 取消</a>
+		</div>
+	</div>
+</form>

@@ -7,7 +7,6 @@
  */
 return array(
 	'STTP'	=> array(			// 测站类型
-		array('value' => '', 'lable' => '请选择测站类型', 'selected' => true),
 		array('value' => 'PP', 'lable' => '雨量站'),
 		array('value' => 'ZQ', 'lable' => '河道水文站'),
 		array('value' => 'ZZ', 'lable' => '河道水位站'),
@@ -127,7 +126,6 @@ return array(
 		array('value' => 4, 'lable' => '其它'),
 	),
 	'SLTP'		=> array(		// 土壤类别
-		array('value' => '', 'lable' => '请选择土壤类别', 'selected' => true),
 		array('value' => 1, 'lable' => '沙土'),
 		array('value' => 2, 'lable' => '壤土'),
 		array('value' => 3, 'lable' => '粘土'),
@@ -137,7 +135,6 @@ return array(
 		array('value' => 0, 'lable' => '其它'),
 	),
 	'SLTX'		=> array(		// 土壤质地
-		array('value' => '', 'lable' => '请选择土壤质地', 'selected' => true),
 		array('value' => 11, 'lable' => '沙土-粗砂土'),
 		array('value' => 12, 'lable' => '沙土-细砂土'),
 		array('value' => 13, 'lable' => '沙土-细砂土'),

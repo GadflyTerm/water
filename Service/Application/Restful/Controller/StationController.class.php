@@ -12,7 +12,7 @@ namespace Restful\Controller;
 use think\Controller;
 
 class StationController extends Controller{
-	public function lists($param){
+	public function getLists($param){
 		switch ($param['op']){
 			case 'GetZZlist':
 				return array(

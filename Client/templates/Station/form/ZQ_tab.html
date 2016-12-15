@@ -1,0 +1,164 @@
+<form class="form-horizontal" role="form" method="post" action="__SELF__">
+	<div class="form-group">
+		<label class="col-sm-3 control-label">左堤高程</label>
+		<div class="col-sm-3">
+			<input type="text" class="form-control" ng-model="station.RVFCCH.LDKEL" name="LDKEL" placeholder="测站测验断面左岸防洪大堤与水位同基面的堤顶高程">
+		</div>
+		<label class="col-sm-3 control-label">右堤高程</label>
+		<div class="col-sm-3">
+			<input type="text" class="form-control" ng-model="station.RVFCCH.RDKEL" name="RDKEL" placeholder="测站测验断面右岸防洪大堤与水位同基面的堤顶高程">
+		</div>
+	</div>
+	<div class="form-group">
+		<label class="col-sm-3 control-label">警戒水位</label>
+		<div class="col-sm-3">
+			<input type="text" class="form-control" ng-model="station.RVFCCH.WRZ" name="WRZ" placeholder="测站测验断面临河防洪大堤，根据堤防质量、渗流现象以及历年防汛情况，有可能
+出险的洪水水位">
+		</div>
+		<label class="col-sm-3 control-label">警戒流量</label>
+		<div class="col-sm-3">
+			<input type="text" class="form-control" ng-model="station.RVFCCH.WRQ" name="WRQ" placeholder="测站测验断面，根据堤防质量、渗流现象以及历年防汛情况，有可能出险的通过流
+量">
+		</div>
+	</div>
+	<div class="form-group">
+		<label class="col-sm-3 control-label">保证水位</label>
+		<div class="col-sm-3">
+			<input type="text" class="form-control" ng-model="station.RVFCCH.GRZ" name="GRZ" placeholder="测站测验断面的防洪设计水位或历史上防御过的最高洪水位">
+		</div>
+		<label class="col-sm-3 control-label">保证流量</label>
+		<div class="col-sm-3">
+			<input type="text" class="form-control" ng-model="station.RVFCCH.GRQ" name="GRQ" placeholder="测站测验断面的防洪设计通过流量或历史上防御过的最大通过流量">
+		</div>
+	</div>
+	<div class="form-group">
+		<label class="col-sm-3 control-label">平滩流量</label>
+		<div class="col-sm-3">
+			<input type="text" class="form-control" ng-model="station.RVFCCH.FLPQ" name="FLPQ" placeholder="在有河槽和滩地分布的河段，河水上涨出槽开始漫滩的临界流量">
+		</div>
+		<label class="col-sm-3 control-label">实测最高水位</label>
+		<div class="col-sm-3">
+			<input type="text" class="form-control" ng-model="station.RVFCCH.OBHTZ" name="OBHTZ" placeholder="测站测验断面历史上实测到的最高洪水位">
+		</div>
+	</div>
+	<div class="form-group">
+		<label  class="col-sm-3 control-label">实测最高水位出现时间</label>
+		<div class="col-sm-3">
+			<input type="text" class="form-control" ng-model="station.RVFCCH.OBHTZTM" name="OBHTZTM" placeholder="实测最高洪水位的发生时间">
+		</div>
+		<label class="col-sm-3 control-label">调查最高水位</label>
+		<div class="col-sm-3">
+			<input type="text" class="form-control" ng-model="station.RVFCCH.IVHZ" name="IVHZ" placeholder="调查最高水位的发生时间">
+		</div>
+	</div>
+	<div class="form-group">
+		<label class="col-sm-3 control-label">调查最高水位出现时间</label>
+		<div class="col-sm-3">
+			<input type="text" class="form-control" ng-model="station.RVFCCH.IVHZTM" name="IVHZTM" placeholder="调查最高水位的发生时间">
+		</div>
+		<label class="col-sm-3 control-label">实测最大流量</label>
+		<div class="col-sm-3">
+			<input type="text" class="form-control" ng-model="station.RVFCCH.OBMXQ" name="OBMXQ" placeholder="测站测验断面历史上实测到的最大流量">
+		</div>
+	</div>
+	<div class="form-group">
+		<label class="col-sm-3 control-label">实测最大流量出现时间</label>
+		<div class="col-sm-3">
+			<input type="text" class="form-control" ng-model="station.RVFCCH.OBMXQTM" name="OBMXQTM" placeholder="实测最大流量的发生时间">
+		</div>
+		<label class="col-sm-3 control-label">调查最大流量</label>
+		<div class="col-sm-3">
+			<input type="text" class="form-control" ng-model="station.RVFCCH.IVMXQ" name="IVMXQ" placeholder="调查到的测站测验断面历史上曾经发生洪水的最大流量">
+		</div>
+	</div>
+	<div class="form-group">
+		<label class="col-sm-3 control-label">调查最大流量出现时间</label>
+		<div class="col-sm-3">
+			<input type="text" class="form-control" ng-model="station.RVFCCH.IVMXQTM" name="IVMXQTM" placeholder="调查最大流量的发生时间">
+		</div>
+		<label class="col-sm-3 control-label">历史最大含沙量</label>
+		<div class="col-sm-3">
+			<input type="text" class="form-control" ng-model="station.RVFCCH.HMXS" name="HMXS" placeholder="测站测验断面历史上实测到的最大含沙量">
+		</div>
+	</div>
+	<div class="form-group">
+		<label class="col-sm-3 control-label">历史最大含沙量出现时间</label>
+		<div class="col-sm-3">
+			<input type="text" class="form-control" ng-model="station.RVFCCH.HMXSTM" name="HMXSTM" placeholder="历史最大含沙量的发生时间">
+		</div>
+		<label class="col-sm-3 control-label">实测最大流量</label>
+		<div class="col-sm-3">
+			<input type="text" class="form-control" ng-model="station.RVFCCH.HMXAVV" name="HMXAVV" placeholder="测站编码所代表测站的中文名称">
+		</div>
+	</div>
+	<div class="form-group">
+		<label class="col-sm-3 control-label">历史最大断面平均流速出现时间</label>
+		<div class="col-sm-3">
+			<input type="text" class="form-control" ng-model="station.RVFCCH.HMXAVVTM" name="HMXAVVTM" placeholder="具有唯一性，由数字和大写字母组成的8位字符串">
+		</div>
+		<label class="col-sm-3 control-label">历史最低水位</label>
+		<div class="col-sm-3">
+			<input type="text" class="form-control" ng-model="station.RVFCCH.HLZ" name="HLZ" placeholder="测站编码所代表测站的中文名称">
+		</div>
+	</div>
+	<div class="form-group">
+		<label class="col-sm-3 control-label">历史最低水位出现时间</label>
+		<div class="col-sm-3">
+			<input type="text" class="form-control" ng-model="station.RVFCCH.HLZTM" name="HLZTM" placeholder="具有唯一性，由数字和大写字母组成的8位字符串">
+		</div>
+		<label class="col-sm-3 control-label">历史最小流量</label>
+		<div class="col-sm-3">
+			<input type="text" class="form-control" ng-model="station.RVFCCH.HMNQ" name="HMNQ" placeholder="测站编码所代表测站的中文名称">
+		</div>
+	</div>
+	<div class="form-group">
+		<label class="col-sm-3 control-label">大流量告警值</label>
+		<div class="col-sm-3">
+			<input type="text" class="form-control" ng-model="station.RVFCCH.TAQ" name="TAQ" placeholder="具有唯一性，由数字和大写字母组成的8位字符串">
+		</div>
+		<label class="col-sm-3 control-label">高水位告警值</label>
+		<div class="col-sm-3">
+			<input type="text" class="form-control" ng-model="station.RVFCCH.TAZ" name="TAZ" placeholder="测站编码所代表测站的中文名称">
+		</div>
+	</div>
+	<div class="form-group">
+		<label class="col-sm-3 control-label">低水位告警值</label>
+		<div class="col-sm-3">
+			<input type="text" class="form-control" ng-model="station.RVFCCH.LAZ" name="低水位告警值" placeholder="具有唯一性，由数字和大写字母组成的8位字符串">
+		</div>
+		<label class="col-sm-3 control-label">小流量告警值</label>
+		<div class="col-sm-3">
+			<input type="text" class="form-control" ng-model="station.RVFCCH.LAQ" name="LAQ" placeholder="测站编码所代表测站的中文名称">
+		</div>
+	</div>
+	<div class="form-group">
+		<label class="col-sm-3 control-label">历史最小流量出现时间</label>
+		<div class="col-sm-3">
+			<input type="text" class="form-control" ng-model="station.RVFCCH.HMNQTM" name="HMNQTM" placeholder="具有唯一性，由数字和大写字母组成的8位字符串">
+		</div>
+		<label class="col-sm-3 control-label">测站编码</label>
+		<div class="col-sm-3">
+			<input type="text" class="form-control" ng-model="station.RVFCCH.STCD0" name="STCD" placeholder="测站编码所代表测站的中文名称">
+		</div>
+	</div>
+	<div class="form-group">
+		<label class="col-sm-3 control-label">启动预报水位标准</label>
+		<div class="col-sm-3">
+			<input type="text" class="form-control" ng-model="station.RVFCCH.SFZ" name="SFZ" placeholder="具有唯一性，由数字和大写字母组成的8位字符串">
+		</div>
+		<label class="col-sm-3 control-label">启动预报流量标准</label>
+		<div class="col-sm-3">
+			<input type="text" class="form-control" ng-model="station.RVFCCH.SFQ" name="SFQ" placeholder="测站编码所代表测站的中文名称">
+		</div>
+	</div>
+	<div class="form-group">
+		<div class="col-sm-offset-2 col-sm-5">
+			<button type="button" class="btn btn-default btn-block" ng-show="tab.step" ng-click="nextStep(2)">
+				<i class="fa fa-long-arrow-right"></i> 下一步
+			</button>
+		</div>
+		<div class="col-sm-5">
+			<a href="#" ng-click="jumpToUrl()" class="btn btn-info btn-block"><i class="fa fa-times-circle"></i> 取消</a>
+		</div>
+	</div>
+</form>

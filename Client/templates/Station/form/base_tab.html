@@ -1,3 +1,4 @@
+<form class="form-horizontal" role="form" method="post" action="__SELF__">
 	<div class="form-group">
 		<label class="col-sm-2 control-label">测站编码</label>
 		<div class="col-sm-4">
@@ -21,21 +22,14 @@
 	<div class="form-group">
 		<label class="col-sm-2 control-label">测站类别</label>
 		<div class="col-sm-4">
-			<select class="form-control" ng-model="station.STBPRP.STTP" name="STTP" ng-change="mySTTP()">
-				<foreach name="STTP" item="vo" >
-					<present name="vo.selected">
-						<option value="{$vo.value}" selected>{$vo.lable}</option>
-						<else />
-						<option value="{$vo.value}">{$vo.lable}</option>
-					</present>
-				</foreach>
+			<select class="form-control" ng-model="station.STBPRP.STTP" name="STTP" ng-change="mySTTP()" 
+					ng-options="item.lable for item in option.STTP track by item.value">
+				<option value="">请选择测站类型</option>
 			</select>
 		</div>
 		<label class="col-sm-2 control-label">启用标志</label>
 		<div class="col-sm-4 btn-group">
-			<foreach name="USFL" item="vo" >
-				<label class="btn btn-success" ng-model="station.STBPRP.USFL" uib-btn-radio="{$vo.value}">{$vo.lable}</label>
-			</foreach>
+			<label class="btn btn-success" ng-model="station.STBPRP.USFL" uib-btn-radio="{{item.value}}" ng-repeat="item in option.USFL">{{item.lable}}</label>
 		</div>
 	</div>
 	<div class="form-group" ng-show="tab.DD_tab">
@@ -69,14 +63,11 @@
 	<div class="form-group">
 		<label class="col-sm-2 control-label">报送任务</label>
 		<div class="col-sm-10">
-			<foreach name="TASK" item="vo" >
-				<div class="col-md-3">
-					<label class="checkbox-inline">
-						<input type="checkbox" value="1" ng-model="station.STSMTASK.{$vo.value}" name="{$vo.value}">
-						{$vo.lable}
-					</label>
-				</div>
-			</foreach>
+			<div class="col-md-3" ng-repeat="val in option.TASK">
+				<label class="checkbox-inline">
+					<input type="checkbox" value="{{val.value}}" ng-model="station.STSMTASK" name="{{val.value}}">{{val.lable}}
+				</label>
+			</div>
 		</div>
 	</div>
 	<div class="form-group">
@@ -85,4 +76,17 @@
 			<input type="text" class="form-control" ng-model="station.STBPRP.STLC" name="STLC" placeholder="测站代表点所在地县级以下详细地址">
 		</div>
 	</div>
-	
+	<div class="form-group">
+		<div class="col-sm-offset-2 col-sm-5">
+			<button type="button" class="btn btn-default btn-block" ng-hide="tab.step" ng-click="submit()">
+				<i class="fa fa-check-circle"></i> 添加
+			</button>
+			<button type="button" class="btn btn-default btn-block" ng-show="tab.step" ng-click="nextStep()">
+				<i class="fa fa-long-arrow-right"></i> 下一步
+			</button>
+		</div>
+		<div class="col-sm-5">
+			<a href="#" ng-click="jumpToUrl()" class="btn btn-info btn-block"><i class="fa fa-times-circle"></i> 取消</a>
+		</div>
+	</div>
+</form>

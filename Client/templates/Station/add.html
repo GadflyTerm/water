@@ -5,36 +5,62 @@
 		</div>
 		<div class="panel-body">
 			<div cg-busy="{promise:promise, message: '请等待，正在向服务器请求数据...', backdrop:true, delay:0, minDuration:10}">
-				<wizard on-finish="finishedWizard()" indicators-position="top">
-					<wz-step wz-title="第一步 基础信息">
-						<div class="col-md-12">
-							<div class="well" style="margin-top: 30px;">
-								<form class="form-horizontal" role="form" method="post" action="__SELF__">
-									<!--<ng-include src="template.url"></ng-include>-->
-									<div class="form-group">
-										<div class="col-sm-offset-2 col-sm-5">
-											<button type="button" class="btn btn-default btn-block" wz-next>
-												<i class="fa fa-long-arrow-right"></i> 下一步
-											</button>
-										</div>
-										<div class="col-sm-5">
-											<a href="#" ng-click="jumpToUrl()" class="btn btn-info btn-block"><i class="fa fa-times-circle"></i> 取消</a>
-										</div>
+				<uib-tabset active="activeJustified" justified="true">
+					<uib-tab index="0" heading="{{tab.STBPRP_title}}">
+						<div class="well">
+							<ng-include src="template.base_tab"></ng-include>
+						</div>
+					</uib-tab>
+					<uib-tab index="1" heading="第二步 河道防洪指标、水文特征" ng-show="tab.ZQ_tab">
+						<div class="well">
+							<ng-include src="template.ZQ_tab"></ng-include>
+						</div>
+					</uib-tab>
+					<uib-tab index="2" heading="第三步 设置河道水位流量曲线" ng-show="tab.ZQ_tab">
+						<div class="well">
+							<div class="row">
+								<ng-include src="template.riverway"></ng-include>
+								<div class="form-group">
+									<div class="col-sm-offset-2 col-sm-5">
+										<button type="button" class="btn btn-default btn-block" ng-click="submit()">
+											<i class="fa fa-check-circle"></i> 添加
+										</button>
 									</div>
-								</form>
+									<div class="col-sm-5">
+										<a href="#" ng-click="jumpToUrl()" class="btn btn-info btn-block"><i class="fa fa-times-circle"></i> 取消</a>
+									</div>
+								</div>
 							</div>
 						</div>
-					</wz-step>
-					<wz-step wz-title="第二步">
-						<h1>Continuing</h1>
-						<p>You have continued here!</p>
-						<input type="submit" wz-next value="下一步" class="btn btn-primary" />
-					</wz-step>
-					<wz-step wz-title="第三步 完成">
-						<p>Even more steps!!</p>
-						<input type="submit" wz-next value="完成并提交" class="btn btn-success" />
-					</wz-step>
-				</wizard>
+					</uib-tab>
+					<uib-tab index="3" heading="第二步 库(湖)防洪指标、水文特征" ng-show="tab.RR_tab">
+						<div class="well">
+							<ng-include src="template.RR_tab"></ng-include>
+						</div>
+					</uib-tab>
+					<uib-tab index="4" heading="第三步 设置库(湖)容量曲线" ng-show="tab.RR_tab">
+						<div class="well">
+							<div class="row">
+								<ng-include src="template.reservoir"></ng-include>
+								<div class="form-group">
+									<div class="col-sm-offset-2 col-sm-5">
+										<button type="button" class="btn btn-default btn-block" ng-click="submit()">
+											<i class="fa fa-check-circle"></i> 添加
+										</button>
+									</div>
+									<div class="col-sm-5">
+										<a href="#" ng-click="jumpToUrl()" class="btn btn-info btn-block"><i class="fa fa-times-circle"></i> 取消</a>
+									</div>
+								</div>
+							</div>
+						</div>
+					</uib-tab>
+					<uib-tab index="5" heading="第二步 设置墒情特征值" ng-show="tab.SS_tab">
+						<div class="well">
+							<ng-include src="template.SS_tab"></ng-include>
+						</div>
+					</uib-tab>
+				</uib-tabset>
 			</div>
 		</div>
 	</div>
