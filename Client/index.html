@@ -1,11 +1,11 @@
 <!DOCTYPE html>
-<html lang="zh-CN">
+<html lang="zh-CN" ng-controller="topCtrl">
 <head>
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<link rel="stylesheet" href="node_modules/bootswatch/slate/bootstrap.min.css">
-	<title>{$nav.home.title}</title>
+	<title>{{nav.home.title}}</title>
 </head>
 <body>
 <div class="container">
@@ -21,19 +21,21 @@
 					<li ui-sref-active="active"><a ui-sref="StationIndex">测站管理列表</a></li>
 					<li ui-sref-active="active"><a ui-sref="StationAdd">添加新的测站</a></li>
 					<li><a href="{$nav.home.url}">SD宫灯SD宫灯SD</a></li>
-					<present name="nav.sublib">
-						<li><a href="{$nav.library.url}">{$nav.library.title}</a></li>
-						<li class="active">{$nav.sublib.title}</li>
-						<else />
-						<li class="active">{$nav.library.title}</li>
-					</present>
 				</ul>
 			</span>
 		</div>
 		<div class="col-md-10">
-			<h1> hgjggjh{$nav.library.title} <small>Subtext for header</small></h1>
+			<h1> {{nav.library.title}} <small>Subtext for header</small></h1>
 		</div>
 	</div>
+	<ol class="breadcrumb">
+		<li><a ng-href="#{{nav.home.url}}">{{nav.home.title}}</a></li>
+		<li ng-show="nav.library.url">
+			<a ng-href="#{{nav.library.url}}">{{nav.library.title}}</a>
+		</li>
+		<li class="active" ng-hide="nav.library.url">{{nav.library.title}}</li>
+		<li class="active" ng-show="nav.sublib.title">{{nav.sublib.title}}</li>
+	</ol>
 	<div class="row">
 		<ui-view></ui-view>
 	</div>

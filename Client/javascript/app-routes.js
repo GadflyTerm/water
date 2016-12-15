@@ -43,7 +43,7 @@ define(function (require){
 			resolve: {
 				StationIndexCtrl: ["$q", function($q){
 					var deferred = $q.defer();
-					require(['../javascript/controller/stationCtrl'], function(){	//异步加载controller／directive/filter/service
+					require(['../javascript/controller/stationIndexCtrl'], function(){	//异步加载controller／directive/filter/service
 						deferred.resolve(); 
 					});
 					return deferred.promise;
@@ -51,12 +51,25 @@ define(function (require){
 			}
 		}).state('StationAdd', {            // 登陆
 			url: '/StationAdd',
-			templateUrl: 'templates/Station/add.html',
+			templateUrl: 'templates/Station/action.html',
 			controller: 'StationAddCtrl',
 			resolve: {
 				StationAddCtrl: ["$q", function($q){
 					var deferred = $q.defer();
-					require(['../javascript/controller/stationCtrl'], function(){	//异步加载controller／directive/filter/service
+					require(['../javascript/controller/stationAddCtrl'], function(){	//异步加载controller／directive/filter/service
+						deferred.resolve();
+					});
+					return deferred.promise;
+				}]
+			}
+		}).state('StationEdit', {            // 登陆
+			url: '/StationEdit:id',
+			templateUrl: 'templates/Station/action.html',
+			controller: 'StationEditCtrl',
+			resolve: {
+				StationAddCtrl: ["$q", function($q){
+					var deferred = $q.defer();
+					require(['../javascript/controller/stationEditCtrl'], function(){	//异步加载controller／directive/filter/service
 						deferred.resolve();
 					});
 					return deferred.promise;
@@ -120,5 +133,10 @@ define(function (require){
 	});
 	app.run(function(xhr) {
 		xhr.getBase(true);
+	});
+	app.controller('topCtrl', function($scope){
+		$scope.$on('nav', function(event, data){
+			$scope.nav = data;
+		});
 	});
 });

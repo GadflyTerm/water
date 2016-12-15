@@ -1,1 +1,57 @@
-<h2>Index Pages - {{myData.msg}}</h2>
+<div class="col-md-12">
+	<div class="panel panel-warning">
+		<div class="panel-heading">
+			<div class="row">
+				<div class="col-md-10"><i class="fa fa-list-alt"></i> {{nav.home.title}}</div>
+				<div class="col-md-2">
+					<a ui-sref="StationAdd" class="btn btn-primary btn-xs btn-block pull-right"><i class="fa fa-plus-circle"></i> 新增</a>
+				</div>
+			</div>
+		</div>
+		<table class="table table-bordered table-hover table-condensed">
+			<tr>
+				<th class="text-center" style="width: 45px;">ID</th>
+				<th class="text-center">检测站名称</th>
+				<th class="text-center">所属水库干渠</th>
+				<th class="text-center">检测站位置</th>
+				<th class="text-center">经度</th>
+				<th class="text-center">纬度</th>
+				<th style="width: 120px;" class="text-center">操作</th>
+			</tr>
+			<tr ng-repeat="vo in lists">
+				<td class="text-center">{{vo.id}}</td>
+				<td>{{vo.STNM}}</td>
+				<td>{{vo.RVNM}}</td>
+				<td>{{vo.STLC}}</td>
+				<td>{{vo.LGTD}}</td>
+				<td>{{vo.LTTD}}</td>
+				<td class="text-center">
+					<button type="button" class="btn btn-danger btn-xs pull-right btn-del" ng-click="delete(vo.id)">
+						<i class="fa fa-trash-o"></i> 删除
+					</button>
+					<a ui-sref="StationEdit({id: vo.id})" class="btn btn-info btn-xs pull-right">
+						<i class="fa fa-edit"></i> 编辑
+					</a>
+				</td>
+			</tr>
+			<tr ng-if="lists.length == 0">
+				<td colspan="7" class="text-center">没有数据</td>
+			</tr>
+		</table>
+		<div class="panel-footer">
+			<nav class="row">
+				<ul class="pagination pagination-sm pull-right" style="margin: 0; padding-right: 10px;">
+					<li><a href="#">第一页</a></li>
+					<li><a href="#">上一页</a></li>
+					<li><a href="#">1</a></li>
+					<li><a href="#">2</a></li>
+					<li><a href="#">3</a></li>
+					<li><a href="#">4</a></li>
+					<li><a href="#">5</a></li>
+					<li><a href="#">下一页</a></li>
+					<li><a href="#">最后一页</a></li>
+				</ul>
+			</nav>
+		</div>
+	</div>
+</div>

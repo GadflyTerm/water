@@ -1,5 +1,5 @@
 /**
- * Created by gadfly on 2016/12/14.
+ * Created by gadfly on 2016/12/15.
  */
 define(function (require){
 	var app = require('../app');
@@ -7,24 +7,13 @@ define(function (require){
 	app.useModule('xeditable');
 	require('ng_file_upload');
 	app.useModule('ngFileUpload');
-	app.run(function(editableOptions) {
-		editableOptions.theme = 'bs3'; // bootstrap3 theme. Can be also 'bs2', 'default'
-	});
-	app.controller('StationIndexCtrl', function($scope){
-		/*xhr.service('post', {action: 'ac'}, function(resp){
-			$scope.myData = resp.data;
-		});*/
-		$scope.myData = {
-			type: 'Success',
-			msg: '数据获取成功',
-			data: [
-				{ss: 'ss0', dd: 'dd0'},
-				{ss: 'ss1', dd: 'dd1'},
-			]
-		}
-	});
 	app.controller('StationAddCtrl', function($scope, $window, xhr){
 		$scope.option = JSON.parse($window.sessionStorage.getItem("baseData"));
+		$scope.$emit('nav', {
+			home: {title: '检测站管理', url: 'Home'},
+			library: {title: '检测站列表', url: 'StationIndex'},
+			sublib: {title: '添加新的检测站', url: ''}
+		});
 		$scope.ajax = {
 			relev: 2
 		}
