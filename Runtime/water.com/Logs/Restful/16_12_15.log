@@ -711,3 +711,11 @@ INFO: [ app_begin ] --START--
 INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.000254s ]
 INFO: [ app_begin ] --END-- [ RunTime:0.000320s ]
 
+[ 2016-12-15T23:57:17+08:00 ] 127.0.0.1 /Service/restful.php?s=/Ajax/angular.html&action=Ajax&module=getBase
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000014s ]
+INFO: [ app_init ] --END-- [ RunTime:0.000080s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.000336s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.000405s ]
+
