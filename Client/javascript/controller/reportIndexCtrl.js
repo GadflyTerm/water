@@ -13,8 +13,8 @@ define(function (require){
 		}
 		$scope.$emit('nav', $scope.nav);
 		$scope.lists = [
-			{id:1, rsvname:'丙间水库',Rfall:'33',Ept:'20',WLevel:'0.72',Rsv:'60',TCPcity:'90',DCPcity:'30',AWSupply:'60',WIntake:'33',WSupply:'40',WOutake:'40'},
-			{id:2, rsvname:'妙丰水库',Rfall:'33',Ept:'20',WLevel:'0.72',Rsv:'60',TCPcity:'90',DCPcity:'30',AWSupply:'60',WIntake:'33',WSupply:'40',WOutake:'40'}
+			{id:1, rsvname:'丙间水库',Rfall:'33',Ept:'20',WLevel:'0.72',Rsv:'60',TCPcity:'90',DCPcity:'30',AWSupply:'60',WIntake:'33',WSupply:'40',WOutake:'0'},
+			{id:2, rsvname:'妙丰水库',Rfall:'33',Ept:'20',WLevel:'0.72',Rsv:'60',TCPcity:'90',DCPcity:'30',AWSupply:'60',WIntake:'33',WSupply:'40',WOutake:'0'}
 		];
 		$scope.delete = function(id){
 			alert(id);
