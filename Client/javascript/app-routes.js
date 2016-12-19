@@ -56,7 +56,7 @@ define(function (require){
 			resolve: {
 				StationAddCtrl: ["$q", function($q){
 					var deferred = $q.defer();
-					require(['../javascript/controller/stationAddCtrl'], function(){	//异步加载controller／directive/filter/service
+					require(['../javascript/controller/station/AddCtrl'], function(){	//异步加载controller／directive/filter/service
 						deferred.resolve();
 					});
 					return deferred.promise;
@@ -75,7 +75,21 @@ define(function (require){
 					return deferred.promise;
 				}]
 			}
-		});
+		}).state('ReportIndex', {            // 报表
+			url: '/ReportIndex',
+			templateUrl: 'templates/Report/index.html',
+			controller: 'ReportIndexCtrl',
+			resolve: {
+				ReportIndexCtrl: ["$q", function($q){
+					var deferred = $q.defer();
+					require(['../javascript/controller/ReportIndexCtrl'], function(){	//异步加载controller／directive/filter/service
+						deferred.resolve();
+					});
+					return deferred.promise;
+				}]
+			}
+		})
+		;
 		$urlRouterProvider.otherwise('/Home');
 	});
 	app.factory('xhr', function($http, $window, toastr){
