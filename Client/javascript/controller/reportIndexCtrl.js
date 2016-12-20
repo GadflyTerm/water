@@ -18,8 +18,8 @@ define(function (require){
 			{id:'3',text:'日',}
 		]
 		$scope.lists = [{
-				id:1, 
-				Wtime:'2016-12-08',
+				id:1,
+				date:'2016-12-08',
 				rsvname:'丙间水库',
 				Rfall:'33',
 				Ept:'20',
@@ -33,7 +33,7 @@ define(function (require){
 				WOutake:'0'
 			}, {
 				id:2,
-				Wtime:'2016-12-09',
+				date:'2016-12-09',
 				rsvname:'妙丰水库',
 				Rfall:'33',
 				Ept:'20',
@@ -47,7 +47,7 @@ define(function (require){
 				WOutake:'0'
 		},{
 			id:3,
-			Wtime:'2016-12-08',
+			date:'2016-12-10',
 			rsvname:'间里水库',
 			Rfall:'33',
 			Ept:'20',

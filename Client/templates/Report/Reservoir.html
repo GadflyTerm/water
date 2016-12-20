@@ -22,9 +22,10 @@
 							<div class="form-group">
 								<lable class="col-md-3 col-sm-3 col-xs-4 control-label">水库</lable>
 								<div class="col-md-9 col-sm-9 col-xs-8">
-									<select name="请选择水库" id="" class="form-control" >
-										<option value="">丙间水库</option>
-										<option value="">妙丰水库</option>
+									<select name="请选择水库" ng-repeat="li in lists" class="form-control" >
+										<option value="请选择水库">{{li.rsvname}}</option>
+										<!--<option value="">丙间水库</option>-->
+										<!--<option value="">妙丰水库</option>-->
 									</select>
 								</div>
 							</div>
@@ -83,7 +84,7 @@
 					<th class="text-center">供水量</th>
 					<th class="text-center">排洪量</th>
 				</tr>
-				<tr ng-repeat="item in Mlists">
+				<tr ng-repeat="item in lists">
 					<td><a href="#">{{item.Time}}</a></td>
 					<td>{{vo.Rfall}}</td>
 					<td>{{vo.Ept}}</td>

@@ -17,11 +17,49 @@ define(function (require){
 			{id:'2',text:'月',},
 			{id:'3',text:'日',}
 		]
-		$scope.Mlists = [{
-			id:1,date:'2016-12-08',Rfall:'33',Ept:'20',WLevel:'0.72',Rsv:'60',TCPcity:'90',DCPcity:'30',AWSupply:'60',WIntake:'33',WSupply:'40',WOutake:'0'},{
-			id:2,date:'2016-12-09',Rfall:'33',Ept:'20',WLevel:'0.72',Rsv:'60',TCPcity:'90',DCPcity:'30',AWSupply:'60',WIntake:'33',WSupply:'40',WOutake:'0'},{
-			id:3,date:'2016-12-11',Rfall:'33',Ept:'20',WLevel:'0.72',Rsv:'60',TCPcity:'90',DCPcity:'30',AWSupply:'60',WIntake:'33',WSupply:'40',WOutake:'0'},{
-			id:4,date:'2016-12-13',Rfall:'33',Ept:'20',WLevel:'0.72',Rsv:'60',TCPcity:'90',DCPcity:'30',AWSupply:'60',WIntake:'33',WSupply:'40',WOutake:'0'}];
+		$scope.lists = [{
+			id:1,
+			date:'2016-12-08',
+			rsvname:'丙间水库',
+			Rfall:'33',
+			Ept:'20',
+			WLevel:'0.72',
+			Rsv:'60',
+			TCPcity:'90',
+			DCPcity:'30',
+			AWSupply:'60',
+			WIntake:'33',
+			WSupply:'40',
+			WOutake:'0'
+		}, {
+			id:2,
+			date:'2016-12-09',
+			rsvname:'妙丰水库',
+			Rfall:'33',
+			Ept:'20',
+			WLevel:'0.72',
+			Rsv:'60',
+			TCPcity:'90',
+			DCPcity:'30',
+			AWSupply:'60',
+			WIntake:'33',
+			WSupply:'40',
+			WOutake:'0'
+		},{
+			id:3,
+			date:'2016-12-10',
+			rsvname:'间里水库',
+			Rfall:'33',
+			Ept:'20',
+			WLevel:'0.72',
+			Rsv:'60',
+			TCPcity:'90',
+			DCPcity:'30',
+			AWSupply:'60',
+			WIntake:'33',
+			WSupply:'40',
+			WOutake:'0'
+		}];
 		$scope.myData = {
 			type: 'Success',
 			msg: '数据获取成功',
