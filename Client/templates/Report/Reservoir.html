@@ -2,24 +2,21 @@
 	<div class="panel panel-warning">
 		<div class="panel-heading">
 			<div class="row">
-				<div class="col-md-10"><i class="fa fa-list-alt"></i> 水库报表管理</div>
+				<h4 class="col-md-10"><i class="fa fa-list-alt"></i> 水库报表管理</h4>
+				<div class="col-md-2 col-sm-2 col-xs-2 text-right">
+					<a href="" class="btn">导出数据 <i class="fa fa-mail-forward"></i></a>
+				</div>
 			</div>
 		</div>
 		<div class="panel-body">
 			<!--=== 选择 ===-->
-			<div class="col-md-12 text-right">
-					<div class="btn btn-default">
-						日报表
-					</div>
-					<div class="btn btn-default">
-						月报表
-					</div>
-					<div class="btn btn-default">
-						年报表
-					</div>
-			</div>
 			<div class="row">
-				<div class="col-md-3 col-md-offset-4 col-sm-4 col-xs-4">
+				<div class="col-md-12 text-right mb5">
+					<a class="btn btn-default ml3" ng-repeat="item in Tcate">
+						{{item.text}}报表
+					</a>
+				</div>
+				<div class="col-md-3 col-md-offset-6 col-sm-4 col-xs-4">
 					<div class="select">
 						<form action="" class="form-horizontal">
 							<div class="form-group">
@@ -35,42 +32,46 @@
 					</div>
 				</div>
 				<div class="col-md-3 col-sm-4 col-xs-4">
-					<div class="select row">
-						<form action="" class="form-horizontal">
-							<div class="form-group">
-								<lable for="select" class="col-md-3 col-sm-3 col-xs-4 control-label">选择月份</lable>
-								<div class="col-md-9 col-sm-9 col-xs-8">
-									<select class="form-control" id="select">
-										<option>1月</option>
-										<option>2月</option>
-										<option>3月</option>
-										<option>4月</option>
-										<option>5月</option>
-										<option>6月</option>
-										<option>7月</option>
-										<option>8月</option>
-										<option>9月</option>
-										<option>10月</option>
-										<option>11月</option>
-										<option>12月</option>
-									</select>
-								</div>
-
-							</div>
-						</form>
+					<div class="input-group input-medium date date-picker"
+						 data-date="12-02-2012"
+						 data-date-format="dd-mm-yyyy"
+						 data-date-viewmode="years">
+						<input type="text" class="form-control" readonly>
+						<span class="input-group-btn">
+							<button class="btn default" type="button"><i class="fa fa-calendar"></i></button>
+						</span>
 					</div>
-				</div>
-				<div class="col-md-2 col-sm-2 col-xs-2 text-right">
-					<a href="" class="btn btn-sucsse">导出数据 <i class="fa fa-mail-forward"></i></a>
+					<!--<div class="select">-->
+						<!--<form action="" class="form-horizontal">-->
+							<!--<div class="form-group">-->
+								<!--<lable for="select" class="col-md-3 col-sm-3 col-xs-4 control-label">选择月份</lable>-->
+								<!--<div class="col-md-9 col-sm-9 col-xs-8">-->
+									<!--<select class="form-control" id="select">-->
+										<!--<option>1月</option>-->
+										<!--<option>2月</option>-->
+										<!--<option>3月</option>-->
+										<!--<option>4月</option>-->
+										<!--<option>5月</option>-->
+										<!--<option>6月</option>-->
+										<!--<option>7月</option>-->
+										<!--<option>8月</option>-->
+										<!--<option>9月</option>-->
+										<!--<option>10月</option>-->
+										<!--<option>11月</option>-->
+										<!--<option>12月</option>-->
+									<!--</select>-->
+								<!--</div>-->
+							<!--</div>-->
+						<!--</form>-->
+					<!--</div>-->
 				</div>
 			</div>
 			<!--=== \ 选择 ===-->
 			<!--=== 表格 ===-->
-			<h2 class="text-center"> 灌区管理月报表 </h2>
+			<h2 class="text-center">{{vo.rsvname}}灌区管理月报表 </h2>
 			<table class="table table-bordered table-hover table-condensed">
 				<tr>
-					<th class="text-center" style="width: 45px;">序号</th>
-					<th class="text-center">水库名称</th>
+					<th class="text-center">时间</th>
 					<th class="text-center">降雨量</th>
 					<th class="text-center">蒸发量</th>
 					<th class="text-center">库水位</th>
@@ -82,9 +83,8 @@
 					<th class="text-center">供水量</th>
 					<th class="text-center">排洪量</th>
 				</tr>
-				<tr ng-repeat="vo in lists">
-					<td class="text-center">{{vo.id}}</td>
-					<td><a href="#">{{vo.rsvname}}</a></td>
+				<tr ng-repeat="item in Mlists">
+					<td><a href="#">{{item.Time}}</a></td>
 					<td>{{vo.Rfall}}</td>
 					<td>{{vo.Ept}}</td>
 					<td>{{vo.WLevel}}</td>
@@ -96,7 +96,7 @@
 					<td>{{vo.WSupply}}</td>
 					<td>{{vo.WOutake}}</td>
 				</tr>
-				<tr ng-if="lists.length == 0">
+				<tr ng-if="Mlists.length == 0">
 					<td colspan="7" class="text-center">没有数据</td>
 				</tr>
 			</table>
