@@ -52,20 +52,12 @@ AS
 	BEGIN
 		DECLARE @id int, 						-- 当前数据表pk
 			@stcd char(8),						-- 当前测站编码 
-			@today datetime, 					-- 今天的时间截
-			@yestday datetime,				-- 昨天的时间截
-			@tomorrow datetime, 			-- 明天的时间截
-			@year int, 								-- 当前年份数
-			@month int, 							-- 当前月份数
-			@day int, 								-- 当前天数
 			@now datetime, 						-- 当前时间截
 			@rz numeric(7, 3), 				-- 当前库上水位
 			@last_rz numeric(7, 3), 	-- 上一次记录的库上水位
 			@rw CHAR, 								-- 对比上一次记录的库水水势
 			@w NUMERIC(9, 3);					-- 当前库上水位所对应的蓄水量
 
-		SELECT @today = today, @yestday = yestday, @tomorrow = tomorrow, @year = year, @month = month, @day = day	FROM openrowset('sqloledb','Trusted_Connection=yes','exec [dbo].[proc_get_datetime]');
-				
 		/* 触发器根据INSERT数据对比上一条记录生成库水水势；对照库容曲线表查询生成当前水位的蓄水量 */
 		SELECT @id = [id], @stcd = [STCD], @now = [TM], @rz = [RZ] FROM inserted;
 		SELECT TOP 1 @last_rz = [RZ] FROM [dbo].[ST_RSVR_R] WHERE [STCD] = @stcd AND [TM] < @now ORDER BY [TM] DESC;
@@ -83,24 +75,8 @@ AS
 				SET @rw = 6;
 			END
 		UPDATE [dbo].[ST_ZVARL_B] SET [W] = @w, [RWPTN] = @rw WHERE [id] = @id;
-		
-		/* 计算当天平均水位和平均蓄水量 */
-		SELECT [dbo].[fn_set_rsvrav](@stcd, @now, 1);
-
-		/* 计算3天平均水位和平均蓄水量 */
-		SELECT [dbo].[fn_set_rsvrav](@stcd, @now, 2);
-
-		/* 计算5天平均水位和平均蓄水量 */
-		SELECT [dbo].[fn_set_rsvrav](@stcd, @now, 3);
-
-		/* 计算一旬平均水位和平均蓄水量 */
-		SELECT [dbo].[fn_set_rsvrav](@stcd, @now, 4);
-		
-		/* 计算当月平均水位和平均蓄水量 */
-		SELECT [dbo].[fn_set_rsvrav](@stcd, @now, 5);
-
-		/* 计算当年平均水位和平均蓄水量 */
-		SELECT [dbo].[fn_set_rsvrav](@stcd, @now, 6);
+		EXEC [dbo].[proc_set_rsvrav] @stcd, @now;		-- 计算统计时段平均水位和平均蓄水量
+		EXEC [dbo].[proc_set_rsvrevs] @stcd, @now;	-- 根据统计时段, 计算水库水情极值
 	END
 GO
 
@@ -115,19 +91,10 @@ AS
 	BEGIN
 		DECLARE @id int, 						-- 当前数据表pk
 		@stcd char(8),						-- 当前测站编码 
-		@today datetime, 					-- 今天的时间截
-		@yestday datetime,				-- 昨天的时间截
-		@tomorrow datetime, 			-- 明天的时间截
-		@year int, 								-- 当前年份数
-		@month int, 							-- 当前月份数
-		@day int, 								-- 当前天数
 		@now datetime, 						-- 当前时间截
 		@rz numeric(7, 3), 				-- 当前库上水位
 		@last_rz numeric(7, 3), 	-- 上一次记录的库上水位
 		@rw CHAR; 								-- 对比上一次记录的库水水势
-
-		SELECT @today = today, @yestday = yestday, @tomorrow = tomorrow, @year = year, @month = month, @day = day	
-		FROM openrowset('sqloledb','Trusted_Connection=yes','exec [dbo].[proc_get_datetime]');
 
 		/* 触发器根据INSERT数据对比上一条记录生成库水水势；对照库容曲线表查询生成当前水位的蓄水量 */
 		SELECT @stcd = [STCD], @now = [TM], @rz = [RZ] FROM deleted;
@@ -145,23 +112,7 @@ AS
 				SET @rw = 6;
 			END
 		UPDATE [dbo].[ST_ZVARL_B] SET [RWPTN] = @rw WHERE [id] = @id;
-
-		/* 计算当天平均水位和平均蓄水量 */
-		SELECT [dbo].[fn_set_rsvrav](@stcd, @now, 1);
-
-		/* 计算3天平均水位和平均蓄水量 */
-		SELECT [dbo].[fn_set_rsvrav](@stcd, @now, 2);
-
-		/* 计算5天平均水位和平均蓄水量 */
-		SELECT [dbo].[fn_set_rsvrav](@stcd, @now, 3);
-
-		/* 计算一旬平均水位和平均蓄水量 */
-		SELECT [dbo].[fn_set_rsvrav](@stcd, @now, 4);
-
-		/* 计算当月平均水位和平均蓄水量 */
-		SELECT [dbo].[fn_set_rsvrav](@stcd, @now, 5);
-
-		/* 计算当年平均水位和平均蓄水量 */
-		SELECT [dbo].[fn_set_rsvrav](@stcd, @now, 6);
+		EXEC [dbo].[proc_set_rsvrav] @stcd, @now;		-- 计算统计时段平均水位和平均蓄水量
+		EXEC [dbo].[proc_set_rsvrevs] @stcd, @now;	-- 根据统计时段, 计算水库水情极值
 	END
 GO

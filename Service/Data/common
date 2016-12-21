@@ -9,12 +9,16 @@ SET QUOTED_IDENTIFIER ON
 GO
 
 -- =============================================
+-- 根据指定时间（默认当前时间截）返回当天、昨天、明天时间截和年、月、日、时、分、秒和当前所在月的最后一天数据
 -- Author:		<Author,,Name>
 -- Create date: <Create Date,,>
 -- Description:	<Description,,>
 -- =============================================
+IF EXISTS(SELECT * FROM SYSOBJECTS WHERE [NAME] = 'proc_get_datetime' AND [XTYPE] = 'P')
+	DROP PROCEDURE [dbo].[proc_get_datetime]
+GO
 CREATE PROCEDURE [dbo].[proc_get_datetime] 
-	@getdate datetime = NULL
+	@getdate datetime = GETDATE()
 AS
 BEGIN
 	SET NOCOUNT ON;
@@ -28,11 +32,9 @@ BEGIN
 		@month INT, 							-- 给定时间的月份数
 		@day INT, 								-- 给定时间的天数
 		@lastday VARCHAR(20);			-- 给定时间当月的最后一天天数
-	SET @getdate = ISNULL(@getdate, GETDATE());
 	SET @hour = DATENAME(hour, @getdate);
 	SET @minute = DATENAME(minute, @getdate);
 	SET @second = DATENAME(second, @getdate);
-	SELECT @lastday = convert(VARCHAR(20), dateadd(d, -1, dateadd(m, 1, rtrim(@year) + '-' + rtrim(@month) + '-01')), 111);
   IF(@hour > 8)
 		begin
 			SET @yestday = CONVERT(varchar(100), @getdate-1, 23) + ' 08:00:00';
@@ -48,6 +50,7 @@ BEGIN
 	SET @year = DATENAME(year, @today);
 	SET @month = DATENAME(month, @today);
 	SET @day = DATENAME(day, @today);
+	SELECT @lastday = convert(VARCHAR(20), dateadd(d, -1, dateadd(m, 1, rtrim(@year) + '-' + rtrim(@month) + '-01')), 111);
 	SELECT @today AS today, 
 		@yestday AS yestday,
 		@tomorrow AS tomorrow,
@@ -62,70 +65,212 @@ END
 GO
 
 
-CREATE FUNCTION dbo.fn_set_rsvrav(
-	@stcd char(8),
-	@now DATETIME,
-	@sttdrcd INT
-)
-	returns INT
+-- =============================================
+-- 根据指定时间（默认当前时间截）返回一日、三日、一侯、一旬、一月、一年统计时段的开始和结束时间截
+-- Author:		<Author,,Name>
+-- Create date: <Create Date,,>
+-- Description:	<Description,,>
+-- =============================================
+IF EXISTS(SELECT * FROM SYSOBJECTS WHERE [NAME] = 'proc_get_time_frame' AND [XTYPE] = 'P')
+	DROP PROCEDURE [dbo].[proc_get_time_frame]
+GO
+CREATE PROCEDURE [dbo].[proc_get_time_frame]
+		@getdate datetime = NULL,
+		@frame INT = 0
 AS
 	BEGIN
+		SET NOCOUNT ON;
 		DECLARE @day int, 								-- 当前天数
-			@year int, 								-- 当前年份数
-			@month int, 							-- 当前月份数
-			@today datetime, 					-- 今天的时间截
-			@day_last DATETIME,				-- 统计时段的开始时间截
-			@tomorrow datetime, 			-- 明天的时间截
-			@avrz NUMERIC(7, 3),			-- 当天及时平均水位
-			@avw NUMERIC(9, 3),				-- 当天及时平均蓄水量
-			@count int; 							-- 表单数据数
-		SELECT @today = today, @tomorrow = tomorrow, @year = year, @month = month, @day = day 
-		FROM openrowset('sqloledb','Trusted_Connection=yes','exec [dbo].[proc_get_datetime] @getdate=' + @now);
-		IF(@sttdrcd = '1')
-			BEGIN 
-				SET @day_last = @today;
-			END
-		ELSE IF(@sttdrcd = '2')
-			BEGIN
-				SET @day_last = DATENAME(datetime, CONVERT(varchar(100), @today-3, 23) + ' 08:00:00');
-			END
-		ELSE IF(@sttdrcd = '3')
-			BEGIN
-				SET @day_last = DATENAME(datetime, CONVERT(varchar(100), @today-5, 23) + ' 08:00:00');
-			END
-		ELSE IF(@sttdrcd = '4')
+		@year VARCHAR(4), 								-- 当前年份数
+		@month VARCHAR(2), 							-- 当前月份数
+		@today datetime, 					-- 今天的时间截
+		@day_last DATETIME,				-- 统计时段的开始时间截
+		@param VARCHAR(200),			-- 时间类型参数转字符串
+		@sql NVARCHAR(1000),			-- 动态生成SQL字符串
+		@tomorrow datetime; 			-- 明天的时间截
+		SET @param = CONVERT(varchar(100), ISNULL(@getdate, GETDATE()), 20);
+		SET @sql = 'insert INTO #Tb_datetime SELECT * FROM openrowset(''sqloledb'',''Trusted_Connection=yes'',''exec [dbo].[proc_get_datetime] @getdate="' + @param + '"'')';
+		IF OBJECT_ID('[dbo].[#Tb_datetime]') IS NOT NULL
+			DROP TABLE [dbo].[#Tb_datetime]
+		CREATE TABLE [dbo].[#Tb_datetime](
+			today DATETIME,
+			yestday DATETIME,
+			tomorrow DATETIME,
+			year INT,
+			month INT,
+			day INT,
+			hour INT,
+			minute INT,
+			second INT,
+			month_lastday INT
+		)
+		EXECUTE sp_executesql @sql;
+		SELECT @today = today, @tomorrow = tomorrow, @year = year, @month = month, @day = day FROM #Tb_datetime;
+		IF(@frame = 0 OR @frame = 4)
 			BEGIN
 				IF(@day <= 10)	--上旬
 					BEGIN
-						SET @day_last = DATENAME(datetime, @year + '-' + @month + '-01  08:00:00');
+						SET @day_last = CONVERT(datetime, @year + '-' + @month + '-01 08:00:00');
 					END
 				ELSE IF(@day > 10 AND @day <= 20)		--中旬
 					BEGIN
-						SET @day_last = DATENAME(datetime, @year + '-' + @month + '-11  08:00:00');
+						SET @day_last = CONVERT(datetime, @year + '-' + @month + '-11 08:00:00');
 					END
 				ELSE	--下旬
 					BEGIN
-						SET @day_last = DATENAME(datetime, @year + '-' + @month + '-21  08:00:00');
+						SET @day_last = CONVERT(datetime, @year + '-' + @month + '-21 08:00:00');
 					END
 			END
-		ELSE IF(@sttdrcd = '5')
+		IF (@frame = 0)
 			BEGIN
-				SET @day_last = DATENAME(datetime, @year + '-' + @month + '-01  08:00:00');
+				SELECT 1 AS 'frame', @today AS 'begin', dateadd(second, -1, @tomorrow) AS 'end', '一天' AS 'lable'
+				UNION ALL
+				SELECT 2 AS 'frame', CONVERT(datetime, CONVERT(varchar(100), @today-3, 23) + ' 08:00:00') AS 'begin', dateadd(second, -1, @tomorrow) AS 'end', '三天' AS 'lable'
+				UNION ALL
+				SELECT 3 AS 'frame', CONVERT(datetime, CONVERT(varchar(100), @today-5, 23) + ' 08:00:00') AS 'begin', dateadd(second, -1, @tomorrow) AS 'end', '一侯' AS 'lable'
+				UNION ALL
+				SELECT 4 AS 'frame', @day_last AS 'begin', dateadd(second, -1, @tomorrow) AS 'end', '一旬' AS 'lable'
+				UNION ALL
+				SELECT 5 AS 'frame', CONVERT(datetime, @year + '-' + @month + '-01 08:00:00') AS 'begin', dateadd(second, -1, @tomorrow) AS 'end', '一月' AS 'lable'
+				UNION ALL
+				SELECT 6 AS 'frame', CONVERT(datetime, @year + '-01-01 08:00:00') AS 'begin', dateadd(second, -1, @tomorrow) AS 'end', '一年' AS 'lable'
 			END
-		ELSE
+		ELSE IF (@frame = 1)
 			BEGIN
-				SET @day_last = DATENAME(datetime, @year + '-01-01  08:00:00');
+				SELECT @today AS 'begin', @tomorrow AS 'end', '一天' AS 'lable'
 			END
-		SELECT @avrz= SUM([RZ])/COUNT(*), @avw = SUM([W])/COUNT(*) FROM [dbo].[ST_RSVR_R] WHERE [STCD] = @stcd AND [TM] BETWEEN @day_last AND @tomorrow;
-		SELECT @count = COUNT(*) FROM [dbo].[ST_RSVRAV_R] WHERE [STCD] = @stcd AND CONVERT(varchar(100), [IDTM], 23) = CONVERT(varchar(100), @tomorrow, 23) AND [STTDRCD] = @sttdrcd;
-		IF (@count > 0)
+		ELSE IF (@frame = 2)
 			BEGIN
-				UPDATE [dbo].[ST_RSVRAV_R] SET [IDTM] = @now, [AVRZ] = @avrz, [AVW] = @avw 
-				WHERE [STCD] = @stcd AND CONVERT(varchar(100), [IDTM], 23) = CONVERT(varchar(100), @tomorrow, 23) AND [STTDRCD] = @sttdrcd;
+				SELECT CONVERT(datetime, CONVERT(varchar(100), @today-3, 23) + ' 08:00:00') AS 'begin', dateadd(second, -1, @tomorrow) AS 'end', '三天' AS 'lable'
 			END
-		ELSE
+		ELSE IF (@frame = 3)
 			BEGIN
-				INSERT [dbo].[ST_RSVRAV_R] ([STCD], [IDTM], [STTDRCD], [AVRZ], [AVW]) VALUES (@stcd, @now, @sttdrcd, @avrz, @avw);
+				SELECT CONVERT(datetime, CONVERT(varchar(100), @today-5, 23) + ' 08:00:00') AS 'begin', dateadd(second, -1, @tomorrow) AS 'end', '一侯' AS 'lable'
 			END
-		RETURN 1;
+		ELSE IF (@frame = 4)
+			BEGIN
+				SELECT @day_last AS 'begin', dateadd(second, -1, @tomorrow) AS 'end', '一旬' AS 'lable'
+			END
+		ELSE IF (@frame = 5)
+			BEGIN
+				SELECT CONVERT(datetime, @year + '-' + @month + '-01 08:00:00') AS 'begin', dateadd(second, -1, @tomorrow) AS 'end', '一月' AS 'lable'
+			END
+		ELSE IF (@frame = 6)
+			BEGIN
+				SELECT CONVERT(datetime, @year + '-01-01 08:00:00') AS 'begin', dateadd(second, -1, @tomorrow) AS 'end', '一年' AS 'lable'
+			END
+	END
+GO
+
+
+-- =============================================
+-- 根据统计时段, 计算水库平均水位和平均蓄水量
+-- Author:		<Author,,Name>
+-- Create date: <Create Date,,>
+-- Description:	<Description,,>
+-- =============================================
+IF EXISTS(SELECT * FROM SYSOBJECTS WHERE [NAME] = 'proc_set_rsvrav' AND [XTYPE] = 'P')
+	DROP PROCEDURE [dbo].[proc_set_rsvrav]
+GO
+CREATE PROCEDURE [dbo].[proc_set_rsvrav]
+	@stcd char(8),
+	@now DATETIME = NULL
+AS
+	BEGIN
+		DECLARE @frame int, 				-- 统计时段
+			@begin DATETIME, 					-- 查询的开始时间截
+			@end DATETIME, 						-- 查询的结束时间截
+			@avrz NUMERIC(7, 3),			-- 当天及时平均水位
+			@avw NUMERIC(9, 3),				-- 当天及时平均蓄水量
+			@param VARCHAR(200),			-- 时间类型参数转字符串
+			@sql NVARCHAR(1000),			-- 动态生成SQL字符串
+			@count int; 							-- 表单数据数
+		SET @param = CONVERT(varchar(100), ISNULL(@now, GETDATE()), 20);
+		SET @sql = 'insert INTO #Tb_frame SELECT * FROM openrowset(''sqloledb'',''Trusted_Connection=yes'',''exec [dbo].[proc_get_time_frame] @getdate="' + @param + '"'')';
+		IF OBJECT_ID('[dbo].[#Tb_frame]') IS NOT NULL
+			DROP TABLE [dbo].[#Tb_frame]
+		CREATE TABLE [dbo].[#Tb_frame](
+			[frame] INT,
+			[begin] DATETIME,
+			[end] DATETIME
+		)
+		EXECUTE sp_executesql @sql;
+		SET @frame = 1;
+		WHILE (@frame <= 6)
+			BEGIN
+				SELECT @begin = [begin], @end = [end] FROM #Tb_frame WHERE [frame] = @frame;
+				SELECT @avrz= SUM([RZ])/COUNT(*), @avw = SUM([W])/COUNT(*) FROM [dbo].[ST_RSVR_R] WHERE [STCD] = @stcd AND [TM] BETWEEN @begin AND @end;
+				SELECT @count = COUNT(*) FROM [dbo].[ST_RSVRAV_R] WHERE [STCD] = @stcd AND CONVERT(varchar(100), [IDTM], 23) = CONVERT(varchar(100), @end, 23) AND [STTDRCD] = @frame;
+				IF (@count > 0)
+					BEGIN
+						UPDATE [dbo].[ST_RSVRAV_R] SET [IDTM] = @now, [AVRZ] = @avrz, [AVW] = @avw
+						WHERE [STCD] = @stcd AND CONVERT(varchar(100), [IDTM], 23) = CONVERT(varchar(100), @end, 23) AND [STTDRCD] = @frame;
+					END
+				ELSE
+					BEGIN
+						INSERT [dbo].[ST_RSVRAV_R] ([STCD], [IDTM], [STTDRCD], [AVRZ], [AVW]) VALUES (@stcd, @now, @frame, @avrz, @avw);
+					END
+				SET @frame = @frame + 1
+			END
+	END
+
+-- =============================================
+-- 根据统计时段, 计算水库水情极值
+-- Author:		<Author,,Name>
+-- Create date: <Create Date,,>
+-- Description:	<Description,,>
+-- =============================================
+IF EXISTS(SELECT * FROM SYSOBJECTS WHERE [NAME] = 'proc_set_rsvrevs' AND [XTYPE] = 'P')
+	DROP PROCEDURE [dbo].[proc_set_rsvrevs]
+GO
+CREATE PROCEDURE [dbo].[proc_set_rsvrevs]
+		@stcd char(8),
+		@now DATETIME = NULL
+AS
+	BEGIN
+		DECLARE @frame int, 			-- 统计时段
+		@begin DATETIME, 					-- 查询的开始时间截
+		@end DATETIME, 						-- 查询的结束时间截
+		@htrz NUMERIC(7, 3),			-- 最高库水位
+		@htrztm DATETIME,					-- 最高库水位出现时间
+		@mxw NUMERIC(9, 3),				-- 最大蓄水量
+		@mxwtm DATETIME,					-- 最大蓄水量出现时间
+		@ltrz NUMERIC(7, 3),			-- 最低库水位
+		@ltrztm DATETIME,					-- 最低库水位出现时间
+		@mnw NUMERIC(9, 3),				-- 最小蓄水量
+		@mnwtm DATETIME,					-- 最小蓄水量出现时间
+		@param VARCHAR(200),			-- 时间类型参数转字符串
+		@sql NVARCHAR(1000),			-- 动态生成SQL字符串
+		@count int; 							-- 表单数据数
+		SET @param = CONVERT(varchar(100), ISNULL(@now, GETDATE()), 20);
+		SET @sql = 'insert INTO #Tb_frame SELECT * FROM openrowset(''sqloledb'',''Trusted_Connection=yes'',''exec [dbo].[proc_get_time_frame] @getdate="' + @param + '"'')';
+		IF OBJECT_ID('[dbo].[#Tb_frame]') IS NOT NULL
+			DROP TABLE [dbo].[#Tb_frame]
+		CREATE TABLE [dbo].[#Tb_frame](
+			[frame] INT,
+			[begin] DATETIME,
+			[end] DATETIME
+		)
+		EXECUTE sp_executesql @sql;
+		SET @frame = 1;
+		WHILE (@frame <= 6)
+			BEGIN
+				SELECT @begin = [begin], @end = [end] FROM #Tb_frame WHERE [frame] = @frame;
+				SELECT TOP 1 @htrztm = [TM], @htrz = [RZ] FROM [dbo].[ST_RSVR_R] WHERE [STCD] = @stcd AND [TM] BETWEEN @begin AND @end ORDER BY [RZ] DESC;
+				SELECT TOP 1 @mxwtm = [TM], @mxw = [W] FROM [dbo].[ST_RSVR_R] WHERE [STCD] = @stcd AND [TM] BETWEEN @begin AND @end ORDER BY [W] DESC;
+				SELECT TOP 1 @ltrztm = [TM], @ltrz = [RZ] FROM [dbo].[ST_RSVR_R] WHERE [STCD] = @stcd AND [TM] BETWEEN @begin AND @end ORDER BY [RZ] ASC;
+				SELECT TOP 1 @mnwtm = [TM], @mnw = [W] FROM [dbo].[ST_RSVR_R] WHERE [STCD] = @stcd AND [TM] BETWEEN @begin AND @end ORDER BY [W] ASC;
+				SELECT @count = COUNT(*) FROM [dbo].[ST_RSVRAV_R] WHERE [STCD] = @stcd AND CONVERT(varchar(100), [IDTM], 23) = CONVERT(varchar(100), @end, 23) AND [STTDRCD] = @frame;
+				IF (@count > 0)
+					BEGIN
+						UPDATE [dbo].[ST_RSVREVS_R] SET [IDTM] = @now, [HTRZ] = @htrz, [LTRZ] = @ltrz, [MXW] = @mxw, [MNW] = @mnw, [HTRZTM] = @htrztm, [LTRZTM] = @ltrztm, [MXWTM] = @mxwtm, [MNWTM] = @mnwtm
+						WHERE [STCD] = @stcd AND CONVERT(varchar(100), [IDTM], 23) = CONVERT(varchar(100), @end, 23) AND [STTDRCD] = @frame;
+					END
+				ELSE
+					BEGIN
+						INSERT [dbo].[ST_RSVREVS_R] ([STCD], [IDTM], [STTDRCD], [HTRZ], [LTRZ], [MXW], [MNW], [HTRZTM], [LTRZTM], [MXWTM], [MNWTM]) 
+						VALUES (@stcd, @now, @frame, @htrz, @ltrz, @mxw, @mnw, @htrztm, @ltrztm, @mxwtm, @mnwtm);
+					END
+				SET @frame = @frame + 1
+			END
 	END
