@@ -12,13 +12,54 @@ define(function (require){
 			library: {title: '灌区报表管理', url: ''},
 		}
 		$scope.$emit('nav', $scope.nav);
-		$scope.lists = [
-			{id:1, rsvname:'丙间水库',Rfall:'33',Ept:'20',WLevel:'0.72',Rsv:'60',TCPcity:'90',DCPcity:'30',AWSupply:'60',WIntake:'33',WSupply:'40',WOutake:'0'},
-			{id:2, rsvname:'妙丰水库',Rfall:'33',Ept:'20',WLevel:'0.72',Rsv:'60',TCPcity:'90',DCPcity:'30',AWSupply:'60',WIntake:'33',WSupply:'40',WOutake:'0'}
-		];
-		$scope.delete = function(id){
-			alert(id);
-		}
+		$scope.Tcate = [
+			{id:'1',text:'年'},
+			{id:'2',text:'月',},
+			{id:'3',text:'日',}
+		]
+		$scope.lists = [{
+				id:1,
+				date:'2016-12-08',
+				rsvname:'丙间水库',
+				Rfall:'33',
+				Ept:'20',
+				WLevel:'0.72',
+				Rsv:'60',
+				TCPcity:'90',
+				DCPcity:'30',
+				AWSupply:'60',
+				WIntake:'33',
+				WSupply:'40',
+				WOutake:'0'
+			}, {
+				id:2,
+				date:'2016-12-09',
+				rsvname:'妙丰水库',
+				Rfall:'33',
+				Ept:'20',
+				WLevel:'0.72',
+				Rsv:'60',
+				TCPcity:'90',
+				DCPcity:'30',
+				AWSupply:'60',
+				WIntake:'33',
+				WSupply:'40',
+				WOutake:'0'
+		},{
+			id:3,
+			date:'2016-12-10',
+			rsvname:'间里水库',
+			Rfall:'33',
+			Ept:'20',
+			WLevel:'0.72',
+			Rsv:'60',
+			TCPcity:'90',
+			DCPcity:'30',
+			AWSupply:'60',
+			WIntake:'33',
+			WSupply:'40',
+			WOutake:'0'
+		}];
 		$scope.myData = {
 			type: 'Success',
 			msg: '数据获取成功',

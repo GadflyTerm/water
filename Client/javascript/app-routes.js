@@ -88,21 +88,20 @@ define(function (require){
 					return deferred.promise;
 				}]
 			}
-		}).state('ReportReservoir',{
-			url:'/ReportReservoir:id',
-			templateUrl:'templates/Report/reservoir.html',
-			contrller:'ReportReservoirCtrl',
-			resolve:{
-				ReportReservoirCtrl:["$q", function($q){
+		}).state('ReportReservoir', { 
+			url: '/ReportReservoir:id',
+			templateUrl: 'templates/Report/reservoir.html',
+			controller: 'ReportReservoirCtrl',
+			resolve: {
+				ReportReservoirCtrl: ["$q", function($q){
 					var deferred = $q.defer();
-					require(['../javascript/controller/ReportReservoirCtrl'], function(){	//异步加载controller／directive/filter/service
+					require(['../javascript/controller/reportReservoirCtrl'], function(){	//异步加载controller／directive/filter/service
 						deferred.resolve();
 					});
 					return deferred.promise;
 				}]
 			}
-		})
-		;
+		});
 		$urlRouterProvider.otherwise('/Home');
 	});
 	app.factory('xhr', function($http, $window, toastr){
