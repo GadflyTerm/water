@@ -7,6 +7,7 @@ define(function (require){
 		/*xhr.service('post', {action: 'ac'}, function(resp){
 			$scope.myData = resp.data;
 		});*/
+		
 		$scope.nav = {
 			home: {title: '监测成果统计', url: 'Home'},
 			library: {title: '灌区报表管理', url: ''},
@@ -17,6 +18,12 @@ define(function (require){
 			{id:'2',text:'月',},
 			{id:'3',text:'日',}
 		]
+		// $scope.date = new Date();
+		// $scope.time = new Date();
+		// $scope.dateTime = new Date();
+		// $scope.minDate = moment().subtract(1, 'month');
+		// $scope.maxDate = moment().add(1, 'month');
+		
 		$scope.lists = [{
 				id:1,
 				date:'2016-12-08',
