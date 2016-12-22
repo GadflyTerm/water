@@ -5,23 +5,21 @@ define(function (require){
 	var app = require('../app');
 	require('angular_xeditable');
 	app.useModule('xeditable');
-	/*app.run(function(editableOptions) {
-		editableOptions.theme = 'bs3'; // bootstrap3 theme. Can be also 'bs2', 'default'
-		//$window.sessionStorage.setItem("theme", 'bs3');
-	});*/
-	app.controller('WaterStandardCtrl', function($scope){
-		$scope.Standard = [];
-		$scope.addRiverwayCurve = function(){
-			$scope.inserted = {
-				LNNM: '',
-				BGTM: '',
-				PTNO: '',
-				Z: '',
-				Q: '',
-				COMMENTS: ''
-			};
-			$scope.Standard.push($scope.inserted);
-			$scope.$emit('Standard', $scope.Standard);
+	app.controller('WaterStandardCtrl', function($scope, $filter, editableOptions, editableThemes, xhr){
+		editableThemes.bs3.inputClass = 'input-sm';
+		editableThemes.bs3.buttonsClass = 'btn-sm';
+		editableOptions.theme = 'bs3';
+		$scope.promise = xhr.service('get', {action: 'station', module: 'getLists', op: 'WaterStandard'}, function(resp){
+			$scope.Standard = resp.data;
+		});
+		$scope.statuses = [
+			{value: 0, text: '禁用'},
+			{value: 1, text: '启用'}
+		];
+		$scope.submit = function() {
+			$scope.promise = xhr.service('POST', {action: 'station', module: 'setXediTable', op: 'WaterStandard', data: JSON.stringify($scope.Standard)}, function(resp){
+				$scope.Standard = resp.data;
+			});
 		}
 	});
 });

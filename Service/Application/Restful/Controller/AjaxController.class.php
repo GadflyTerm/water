@@ -18,6 +18,7 @@ class AjaxController extends RestController{
 		header('Access-Control-Allow-Headers:x-requested-with,content-type');
 		header("Access-Control-Allow-Credentials: true");
 		$param = I('param.');
+		$param['data'] = I('param.data')?I('param.data', '', false):null;
 		switch ($this->_method){
 			case 'post':
 				$op = 'insert';

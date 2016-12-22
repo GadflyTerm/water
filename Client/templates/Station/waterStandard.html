@@ -11,63 +11,45 @@
 							.vertical-center-30 {line-height:30px!important;}
 						</style>
 						<table class="table table-bordered table-hover table-condensed">
-							<caption>
-								<div class="col md-4 col-md-offset-8">
-									<div class="button btn btn-info btn-block" ngf-select ng-model="file" name="file"
-										 ngf-max-size="5MB" ngf-min-height="100" ng-change="uploadFile()">
-										<i class="fa fa-file-excel-o"></i> 选择Excal水位流量曲线数据文件
-									</div>
-								</div>
-							</caption>
 							<tr style="font-weight: bold" class="">
 								<th class="text-center vertical-center-30">采样名称</th>
-								<th class="text-center vertical-center-30">启用时间</th>
-								<th class="text-center vertical-center-30">点序号</th>
-								<th class="text-center vertical-center-30">水位</th>
-								<th class="text-center vertical-center-30">流量</th>
-								<th class="text-center vertical-center-30">备注</th>
+								<th class="text-center vertical-center-30">字段标识</th>
+								<th class="text-center vertical-center-30">参考值</th>
+								<th class="text-center vertical-center-30">计量单位</th>
+								<th class="text-center vertical-center-30">是否启用</th>
 								<th class="text-center col-md-2 vertical-center-30">
 									<button type="button" class="btn btn-default btn-block btn-sm" ng-click="addRiverwayCurve()">
-										<i class="fa fa-plus-circle"></i> 添加曲线数据
+										<i class="fa fa-plus-circle"></i> 添加采样
 									</button>
 								</th>
 							</tr>
 							<tr ng-repeat="val in Standard">
-								<td class="vertical-center-30">
-									<span editable-text="val.LNNM" e-name="LNNM" e-form="rowform" onbeforesave="checkName($data, val.id)">
-										{{val.LNNM||'empty'}}
+								<td class="vertical-center-30 text-center">
+									{{val.label}}
+								</td>
+								<td class="vertical-center-30 text-center">
+									{{val.field}}
+								</td>
+								<td class="vertical-center-30 text-center">
+									<span editable-number="val.value" e-name="value" e-form="rowform" onbeforesave="checkName($data, val.id)">
+										{{val.value||'未设置'}}
 									</span>
 								</td>
-								<td class="vertical-center-30">
-									<span editable-date="val.BGTM" e-name="BGTM" e-form="rowform" onbeforesave="checkName($data, val.id)">
-										{{val.BGTM||'empty'}}
-									</span>
+								<td class="vertical-center-30 text-center">
+									{{val.prickle}}
 								</td>
-								<td class="vertical-center-30">
-									<span editable-number="val.PTNO" e-name="PTNO" e-form="rowform" onbeforesave="checkName($data, val.id)">
-										{{val.PTNO||'empty'}}
-									</span>
-								</td>
-								<td class="vertical-center-30">
-									<span editable-number="val.Z" e-name="Z" e-form="rowform" onbeforesave="checkName($data, val.id)">
-										{{val.Z||'empty'}}
-									</span>
-								</td>
-								<td class="vertical-center-30">
-									<span editable-number="val.Q" e-name="Q" e-form="rowform" onbeforesave="checkName($data, val.id)">
-										{{val.Q||'empty'}}
-									</span>
-								</td>
-								<td class="vertical-center-30">
-									<span editable-text="val.COMMENTS" e-name="COMMENTS" e-form="rowform"
-										  onbeforesave="checkName($data, val.id)">
-										{{val.COMMENTS||'empty'}}
+								<td class="vertical-center-30 text-center">
+									<span editable-checkbox="val.status" e-name="Z" e-form="rowform" e-title="启用">
+										{{(val.status==1)?'启用':'关闭'}}
 									</span>
 								</td>
 								<td style="white-space: nowrap" class="text-center">
 									<form editable-form name="rowform" onbeforesave="saveUser($data, val.id)" ng-show="rowform.$visible" class="form-buttons form-inline" shown="inserted == val">
-										<button type="submit" ng-disabled="rowform.$waiting" class="btn btn-primary"><i class="fa fa-check-circle"></i> 保存</button>
-										<button type="button" ng-disabled="rowform.$waiting" ng-click="rowform.$cancel()" class="btn btn-default"><i class="fa fa-minus-circle"></i> 取消</button>
+										<button type="submit" ng-disabled="rowform.$waiting" 
+												class="btn btn-sm btn-primary"><i class="fa fa-check-circle"></i> 保存
+										</button>
+										<button type="button" ng-disabled="rowform.$waiting" 
+												ng-click="rowform.$cancel()" class="btn btn-sm btn-default"><i class="fa fa-minus-circle"></i> 取消</button>
 									</form>
 									<div class="buttons vertical-center-30" ng-show="!rowform.$visible">
 										<button type="button" class="btn btn-sm btn-primary" ng-click="rowform.$show()"><i class="fa fa-edit"></i> 编辑</button>
@@ -75,31 +57,14 @@
 									</div>
 								</td>
 							</tr>
-							<tr>
-								<td colspan="7">
-									<nav class="row" style="margin-right: 5px;">
-										<ul class="pagination pagination-sm pull-right" style="margin: 0; padding-right: 10px;">
-											<li><a href="#">第一页</a></li>
-											<li><a href="#">上一页</a></li>
-											<li><a href="#">1</a></li>
-											<li><a href="#">2</a></li>
-											<li><a href="#">3</a></li>
-											<li><a href="#">4</a></li>
-											<li><a href="#">5</a></li>
-											<li><a href="#">下一页</a></li>
-											<li><a href="#">最后一页</a></li>
-										</ul>
-									</nav>
-								</td>
-							</tr>
 						</table>
 						<div class="form-group">
-							<div class="col-sm-offset-2 col-sm-5">
+							<div class="col-sm-offset-2 col-sm-6">
 								<button type="button" class="btn btn-default btn-block" ng-click="submit()">
-									<i class="fa fa-check-circle"></i> 添加
+									<i class="fa fa-check-circle"></i> 保存水质参照标准数据
 								</button>
 							</div>
-							<div class="col-sm-5">
+							<div class="col-sm-4">
 								<a href="#" ng-click="jumpToUrl()" class="btn btn-info btn-block"><i class="fa fa-times-circle"></i> 取消</a>
 							</div>
 						</div>
