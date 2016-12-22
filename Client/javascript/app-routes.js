@@ -56,7 +56,7 @@ define(function (require){
 			resolve: {
 				StationAddCtrl: ["$q", function($q){
 					var deferred = $q.defer();
-					require(['../javascript/controller/station/AddCtrl'], function(){	//异步加载controller／directive/filter/service
+					require(['../javascript/controller/stationAddCtrl'], function(){	//异步加载controller／directive/filter/service
 						deferred.resolve();
 					});
 					return deferred.promise;
@@ -96,6 +96,19 @@ define(function (require){
 				ReportReservoirCtrl: ["$q", function($q){
 					var deferred = $q.defer();
 					require(['../javascript/controller/reportReservoirCtrl'], function(){	//异步加载controller／directive/filter/service
+						deferred.resolve();
+					});
+					return deferred.promise;
+				}]
+			}
+		}).state('WaterStandard', {
+			url: '/WaterStandard',
+			templateUrl: 'templates/Station/WaterStandard.html',
+			controller: 'WaterStandardCtrl',
+			resolve: {
+				ReportReservoirCtrl: ["$q", function($q){
+					var deferred = $q.defer();
+					require(['../javascript/controller/WaterStandardCtrl'], function(){	//异步加载controller／directive/filter/service
 						deferred.resolve();
 					});
 					return deferred.promise;
