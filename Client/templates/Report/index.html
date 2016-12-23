@@ -11,51 +11,65 @@
 		<div class="panel-body">
 			<!--=== 选择 ===-->
 			<div class="row">
-				<div class="col-md-12 text-right mb5">
+				<div class="col-md-3 col-md-offset-9 mb5">
 					<!--<a class="btn btn-default ml3" ng-repeat="item in Tcate">-->
 						<!--{{item.text}}报表-->
 					<!--</a>-->
-					<ul id="nav-tabs-wrapper" class="nav nav-tabs nav-pills nav-stacked well">
-						<li class="active"><a href="#table-year" date-toggle="tab" class="btn btn-default ml3" >
-							年报表
+					<ul class="nav nav-tabs  text-right">
+						<li class="active"><a href="#" date-target="#tab_1_1" date-toggle="tab" class="btn btn-default ml3" >
+						年报表
 						</a></li>
-						<li><a href="#table-mouth" date-toggle="tab" class="btn btn-default ml3" >
-							月报表
+						<li><a href="#" date-target="#tab_1_2" date-toggle="tab" class="btn btn-default ml3" >
+						月报表
 						</a></li>
-						<li><a href="#table-day" date-toggle="tab" class="btn btn-default ml3">
-							日报表
+						<li><a href="#" date-target="#tab_1_3" date-toggle="tab" class="btn btn-default ml3">
+						日报表
 						</a></li>
 					</ul>
-				</div>
-				<div class="col-md-4 col-sm-5 col-xs-6 col-md-offset-8 text-right">
-					<div class="select">
-						<form action="" class="form-horizontal">
-							<div class="form-group">
-								<lable class="col-md-5 col-sm-4 col-xs-5 control-label">选择月份</lable>
-								<div ng-model="timepickerTest" 
-									class="col-md-7 col-sm-8 col-xs-7 input-group input-medium date date-picker" 
-									data-date="12-02-2012" 
-									data-date-format="dd-mm-yyyy" 
-									data-date-viewmode="years">
-									<!--<input type="text" time="false" date="true" class="form-control" readonly>-->
-									<input time="false" date="true" mdc-datetime-picker type="text" id="date"
-										placeholder="Date" lang="zh-cn"
-										ng-model="date" min-date="minDate" max-date="maxDate">
-									<span class="input-group-btn">
-										<button class="btn default" type="button"><i class="fa fa-calendar"></i></button>
-									</span>
-								</div>
-							</div>
-						</form>
-					</div>
+					<!--<div class="actions">-->
+						<!--<div class="btn-group btn-grop-devided" data-toggle="buttons">-->
+							<!--<label class="btn btn-transparent grey-salsa btn-circle btn-sm active">-->
+								<!--<input type="radio" name="options" class="toggle" id="option1">日报表</label>-->
+							<!--<label class="btn btn-transparent grey-salsa btn-circle btn-sm">-->
+								<!--<input type="radio" name="options" class="toggle" id="option2">月报表</label>-->
+							<!--<label class="btn btn-transparent grey-salsa btn-circle btn-sm">-->
+								<!--<input type="radio" name="options" class="toggle" id="option3">年报表</label>-->
+						<!--</div>-->
+					<!--</div>-->
 				</div>
 			</div>
 			<!--=== \ 选择 ===-->
 			<!--=== 表格 ===-->
 			<div class="tab-content">
-				<div role="tabpanel" class="tab-pane fade in active" id="table-year">
-					<div class="table">
-						<h2 class="text-center"> 灌区管理年报表 </h2>
+				<div class="tab-pane active" id="tab_1_1">
+					<div class="col-md-4 col-sm-5 col-xs-6 col-md-offset-8 text-right">
+						<div class="select">
+							<form action="#" class="form-horizontal">
+								<div class="form-group">
+									<lable class="col-md-5 col-sm-4 col-xs-5 control-label">选择日期</lable>
+									<div class="col-md-7 col-sm-8 col-xs-7 input-group input-medium date date-picker">
+										<!--<input time="false" class="form-control" date="true" mdc-datetime-picker type="text" id="date"-->
+										<!--placeholder="mouth" lang="zh-cn"-->
+										<!--ng-model="mouth" min-date="minDate" max-date="maxDate">-->
+										<!--<span class="input-group-btn">-->
+										<!--<button class="btn default" type="button">-->
+										<!--<i class="fa fa-calendar"></i>-->
+										<!--</button>-->
+										<!--</span>-->
+
+										<div class="input-group input-medium date date-picker" data-date-format="dd-mm-yyyy" data-date-start-date="+0d">
+											<input type="text" class="form-control" readonly>
+											<span class="input-group-btn">
+									<button class="btn default" type="button"><i class="fa fa-calendar"></i></button>
+									</span>
+										</div>
+
+									</div>
+								</div>
+							</form>
+						</div>
+					</div>
+					<div class="table-scrollable table-scrollable-borderless">
 						<table class="table table-bordered table-hover table-condensed">
 							<tr>
 								<th class="text-center" style="width: 45px;">序号</th>
@@ -90,11 +104,37 @@
 								<td colspan="7" class="text-center">没有数据</td>
 							</tr>
 						</table>
+						<!--</div>-->
 					</div>
 				</div>
-				<div role="tabpanel" class="tab-pane fade" id="table-mouth">
-					<div class="table">
-						<h2 class="text-center"> 灌区管理月报表 </h2>
+				<div class="tab-pane" id="tab_1_2">
+					<div class="col-md-4 col-sm-5 col-xs-6 col-md-offset-8 text-right">
+						<div class="select">
+							<form action="" class="form-horizontal">
+								<div class="form-group">
+									<lable for="select" class="col-md-3 col-sm-3 col-xs-4 control-label">选择年份</lable>
+									<div class="col-md-9 col-sm-9 col-xs-8">
+										<select class="form-control">
+											<option>1月</option>
+											<option>2月</option>
+											<option>3月</option>
+											<option>4月</option>
+											<option>5月</option>
+											<option>6月</option>
+											<option>7月</option>
+											<option>8月</option>
+											<option>9月</option>
+											<option>10月</option>
+											<option>11月</option>
+											<option>12月</option>
+										</select>
+									</div>
+
+								</div>
+							</form>
+						</div>
+					</div>
+					<div class="table-scrollable table-scrollable-borderless">
 						<table class="table table-bordered table-hover table-condensed">
 							<tr>
 								<th class="text-center" style="width: 45px;">序号</th>
@@ -129,11 +169,36 @@
 								<td colspan="7" class="text-center">没有数据</td>
 							</tr>
 						</table>
+						<!--</div>-->
 					</div>
 				</div>
-				<div role="tabpanel" class="tab-pane fade in" id="table-day">
-					<div class="table">
-						<h2 class="text-center"> 灌区管理日报表 </h2>
+				<div class="tab-pane" id="tab_1_3">
+					<div class="col-md-4 col-sm-5 col-xs-6 col-md-offset-8 text-right">
+						<div class="select">
+							<form action="" class="form-horizontal">
+								<div class="form-group">
+									<lable for="select" class="col-md-3 col-sm-3 col-xs-4 control-label">选择年份</lable>
+									<div class="col-md-9 col-sm-9 col-xs-8">
+												<select class="form-control" id="select">
+													<option>2016</option>
+													<option>2015</option>
+													<option>2014</option>
+													<option>2013</option>
+													<option>2012</option>
+													<option>2011</option>
+													<option>2010</option>
+													<option>2009</option>
+													<option>2008</option>
+													<option>2007</option>
+													<option>2006</option>
+													<option>2005</option>
+												</select>
+											</div>
+								</div>
+							</form>
+						</div>
+					</div>
+					<div class="table-scrollable table-scrollable-borderless">
 						<table class="table table-bordered table-hover table-condensed">
 							<tr>
 								<th class="text-center" style="width: 45px;">序号</th>
@@ -168,10 +233,9 @@
 								<td colspan="7" class="text-center">没有数据</td>
 							</tr>
 						</table>
+						<!--</div>-->
 					</div>
 				</div>
-			</div>
-			
 			<!--=== \ 表格 ===-->
 		</div>
 		<div class="panel-footer">

@@ -3,27 +3,37 @@
  */
 define(function (require){
 	var app = require('../app');
+	// require('ui_bootstrap_datetimepicker');
+	// app.useModule('ui.bootstrap.datetimepicker');
+	// require('material_datetimepicker');
+	// app.useModule('ngMaterialDatePicker');
+	// require('datepicker');
 	app.controller('ReportIndexCtrl', function($scope){
 		/*xhr.service('post', {action: 'ac'}, function(resp){
 			$scope.myData = resp.data;
 		});*/
+		// var date = new Date();
+		// $scope.date = date;
+		// $scope.day = date.getDate();
+		// $scope.mouth = date.getMonth();
+		// $scope.year = date.getFullYear();
+		//
+		// $scope.time = new Date();
+		// $scope.dateTime = new Date();
+		// $scope.minDate = moment().subtract(1, 'month');
+		// $scope.maxDate = moment().add(1, 'month');
 		
 		$scope.nav = {
 			home: {title: '监测成果统计', url: 'Home'},
 			library: {title: '灌区报表管理', url: ''},
 		}
 		$scope.$emit('nav', $scope.nav);
-		$scope.Tcate = [
-			{id:'1',text:'年'},
-			{id:'2',text:'月',},
-			{id:'3',text:'日',}
-		]
-		// $scope.date = new Date();
-		// $scope.time = new Date();
-		// $scope.dateTime = new Date();
-		// $scope.minDate = moment().subtract(1, 'month');
-		// $scope.maxDate = moment().add(1, 'month');
-		
+
+		// $scope.Tcate = [
+		// 	{id:'1',text:'年'},
+		// 	{id:'2',text:'月',},
+		// 	{id:'3',text:'日',}
+		// ]
 		$scope.lists = [{
 				id:1,
 				date:'2016-12-08',
