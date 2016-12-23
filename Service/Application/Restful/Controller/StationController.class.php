@@ -7,8 +7,6 @@
  */
 
 namespace Restful\Controller;
-
-
 use think\Controller;
 use Think\Storage\Driver\File;
 
@@ -58,6 +56,22 @@ class StationController extends Controller{
 						'data'	=> C('OPT.WaterStandard')
 					);
 				}
+			case 'WaterStation':
+				return array(
+					'type'	=> 'Success',
+					'msg'	=> '数据操作成功！',
+					'data'	=> array(
+						array('id'	=> 1,
+							'STCD'	=> 'eerrtg45',
+							'STNM'	=> 'dfhdfhdfhdfh',
+							'STCT'	=> '1',
+							'WATP'	=> '1',
+							'LGTD'	=> 116.58548,
+							'LTTD'	=> 89.436534634,
+							'ASRL'	=> 235235,
+							'WSFL'	=> '2')
+					),
+				);
 			default:
 				return array(
 					'type'	=> 'Success',
@@ -85,6 +99,78 @@ class StationController extends Controller{
 						'msg'	=> '水库测站数据列表写入失败！',
 					);
 				break;
+		}
+	}
+	
+	public function infoData($param){
+		switch ($param['op']){
+			case 'WaterStation':
+				return array(
+					'type'	=> 'Success',
+					'msg'	=> '水库测站数据查询成功！',
+					'data'	=> array(
+						'id'	=> 1,
+						'STCD'	=> 'eerrtg45',
+						'STNM'	=> 'dfhdfhdfhdfh',
+						'STCT'	=> '1',
+						'WATP'	=> '1',
+						'LGTD'	=> 116.58548,
+						'LTTD'	=> 89.436534634,
+						'ASRL'	=> 235235,
+						'WSFL'	=> '2'
+					)
+				);
+		}
+	}
+	
+	public function addData($param){
+		switch ($param['op']){
+			case 'WaterStation':
+				$data = json_decode($param['data'], true);
+				return array(
+					'type'	=> 'Success',
+					'msg'	=> '水库测站数据添加成功！',
+					'data'	=> array(
+						'id'	=> 1,
+						'STCD'	=> $data['STCD'],
+						'STNM'	=> $data['STNM'],
+						'STCT'	=> $data['STCT'],
+						'WATP'	=> $data['WATP'],
+						'LGTD'	=> $data['LGTD'],
+						'LTTD'	=> $data['LTTD'],
+					)
+				);
+		}
+	}
+	
+	public function editData($param){
+		switch ($param['op']){
+			case 'WaterStation':
+				$data = json_decode($param['data'], true);
+				return array(
+					'type'	=> 'Success',
+					'msg'	=> '水库测站数据编辑成功！',
+					'data'	=> array(
+						'id'	=> $data['id'],
+						'STCD'	=> $data['STCD'],
+						'STNM'	=> $data['STNM'],
+						'STCT'	=> $data['STCT'],
+						'WATP'	=> $data['WATP'],
+						'LGTD'	=> $data['LGTD'],
+						'LTTD'	=> $data['LTTD'],
+					)
+				);
+		}
+	}
+	
+	public function delData($param){
+		switch ($param['op']){
+			case 'WaterStation':
+				return array(
+					'type'	=> 'Success',
+					'msg'	=> '水库测站数据删除成功！'.$param['data'],
+					'data'	=> array()
+				);
 		}
 	}
 }

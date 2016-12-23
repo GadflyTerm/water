@@ -8,20 +8,37 @@
 				<div class="well">
 					<div class="row">
 						<style>
-							.vertical-center-30 {line-height:30px!important;}
+							.vertical-center-xs {line-height:24px!important;}
 						</style>
 						<table class="table table-bordered table-hover table-condensed">
 							<tr style="font-weight: bold" class="">
-								<th class="text-center vertical-center-30">采样名称</th>
-								<th class="text-center vertical-center-30">字段标识</th>
-								<th class="text-center vertical-center-30">参考值</th>
-								<th class="text-center vertical-center-30">计量单位</th>
-								<th class="text-center vertical-center-30">是否启用</th>
-								<th class="text-center col-md-2 vertical-center-30">
-									<button type="button" class="btn btn-default btn-block btn-sm" ng-click="addWaterStandard()">
+								<th class="text-center vertical-center-xs">测站代码</th>
+								<th class="text-center vertical-center-xs">测站名称</th>
+								<th class="text-center vertical-center-xs">测站类别</th>
+								<th class="text-center vertical-center-xs">水域类型</th>
+								<th class="text-center vertical-center-xs">经度</th>
+								<th class="text-center vertical-center-xs">纬度</th>
+								<th class="text-center col-md-2 vertical-center-xs">
+									<button type="button" class="btn btn-default btn-block btn-xs" ng-click="action('add')">
 										<i class="fa fa-plus-circle"></i> 添加采样测站
 									</button>
 								</th>
+							</tr>
+							<tr ng-repeat="vo in list">
+								<td>{{vo.STCD}}</td>
+								<td>{{vo.STNM}}</td>
+								<td>{{vo.STCT|stationType}}</td>
+								<td>{{vo.WATP|waterType}}</td>
+								<td>{{vo.LGTD}}</td>
+								<td>{{vo.LTTD}}</td>
+								<td>
+									<button type="button" class="btn btn-danger btn-xs pull-right btn-del" ng-click="del(vo.id)">
+										<i class="fa fa-trash-o"></i> 删除
+									</button>
+									<button type="button" class="btn btn-info btn-xs pull-right" ng-click="action('edit', vo.id)">
+										<i class="fa fa-edit"></i> 编辑
+									</button>
+								</td>
 							</tr>
 						</table>
 					</div>
@@ -30,3 +47,83 @@
 		</div>
 	</div>
 </div>
+<script type="text/ng-template" id="actionModalContent.html">
+	<form class="form-horizontal" role="form" name="theForm" novalidate="novalidate">
+		<div class="modal-header">
+			<h3 class="modal-title" id="modal-title">{{action}}水质采样测站</h3>
+		</div>
+		<div class="modal-body" id="modal-body">
+			<div class="well">
+				<div class="row">
+					<div class="form-group">
+						<label class="col-sm-2 control-label">测站编码</label>
+						<div class="col-sm-4" ng-class="{true: 'has-error', false: 'has-success'}[theForm.STCD.$invalid]">
+							<input type="text" class="form-control input-sm" ng-model="station.STCD" name="STCD" 
+								   placeholder="由数字和大写字母组成的8位唯一字符串" ng-minlength="8" ng-maxlength="8" required>
+						</div>
+						<label class="col-sm-2 control-label">测站名称</label>
+						<div class="col-sm-4" ng-class="{true: 'has-error', false: 'has-success'}[theForm.STNM.$invalid]">
+							<input type="text" class="form-control input-sm" ng-model="station.STNM" name="STNM" 
+								   placeholder="测站编码所代表测站的中文名称" required>
+						</div>
+					</div>
+					<div class="form-group">
+						<label class="col-sm-2 control-label">测站类别</label>
+						<div class="col-sm-4" ng-class="{true: 'has-error', false: 'has-success'}[theForm.STCT.$invalid]">
+							<select class="form-control input-sm" ng-model="station.STCT" name="STCT" required>
+								<option value="" selected>请选择测站类型</option>
+								<option value="1">地表水水质站</option>
+								<option value="2">地下水水质站</option>
+								<option value="3">大气降水水质站</option>
+							</select>
+						</div>
+						<label class="col-sm-2 control-label">水域类型</label>
+						<div class="col-sm-4 btn-group">
+							<label class="btn btn-success btn-sm" ng-model="station.WATP" ng-change="relevance()" uib-btn-radio="'1'">河流</label>
+							<label class="btn btn-success btn-sm" ng-model="station.WATP" ng-change="relevance()" uib-btn-radio="'2'">湖泊</label>
+							<label class="btn btn-success btn-sm" ng-model="station.WATP" ng-change="relevance()" uib-btn-radio="'3'">水库</label>
+						</div>
+					</div>
+					<div class="form-group">
+						<label class="col-sm-2 control-label">测站经度</label>
+						<div class="col-sm-4" ng-class="{true: 'has-error', false: 'has-success'}[theForm.LGTD.$invalid]">
+							<input type="number" class="form-control input-sm" ng-model="station.LGTD" name="LGTD" 
+								   placeholder="水质采样测站所代表的经度" required>
+						</div>
+						<label class="col-sm-2 control-label">测站纬度</label>
+						<div class="col-sm-4" ng-class="{true: 'has-error', false: 'has-success'}[theForm.LTTD.$invalid]">
+							<input type="number" class="form-control input-sm" ng-model="station.LTTD" name="LTTD" 
+								   placeholder="水质采样测站所代表的纬度" required>
+						</div>
+					</div>
+					<div class="form-group">
+						<label class="col-sm-2 control-label" ng-show="isShow.ASRL">代表河长</label>
+						<div class="col-sm-4" ng-show="isShow.ASRL">
+							<input type="number" class="form-control input-sm" ng-model="station.ASRL" name="ASRL" placeholder="测站所代表的河流长度">
+						</div>
+						<label class="col-sm-2 control-label" ng-show="isShow.ASAR">代表面积</label>
+						<div class="col-sm-4" ng-show="isShow.ASAR">
+							<input type="number" class="form-control input-sm" ng-model="station.ASAR" name="ASAR" placeholder="测站所代表的湖泊的表面积">
+						</div>
+						<label class="col-sm-2 control-label" ng-show="isShow.ASRC">代表库容</label>
+						<div class="col-sm-4" ng-show="isShow.ASRC">
+							<input type="number" class="form-control input-sm" ng-model="station.ASRC" name="ASRC" placeholder="测站所代表的水库蓄水量">
+						</div>
+						<label class="col-sm-2 control-label">水源地站标志</label>
+						<div class="col-sm-4 btn-group">
+							<label class="btn btn-success btn-sm" ng-model="station.WSFL" uib-btn-radio="'1'">水源地水质站</label>
+							<label class="btn btn-success btn-sm" ng-model="station.WSFL" uib-btn-radio="'2'">非水源地水质站</label>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="modal-footer">
+			<button class="btn btn-primary" type="button" ng-click="submit()"  ng-disabled="!theForm.$valid">
+				{{action}}水质采样测站信息
+			</button>
+			<button class="btn btn-warning" type="button" ng-click="cancel()">取消</button>
+		</div>
+		<input type="hidden" name="id" ng-model="station.id">
+	</form>
+</script>
