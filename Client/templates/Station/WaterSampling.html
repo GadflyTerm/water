@@ -1,1 +1,50 @@
-<h2>水质采样管理</h2>
+<div class="col-md-12">
+	<div class="panel panel-warning">
+		<div class="panel-heading">
+			<i class="fa fa-plus-circle"></i> {{nav.library.title}}
+		</div>
+		<div class="panel-body">
+			<div cg-busy="{promise:promise, message: '请等待，正在向服务器请求数据...', backdrop:true, delay:0, minDuration:10}">
+				<div class="well">
+					<div class="row">
+						<style>
+							.vertical-center-30 {line-height:30px!important;}
+						</style>
+						<table class="table table-bordered table-hover table-condensed">
+							<tr style="font-weight: bold" class="">
+								<th class="text-center vertical-center-30">采样名称</th>
+								<th class="text-center vertical-center-30">字段标识</th>
+								<th class="text-center vertical-center-30">参考值</th>
+								<th class="text-center vertical-center-30">计量单位</th>
+								<th class="text-center vertical-center-30">是否启用</th>
+								<th class="text-center col-md-2 vertical-center-30">
+									<button type="button" class="btn btn-default btn-block btn-sm" ng-click="addWaterSampling()">
+										<i class="fa fa-plus-circle"></i> 添加采样
+									</button>
+								</th>
+							</tr>
+						</table>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+<script type="text/ng-template" id="myModalContent.html">
+	<div class="modal-header">
+		<h3 class="modal-title" id="modal-title">I'm a modal!</h3>
+	</div>
+	<div class="modal-body" id="modal-body">
+		<ul>
+			<li ng-repeat="item in items">
+				<a href="#" ng-click="$event.preventDefault(); $scope.selected.item = item">{{ item }}</a>
+			</li>
+		</ul>
+		Selected: <b>{{ $scope.selected.item }}</b>
+	</div>
+	<div class="modal-footer">
+		<button class="btn btn-primary" type="button" ng-click="ok()">OK</button>
+		<button class="btn btn-warning" type="button" ng-click="cancel()">Cancel</button>
+	</div>
+</script>

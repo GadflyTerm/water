@@ -115,7 +115,7 @@ define(function (require){
 				}]
 			}
 		}).state('WaterSampling', {			//水质采样管理
-			url: '/WaterStandard',
+			url: '/WaterSampling',
 			templateUrl: 'templates/Station/WaterSampling.html',
 			controller: 'WaterSamplingCtrl',
 			resolve: {
@@ -128,7 +128,7 @@ define(function (require){
 				}]
 			}
 		}).state('WaterStation', {			// 水质测站管理
-			url: '/WaterStandard',
+			url: '/WaterStation',
 			templateUrl: 'templates/Station/WaterStation.html',
 			controller: 'WaterStationCtrl',
 			resolve: {

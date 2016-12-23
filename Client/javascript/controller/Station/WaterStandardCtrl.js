@@ -6,6 +6,11 @@ define(function (require){
 	require('angular_xeditable');
 	app.useModule('xeditable');
 	app.controller('WaterStandardCtrl', function($scope, $filter, editableOptions, editableThemes, xhr){
+		$scope.nav = {
+			home: {title: '首页', url: 'Home'},
+			library: {title: '水质异常参照标准数据列表', url: ''},
+		}
+		$scope.$emit('nav', $scope.nav);
 		editableThemes.bs3.inputClass = 'input-sm';
 		editableThemes.bs3.buttonsClass = 'btn-sm';
 		editableOptions.theme = 'bs3';
