@@ -2,7 +2,7 @@
  * Created by gadfly on 2016/12/15.
  */
 define(function (require){
-	var app = require('../app');
+	var app = require('../../app');
 	require('angular_xeditable');
 	app.useModule('xeditable');
 	require('ng_file_upload');

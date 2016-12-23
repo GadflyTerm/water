@@ -1,14 +1,15 @@
 /**
- * Created by gadfly on 2016/12/14.
+ * 水质检测站管理
+ * Created by gadfly on 2016/12/23.
  */
 define(function (require){
-	var app = require('../app');
-	app.controller('StationIndexCtrl', function($scope){
+	var app = require('../../app');
+	app.controller('WaterStationCtrl', function($scope){
 		/*xhr.service('post', {action: 'ac'}, function(resp){
-			$scope.myData = resp.data;
-		});*/
+		 $scope.myData = resp.data;
+		 });*/
 		$scope.nav = {
-			home: {title: '检测站管理', url: 'Home'},
+			home: {title: '水质检测站管理', url: 'Home'},
 			library: {title: '检测站列表', url: ''},
 		}
 		$scope.$emit('nav', $scope.nav);
@@ -27,5 +28,4 @@ define(function (require){
 			]
 		}
 	});
-	
 });

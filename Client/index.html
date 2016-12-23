@@ -7,6 +7,7 @@
 	<link rel="stylesheet" href="node_modules/bootswatch/slate/bootstrap.min.css">
 	<link rel="stylesheet" href="node_modules/style/css/help.css">
 	<title>{{nav.home.title}}</title>
+	<script type="text/javascript" src="node_modules/requirejs/require.js" data-main="node_modules/main"></script>
 </head>
 <body>
 <div class="container">
@@ -19,9 +20,14 @@
 				</a>
 				<ul class="dropdown-menu" uib-dropdown-menu aria-labelledby="simple-dropdown">
 					<li ui-sref-active="active"><a ui-sref="Home">首页</a></li>
+					<li role="separator" class="divider"></li>
 					<li ui-sref-active="active"><a ui-sref="StationIndex">测站管理列表</a></li>
 					<li ui-sref-active="active"><a ui-sref="StationAdd">添加新的测站</a></li>
+					<li role="separator" class="divider"></li>
+					<li ui-sref-active="active"><a ui-sref="WaterSampling">水质采样管理</a></li>
+					<li ui-sref-active="active"><a ui-sref="WaterStation">水质采样测站管理</a></li>
 					<li ui-sref-active="active"><a ui-sref="WaterStandard">管理水质异常参照标准数据</a></li>
+					<li role="separator" class="divider"></li>
 					<li ui-sref-active="active"><a ui-sref="ReportIndex">灌区报表管理</a></li>
 					<li ui-sref-active="active"><a ui-sref="ReportReservoir">水库报表管理</a></li>
 					<li ui-sref-active="active"><a ui-sref="ReportDaily">日表</a></li>
@@ -44,6 +50,5 @@
 		<ui-view></ui-view>
 	</div>
 </div>
-<script type="text/javascript" src="node_modules/requirejs/require.js" data-main="node_modules/main"></script>
 </body>
 </html>

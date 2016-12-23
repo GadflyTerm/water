@@ -43,7 +43,7 @@ define(function (require){
 			resolve: {
 				StationIndexCtrl: ["$q", function($q){
 					var deferred = $q.defer();
-					require(['../javascript/controller/stationIndexCtrl'], function(){	//异步加载controller／directive/filter/service
+					require(['../javascript/controller/Station/StationIndexCtrl'], function(){	//异步加载controller／directive/filter/service
 						deferred.resolve(); 
 					});
 					return deferred.promise;
@@ -56,7 +56,7 @@ define(function (require){
 			resolve: {
 				StationAddCtrl: ["$q", function($q){
 					var deferred = $q.defer();
-					require(['../javascript/controller/stationAddCtrl'], function(){	//异步加载controller／directive/filter/service
+					require(['../javascript/controller/Station/StationAddCtrl'], function(){	//异步加载controller／directive/filter/service
 						deferred.resolve();
 					});
 					return deferred.promise;
@@ -69,7 +69,7 @@ define(function (require){
 			resolve: {
 				StationAddCtrl: ["$q", function($q){
 					var deferred = $q.defer();
-					require(['../javascript/controller/stationEditCtrl'], function(){	//异步加载controller／directive/filter/service
+					require(['../javascript/controller/Station/StationEditCtrl'], function(){	//异步加载controller／directive/filter/service
 						deferred.resolve();
 					});
 					return deferred.promise;
@@ -101,14 +101,40 @@ define(function (require){
 					return deferred.promise;
 				}]
 			}
-		}).state('WaterStandard', {
+		}).state('WaterStandard', {			// 水质标准管理
 			url: '/WaterStandard',
 			templateUrl: 'templates/Station/WaterStandard.html',
 			controller: 'WaterStandardCtrl',
 			resolve: {
 				ReportReservoirCtrl: ["$q", function($q){
 					var deferred = $q.defer();
-					require(['../javascript/controller/WaterStandardCtrl'], function(){	//异步加载controller／directive/filter/service
+					require(['../javascript/controller/Station/WaterStandardCtrl'], function(){	//异步加载controller／directive/filter/service
+						deferred.resolve();
+					});
+					return deferred.promise;
+				}]
+			}
+		}).state('WaterSampling', {			//水质采样管理
+			url: '/WaterStandard',
+			templateUrl: 'templates/Station/WaterSampling.html',
+			controller: 'WaterSamplingCtrl',
+			resolve: {
+				ReportReservoirCtrl: ["$q", function($q){
+					var deferred = $q.defer();
+					require(['../javascript/controller/Station/WaterSamplingCtrl'], function(){	//异步加载controller／directive/filter/service
+						deferred.resolve();
+					});
+					return deferred.promise;
+				}]
+			}
+		}).state('WaterStation', {			// 水质测站管理
+			url: '/WaterStandard',
+			templateUrl: 'templates/Station/WaterStation.html',
+			controller: 'WaterStationCtrl',
+			resolve: {
+				ReportReservoirCtrl: ["$q", function($q){
+					var deferred = $q.defer();
+					require(['../javascript/controller/Station/WaterStationCtrl'], function(){	//异步加载controller／directive/filter/service
 						deferred.resolve();
 					});
 					return deferred.promise;

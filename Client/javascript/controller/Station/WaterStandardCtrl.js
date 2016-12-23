@@ -2,7 +2,7 @@
  * Created by gadfly on 2016/12/22.
  */
 define(function (require){
-	var app = require('../app');
+	var app = require('../../app');
 	require('angular_xeditable');
 	app.useModule('xeditable');
 	app.controller('WaterStandardCtrl', function($scope, $filter, editableOptions, editableThemes, xhr){
