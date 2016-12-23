@@ -16,13 +16,13 @@
 						<!--{{item.text}}报表-->
 					<!--</a>-->
 					<ul class="nav nav-tabs  text-right">
-						<li class="active"><a href="#" date-target="#tab_1_1" date-toggle="tab" class="btn btn-default ml3" >
+						<li class="active"><a href="#" date-target="#tab_year" date-toggle="tab" class="btn btn-default ml3" >
 						年报表
 						</a></li>
-						<li><a href="#" date-target="#tab_1_2" date-toggle="tab" class="btn btn-default ml3" >
+						<li><a href="#" date-target="#tab_mouth" date-toggle="tab" class="btn btn-default ml3" >
 						月报表
 						</a></li>
-						<li><a href="#" date-target="#tab_1_3" date-toggle="tab" class="btn btn-default ml3">
+						<li><a href="#" date-target="#tab_day" date-toggle="tab" class="btn btn-default ml3">
 						日报表
 						</a></li>
 					</ul>
@@ -41,12 +41,13 @@
 			<!--=== \ 选择 ===-->
 			<!--=== 表格 ===-->
 			<div class="tab-content">
-				<div class="tab-pane active" id="tab_1_1">
+				<!--年报表-->
+				<div class="tab-pane active" id="tab_year">
 					<div class="col-md-4 col-sm-5 col-xs-6 col-md-offset-8 text-right">
 						<div class="select">
 							<form action="#" class="form-horizontal">
 								<div class="form-group">
-									<lable class="col-md-5 col-sm-4 col-xs-5 control-label">选择日期</lable>
+									<lable class="col-md-5 col-sm-4 col-xs-5 control-label">选择年份</lable>
 									<div class="col-md-7 col-sm-8 col-xs-7 input-group input-medium date date-picker">
 										<!--<input time="false" class="form-control" date="true" mdc-datetime-picker type="text" id="date"-->
 										<!--placeholder="mouth" lang="zh-cn"-->
@@ -107,12 +108,14 @@
 						<!--</div>-->
 					</div>
 				</div>
-				<div class="tab-pane" id="tab_1_2">
+				<!--年报表-->
+				<!--月报表-->
+				<div class="tab-pane" id="tab_mouth">
 					<div class="col-md-4 col-sm-5 col-xs-6 col-md-offset-8 text-right">
 						<div class="select">
 							<form action="" class="form-horizontal">
 								<div class="form-group">
-									<lable for="select" class="col-md-3 col-sm-3 col-xs-4 control-label">选择年份</lable>
+									<lable for="select" class="col-md-3 col-sm-3 col-xs-4 control-label">选择月份</lable>
 									<div class="col-md-9 col-sm-9 col-xs-8">
 										<select class="form-control">
 											<option>1月</option>
@@ -172,12 +175,14 @@
 						<!--</div>-->
 					</div>
 				</div>
-				<div class="tab-pane" id="tab_1_3">
+				<!-- \ 月报表-->
+				<!--日报表-->
+				<div class="tab-pane" id="tab_day">
 					<div class="col-md-4 col-sm-5 col-xs-6 col-md-offset-8 text-right">
 						<div class="select">
 							<form action="" class="form-horizontal">
 								<div class="form-group">
-									<lable for="select" class="col-md-3 col-sm-3 col-xs-4 control-label">选择年份</lable>
+									<lable for="select" class="col-md-3 col-sm-3 col-xs-4 control-label">选择日期</lable>
 									<div class="col-md-9 col-sm-9 col-xs-8">
 												<select class="form-control" id="select">
 													<option>2016</option>
@@ -236,6 +241,7 @@
 						<!--</div>-->
 					</div>
 				</div>
+				<!--\ 日报表-->
 			<!--=== \ 表格 ===-->
 		</div>
 		<div class="panel-footer">
