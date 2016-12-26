@@ -3,7 +3,8 @@
  */
 define(function (require){
 	var app = require('./app');
-	var baseUrl = 'http://water.cn/Service/restful.php?s=/Ajax/angular.html';
+	var baseUrl = '/Service/restful.php?s=/Ajax/angular.html';
+	var restUrl = 'http://water.com:8080/Service/restful.php?s=/Ajax/angular.html';
 	app.config(function($httpProvider, $urlRouterProvider, $stateProvider, toastrConfig){
 		$httpProvider.defaults.headers = {
 			post: {'Content-Type': 'application/x-www-form-urlencoded'},
