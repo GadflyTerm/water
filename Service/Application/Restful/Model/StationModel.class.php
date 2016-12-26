@@ -7,9 +7,9 @@
  */
 
 namespace Restful\Model;
-use Think\Model;
+use Common\Model\CommonModel;
 
-class StationModel extends Model{
+class StationModel extends CommonModel{
 	protected $tableName = 'ST_STBPRP_B';
 	Protected $autoCheckFields = false;
 	/**
@@ -78,17 +78,11 @@ class StationModel extends Model{
 	
 	public function delWater(){}
 	
-	public function listWater(){
+	public function listWater($param){
 		$this->tableName = 'ST_SWSINF_B';
-		foreach ($this->select() AS $key => $val){
-			foreach ($val AS $k => $vo){
-				$data[$key][strtoupper($k)] = $vo;
-			}
-		}
-		return array(
-			'type'	=> 'Success',
-			'msg'	=> '水质测站列表数据查询成功！',
-			'data'	=> $data,
-		);
+		return $this->curd(array(
+			'type'	=> 'select',
+			'page'	=> $param['p']
+		));
 	}
 }

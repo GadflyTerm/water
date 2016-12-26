@@ -24,7 +24,7 @@
 									</button>
 								</th>
 							</tr>
-							<tr ng-repeat="vo in list">
+							<tr ng-repeat="vo in allitem[currentPage-1]">
 								<td>{{vo.STCD}}</td>
 								<td>{{vo.STNM}}</td>
 								<td>{{vo.STCT|stationType}}</td>
@@ -39,6 +39,26 @@
 										<i class="fa fa-edit"></i> 编辑
 									</button>
 								</td>
+							</tr>
+							<tr>
+								<td colspan="6" class="test-right">
+									<uib-pagination class="pagination-sm embed-responsive-item"
+											total-items="totalItems"
+											ng-model="currentPage"
+											previous-text="上一页"
+											next-text="下一页"
+											first-text="首页"
+											last-text="尾页"
+											force-ellipses="'3'"
+											boundary-links="true"
+											boundary-link-numbers="true"
+											max-size="3"
+											rotate="false"
+											num-pages="'25'"
+									>
+									</uib-pagination>
+								</td>
+								<td></td>
 							</tr>
 						</table>
 					</div>

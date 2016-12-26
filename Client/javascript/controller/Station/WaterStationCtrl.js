@@ -34,11 +34,17 @@ define(function (require){
 			library: {title: '水质采样测站列表', url: ''},
 		}
 		$scope.$emit('nav', $scope.nav);
-		$scope.list = []
+
+		$scope.currentPage =1;		// 初始当前页
+		$scope.allitem=[];			// 存放所有页
 		$scope.promise = xhr.service('post', {model: 'station', module: 'listWater'}, function(resp){
-			$scope.list = resp.data;
-			console.log($scope.list);
+			var num= resp.data.length;
+			$scope.totalItems =num;	// 共有多少条数据
+			for(var i=0; i<num; i+=$scope.pageRows){
+				$scope.allitem.push(resp.data.slice(i, i+$scope.pageRows))
+			}//此方法可以将一个数组分成多个数组并且放在了一个大数组里面，按每个数组10条数据【因为组件默认为10条数据一页】存放，假如41条数据的话我们将分成5页
 		});
+		
 		$scope.action = function(param, id){
 			$uibModal.open({
 				animation: true,
