@@ -99,12 +99,12 @@ define(function (require){
 					}
 					$scope.submit = function () {
 						if(param =='add'){
-							$scope.promise = xhr.service('post', {action: 'station', module: 'addData', op: 'WaterStation', data: JSON.stringify($scope.station)}, function(resp){
+							$scope.promise = xhr.service('post', {model: 'station', module: 'addWater', op: 'WaterStation', data: JSON.stringify($scope.station)}, function(resp){
 								list.push(resp.data);
 								$uibModalInstance.close();
 							});
 						}else{
-							$scope.promise = xhr.service('post', {action: 'station', module: 'editData', op: 'WaterStation', data: JSON.stringify($scope.station)}, function(resp){
+							$scope.promise = xhr.service('post', {model: 'station', module: 'editWater', op: 'WaterStation', data: JSON.stringify($scope.station)}, function(resp){
 								$scope.list =resp.data;
 								$uibModalInstance.close();
 							});

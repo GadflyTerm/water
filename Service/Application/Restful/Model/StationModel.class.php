@@ -10,6 +10,7 @@ namespace Restful\Model;
 use Think\Model;
 
 class StationModel extends Model{
+	protected $tableName = 'ST_STBPRP_B';
 	Protected $autoCheckFields = false;
 	/**
 	 * 获取河道站列表
@@ -40,4 +41,32 @@ class StationModel extends Model{
 			array('lable' => '测试用水库六', 'value' => 'sk6'),
 		);
 	}
+	
+	public function addWater(){
+		$this->tableName = 'ST_SWSINF_B';
+		if($model = $this->create() && $this->add()){
+			return array(
+				'type'	=> 'Success',
+				'msg'	=> '水质测站数据添加成功！',
+				'param'	=> I('post.'),
+				'sql'	=> $this->getLastSql(),
+			);
+		}else{
+			return array(
+				'type'	=> 'Error',
+				'msg'	=> '水质测站数据添加失败！',
+				'error'	=> $this->getError(),
+				'sql'	=> $this->getLastSql(),
+				'param'	=> I('post.'),
+			);
+		}
+	}
+	
+	public function editWater(){}
+	
+	public function infoWater(){}
+	
+	public function delWater(){}
+	
+	public function listWater(){}
 }
