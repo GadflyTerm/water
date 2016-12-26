@@ -32,14 +32,20 @@
 								<td>{{vo.WATP|waterType}}</td>
 								<td>{{vo.WSFL|headwaterType}}</td>
 								<td>{{vo.TM}}</td>
-								<td>{{vo.TM}}</td>
+								<td>{{vo.anomaly}}</td>
 								<td>
-									<button type="button" class="btn btn-danger btn-xs pull-right btn-del" ng-click="del(vo.id)">
-										<i class="fa fa-trash-o"></i> 删除
-									</button>
-									<button type="button" class="btn btn-info btn-xs pull-right" ng-click="action('edit', vo.id)">
-										<i class="fa fa-edit"></i> 编辑
-									</button>
+									<div class="row">
+										<div class="col-md-6">
+											<button type="button" class="btn btn-info btn-xs btn-block pull-right" ng-click="action('edit', vo.id)">
+												<i class="fa fa-edit"></i> 编辑
+											</button>
+										</div>
+										<div class="col-md-6">
+											<button type="button" class="btn btn-danger btn-xs pull-right btn-block btn-del" ng-click="del(vo.id)">
+												<i class="fa fa-trash-o"></i> 删除
+											</button>
+										</div>
+									</div>
 								</td>
 							</tr>
 						</table>
@@ -61,42 +67,22 @@
 					<div class="form-group">
 						<label class="col-sm-2 control-label">测站编码</label>
 						<div class="col-sm-4" ng-class="{true: 'has-error', false: 'has-success'}[theForm.STCD.$invalid]">
-							<input type="text" class="form-control input-sm" ng-model="sampling.STCD" name="STCD"
-								   placeholder="由数字和大写字母组成的8位唯一字符串" ng-minlength="8" ng-maxlength="8" required>
+							<select class="form-control input-sm" ng-model="sampling.STCD" name="STCD" 
+									ng-options="item.STCD as (item.STNM + '-[' + item.STCD + ']') for item in station" 
+									required>
+								<option value="">请选择一个水质测站</option>
+							</select>
 						</div>
 						<label class="col-sm-2 control-label">采集日期</label>
 						<div class="col-sm-4" ng-class="{true: 'has-error', false: 'has-success'}[theForm.WT.$invalid]">
-							<input type="date" class="form-control input-sm" ng-model="sampling.TM" name="TM" required>
+							<input type="datetime-local" class="form-control input-sm" ng-model="sampling.TM" name="TM" required>
 						</div>
 					</div>
 					<div class="form-group">
-						<label class="col-sm-2 control-label">采集时间</label>
-						<div class="col-sm-4" ng-class="{true: 'has-error', false: 'has-success'}[theForm.WT.$invalid]">
-							<input type="time" class="form-control input-sm" ng-model="sampling.TM" name="TM" required>
-						</div>
-						<label class="col-sm-2 control-label">水温</label>
-						<div class="col-sm-4">
-							<input type="number" class="form-control input-sm" ng-model="sampling.WT" name="WT"
-								   placeholder="水质采样所代表的水温，单位：℃">
-						</div>
-					</div>
-					<div class="form-group">
-						<label class="col-sm-2 control-label">pH值</label>
-						<div class="col-sm-4">
-							<input type="number" class="form-control input-sm" ng-model="sampling.PH" name="PH"
-								   placeholder="水质采样所代表的pH值，单位：无">
-						</div>
 						<label class="col-sm-2 control-label">化学需氧量</label>
 						<div class="col-sm-4">
 							<input type="number" class="form-control input-sm" ng-model="sampling.CODCR" name="CODCR"
 								   placeholder="水质采样所代表的化学需氧量，单位：mg/L">
-						</div>
-					</div>
-					<div class="form-group">
-						<label class="col-sm-2 control-label">悬浮物</label>
-						<div class="col-sm-4">
-							<input type="number" class="form-control input-sm" ng-model="sampling.SS" name="SS"
-								   placeholder="水质采样所代表的悬浮物，单位：mg/L">
 						</div>
 						<label class="col-sm-2 control-label">阴离子表面活性剂</label>
 						<div class="col-sm-4">
@@ -105,118 +91,10 @@
 						</div>
 					</div>
 					<div class="form-group">
-						<label class="col-sm-2 control-label">全盐量</label>
-						<div class="col-sm-4">
-							<input type="number" class="form-control input-sm" ng-model="sampling.SO" name="SO"
-								   placeholder="水质采样所代表的全盐量，单位：mg/L">
-						</div>
-						<label class="col-sm-2 control-label">氯化物</label>
-						<div class="col-sm-4">
-							<input type="number" class="form-control input-sm" ng-model="sampling.CL" name="CL"
-								   placeholder="水质采样所代表的氯化物，单位：mg/L">
-						</div>
-					</div>
-					<div class="form-group">
-						<label class="col-sm-2 control-label">硫化物</label>
-						<div class="col-sm-4">
-							<input type="number" class="form-control input-sm" ng-model="sampling.S2" name="S2"
-								   placeholder="水质采样所代表的硫化物，单位：mg/L">
-						</div>
-						<label class="col-sm-2 control-label">总汞</label>
-						<div class="col-sm-4">
-							<input type="number" class="form-control input-sm" ng-model="sampling.HG" name="HG"
-								   placeholder="水质采样所代表的总汞，单位：mg/L">
-						</div>
-					</div>
-					<div class="form-group">
-						<label class="col-sm-2 control-label">总镉</label>
-						<div class="col-sm-4">
-							<input type="number" class="form-control input-sm" ng-model="sampling.CD" name="CD"
-								   placeholder="水质采样所代表的总镉，单位：mg/L">
-						</div>
-						<label class="col-sm-2 control-label">总砷</label>
-						<div class="col-sm-4">
-							<input type="number" class="form-control input-sm" ng-model="sampling.ARS" name="ARS"
-								   placeholder="水质采样所代表的总砷，单位：mg/L">
-						</div>
-					</div>
-					<div class="form-group">
-						<label class="col-sm-2 control-label">六价铬</label>
-						<div class="col-sm-4">
-							<input type="number" class="form-control input-sm" ng-model="sampling.CR6" name="CR6"
-								   placeholder="水质采样所代表的六价铬，单位：mg/L">
-						</div>
-						<label class="col-sm-2 control-label">总铅</label>
-						<div class="col-sm-4">
-							<input type="number" class="form-control input-sm" ng-model="sampling.PB" name="PB"
-								   placeholder="水质采样所代表的总铅，单位：mg/L">
-						</div>
-					</div>
-					<div class="form-group">
-						<label class="col-sm-2 control-label">总铜</label>
-						<div class="col-sm-4">
-							<input type="number" class="form-control input-sm" ng-model="sampling.CU" name="CU"
-								   placeholder="水质采样所代表的总铜，单位：mg/L">
-						</div>
-						<label class="col-sm-2 control-label">总锌</label>
-						<div class="col-sm-4">
-							<input type="number" class="form-control input-sm" ng-model="sampling.ZN" name="ZN"
-								   placeholder="水质采样所代表的总锌，单位：mg/L">
-						</div>
-					</div>
-					<div class="form-group">
-						<label class="col-sm-2 control-label">总硒</label>
-						<div class="col-sm-4">
-							<input type="number" class="form-control input-sm" ng-model="sampling.SE" name="SE"
-								   placeholder="水质采样所代表的总硒，单位：mg/L">
-						</div>
-						<label class="col-sm-2 control-label">氟化物</label>
-						<div class="col-sm-4">
-							<input type="number" class="form-control input-sm" ng-model="sampling.F" name="F"
-								   placeholder="水质采样所代表的氟化物，单位：mg/L">
-						</div>
-					</div>
-					<div class="form-group">
-						<label class="col-sm-2 control-label">氰化物</label>
-						<div class="col-sm-4">
-							<input type="number" class="form-control input-sm" ng-model="sampling.CN" name="CN"
-								   placeholder="水质采样所代表的氰化物，单位：mg/L">
-						</div>
-						<label class="col-sm-2 control-label">石油类</label>
-						<div class="col-sm-4">
-							<input type="number" class="form-control input-sm" ng-model="sampling.OIL" name="OIL"
-								   placeholder="水质采样所代表的石油类，单位：mg/L">
-						</div>
-					</div>
-					<div class="form-group">
-						<label class="col-sm-2 control-label">挥发酚</label>
-						<div class="col-sm-4">
-							<input type="number" class="form-control input-sm" ng-model="sampling.SE" name="SE"
-								   placeholder="水质采样所代表的挥发酚，单位：mg/L">
-						</div>
-						<label class="col-sm-2 control-label">苯</label>
-						<div class="col-sm-4">
-							<input type="number" class="form-control input-sm" ng-model="sampling.BEN" name="BEN"
-								   placeholder="水质采样所代表的苯，单位：mg/L">
-						</div>
-					</div>
-					<div class="form-group">
 						<label class="col-sm-2 control-label">三氯乙醛</label>
 						<div class="col-sm-4">
 							<input type="number" class="form-control input-sm" ng-model="sampling.SLYQ" name="SLYQ"
 								   placeholder="水质采样所代表的三氯乙醛，单位：mg/L">
-						</div>
-						<label class="col-sm-2 control-label">丙烯醛</label>
-						<div class="col-sm-4">
-							<input type="number" class="form-control input-sm" ng-model="sampling.BXQ" name="BXQ"
-								   placeholder="水质采样所代表的丙烯醛，单位：mg/L">
-						</div>
-					</div>
-					<div class="form-group">
-						<label class="col-sm-2 control-label">硼</label>
-						<div class="col-sm-4">
-							<input type="number" class="form-control input-sm" ng-model="sampling.B" name="B"
-								   placeholder="水质采样所代表的硼，单位：mg/L">
 						</div>
 						<label class="col-sm-2 control-label">蛔虫卵数</label>
 						<div class="col-sm-4">
@@ -234,6 +112,125 @@
 						<div class="col-sm-4">
 							<input type="number" class="form-control input-sm" ng-model="sampling.FCG" name="FCG"
 								   placeholder="水质采样所代表的粪大肠菌群数，单位：个/L">
+						</div>
+					</div>
+					<div class="form-group">
+						<label class="col-sm-1 control-label">水温</label>
+						<div class="col-sm-3">
+							<input type="number" class="form-control input-sm" ng-model="sampling.WT" name="WT"
+								   placeholder="水质采样所代表的水温，单位：℃">
+						</div>
+						<label class="col-sm-1 control-label">pH值</label>
+						<div class="col-sm-3">
+							<input type="number" class="form-control input-sm" ng-model="sampling.PH" name="PH"
+								   placeholder="水质采样所代表的pH值，单位：无">
+						</div>
+						<label class="col-sm-1 control-label">总汞</label>
+						<div class="col-sm-3">
+							<input type="number" class="form-control input-sm" ng-model="sampling.HG" name="HG"
+								   placeholder="水质采样所代表的总汞，单位：mg/L">
+						</div>
+					</div>
+					<div class="form-group">
+						<label class="col-sm-1 control-label">总镉</label>
+						<div class="col-sm-3">
+							<input type="number" class="form-control input-sm" ng-model="sampling.CD" name="CD"
+								   placeholder="水质采样所代表的总镉，单位：mg/L">
+						</div>
+						<label class="col-sm-1 control-label">总砷</label>
+						<div class="col-sm-3">
+							<input type="number" class="form-control input-sm" ng-model="sampling.ARS" name="ARS"
+								   placeholder="水质采样所代表的总砷，单位：mg/L">
+						</div>
+						<label class="col-sm-1 control-label">总铅</label>
+						<div class="col-sm-3">
+							<input type="number" class="form-control input-sm" ng-model="sampling.PB" name="PB"
+								   placeholder="水质采样所代表的总铅，单位：mg/L">
+						</div>
+					</div>
+					<div class="form-group">
+						<label class="col-sm-1 control-label">总铜</label>
+						<div class="col-sm-3">
+							<input type="number" class="form-control input-sm" ng-model="sampling.CU" name="CU"
+								   placeholder="水质采样所代表的总铜，单位：mg/L">
+						</div>
+						<label class="col-sm-1 control-label">总锌</label>
+						<div class="col-sm-3">
+							<input type="number" class="form-control input-sm" ng-model="sampling.ZN" name="ZN"
+								   placeholder="水质采样所代表的总锌，单位：mg/L">
+						</div>
+						<label class="col-sm-1 control-label">总硒</label>
+						<div class="col-sm-3">
+							<input type="number" class="form-control input-sm" ng-model="sampling.SE" name="SE"
+								   placeholder="水质采样所代表的总硒，单位：mg/L">
+						</div>
+					</div>
+					<div class="form-group">
+						<label class="col-sm-1 control-label">硫化物</label>
+						<div class="col-sm-3">
+							<input type="number" class="form-control input-sm" ng-model="sampling.S2" name="S2"
+								   placeholder="水质采样所代表的硫化物，单位：mg/L">
+						</div>
+						<label class="col-sm-1 control-label">悬浮物</label>
+						<div class="col-sm-3">
+							<input type="number" class="form-control input-sm" ng-model="sampling.SS" name="SS"
+								   placeholder="水质采样所代表的悬浮物，单位：mg/L">
+						</div>
+						<label class="col-sm-1 control-label">全盐量</label>
+						<div class="col-sm-3">
+							<input type="number" class="form-control input-sm" ng-model="sampling.SO" name="SO"
+								   placeholder="水质采样所代表的全盐量，单位：mg/L">
+						</div>
+					</div>
+					<div class="form-group">
+						<label class="col-sm-1 control-label">氯化物</label>
+						<div class="col-sm-3">
+							<input type="number" class="form-control input-sm" ng-model="sampling.CL" name="CL"
+								   placeholder="水质采样所代表的氯化物，单位：mg/L">
+						</div>
+						<label class="col-sm-1 control-label">六价铬</label>
+						<div class="col-sm-3">
+							<input type="number" class="form-control input-sm" ng-model="sampling.CR6" name="CR6"
+								   placeholder="水质采样所代表的六价铬，单位：mg/L">
+						</div>
+						<label class="col-sm-1 control-label">氟化物</label>
+						<div class="col-sm-3">
+							<input type="number" class="form-control input-sm" ng-model="sampling.F" name="F"
+								   placeholder="水质采样所代表的氟化物，单位：mg/L">
+						</div>
+					</div>
+					<div class="form-group">
+						<label class="col-sm-1 control-label">丙烯醛</label>
+						<div class="col-sm-3">
+							<input type="number" class="form-control input-sm" ng-model="sampling.BXQ" name="BXQ"
+								   placeholder="水质采样所代表的丙烯醛，单位：mg/L">
+						</div>
+						<label class="col-sm-1 control-label">苯</label>
+						<div class="col-sm-3">
+							<input type="number" class="form-control input-sm" ng-model="sampling.BEN" name="BEN"
+								   placeholder="水质采样所代表的苯，单位：mg/L">
+						</div>
+						<label class="col-sm-1 control-label">硼</label>
+						<div class="col-sm-3">
+							<input type="number" class="form-control input-sm" ng-model="sampling.B" name="B"
+								   placeholder="水质采样所代表的硼，单位：mg/L">
+						</div>
+					</div>
+					<div class="form-group">
+						<label class="col-sm-1 control-label">氰化物</label>
+						<div class="col-sm-3">
+							<input type="number" class="form-control input-sm" ng-model="sampling.CN" name="CN"
+								   placeholder="水质采样所代表的氰化物，单位：mg/L">
+						</div>
+						<label class="col-sm-1 control-label">石油类</label>
+						<div class="col-sm-3">
+							<input type="number" class="form-control input-sm" ng-model="sampling.OIL" name="OIL"
+								   placeholder="水质采样所代表的石油类，单位：mg/L">
+						</div>
+						<label class="col-sm-1 control-label">挥发酚</label>
+						<div class="col-sm-3">
+							<input type="number" class="form-control input-sm" ng-model="sampling.SE" name="SE"
+								   placeholder="水质采样所代表的挥发酚，单位：mg/L">
 						</div>
 					</div>
 				</div>

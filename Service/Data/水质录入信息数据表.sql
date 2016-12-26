@@ -125,8 +125,17 @@ GO
 -- Create date: <Create Date,,>
 -- Description:	<Description,,>
 -- =============================================
-IF EXISTS(SELECT TABLE_NAME FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_NAME = 'ST_AWQMD_D')
-	DROP TABLE [dbo].[ST_AWQMD_D]
+USE [master]
+GO
+
+/****** Object:  Table [dbo].[ST_AWQMD_D]    Script Date: 12/26/2016 12:44:55 ******/
+SET ANSI_NULLS ON
+GO
+
+SET QUOTED_IDENTIFIER ON
+GO
+
+SET ANSI_PADDING ON
 GO
 
 CREATE TABLE [dbo].[ST_AWQMD_D](
@@ -159,12 +168,13 @@ CREATE TABLE [dbo].[ST_AWQMD_D](
 	[B] [numeric](4, 2) NULL,
 	[FCG] [numeric](10, 0) NULL,
 	[AO] [numeric](10, 0) NULL,
+	[anomaly] [text] NULL,
 	CONSTRAINT [PK_ST_AWQMD_D] PRIMARY KEY CLUSTERED
 		(
 			[STCD] ASC,
 			[TM] ASC
 		)WITH (PAD_INDEX  = OFF, STATISTICS_NORECOMPUTE  = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS  = ON, ALLOW_PAGE_LOCKS  = ON) ON [PRIMARY]
-) ON [PRIMARY]
+) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
 
 GO
 
@@ -257,4 +267,3 @@ GO
 
 EXEC sys.sp_addextendedproperty @name=N'MS_Description', @value=N'水质监测数据记录表' , @level0type=N'SCHEMA',@level0name=N'dbo', @level1type=N'TABLE',@level1name=N'ST_AWQMD_D'
 GO
-

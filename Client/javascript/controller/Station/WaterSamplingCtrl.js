@@ -55,11 +55,17 @@ define(function (require){
 				templateUrl: 'actionModalContent.html',
 				controller: function($scope, list, $uibModalInstance){
 					if(param =='add'){
+						$scope.promise = xhr.service('post', {action: 'station', module: 'getLists', op: 'WaterStation', data: JSON.stringify($scope.station)}, function(resp){
+							$scope.station =resp.data;
+						});
 						$scope.sampling = {}
+						$scope.sampling.TM = new Date();
 						$scope.action = '新增';
 					}else{
-						$scope.promise = xhr.service('post', {action: 'station', module: 'infoData', op: 'WaterStation', data: id}, function(resp){
+						$scope.promise = xhr.service('post', {action: 'station', module: 'infoData', op: 'WaterSampling', data: id}, function(resp){
+							$scope.station =resp.station;
 							$scope.sampling =resp.data;
+							$scope.sampling.TM = new Date(resp.data.TM);
 						});
 						$scope.action = '编辑';
 					}
