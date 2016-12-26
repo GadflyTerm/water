@@ -59,7 +59,7 @@ class StationModel extends Model{
 				'type'	=> 'Success',
 				'msg'	=> '水质测站数据添加成功！',
 				'param'	=> $param,
-				'sql'	=> $this->getLastSql(),
+				'data'	=> $param['data'],
 			);
 		}else{
 			return array(
@@ -78,5 +78,12 @@ class StationModel extends Model{
 	
 	public function delWater(){}
 	
-	public function listWater(){}
+	public function listWater(){
+		$this->tableName = 'ST_SWSINF_B';
+		return array(
+			'type'	=> 'Success',
+			'msg'	=> '水质测站列表数据查询成功！',
+			'data'	=> $this->select(),
+		);
+	}
 }
