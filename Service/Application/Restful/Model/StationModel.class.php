@@ -80,10 +80,15 @@ class StationModel extends Model{
 	
 	public function listWater(){
 		$this->tableName = 'ST_SWSINF_B';
+		foreach ($this->select() AS $key => $val){
+			foreach ($val AS $k => $vo){
+				$data[$key][strtoupper($k)] = $vo;
+			}
+		}
 		return array(
 			'type'	=> 'Success',
 			'msg'	=> '水质测站列表数据查询成功！',
-			'data'	=> $this->select(),
+			'data'	=> $data,
 		);
 	}
 }
