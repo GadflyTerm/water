@@ -54,7 +54,7 @@ class StationModel extends Model{
 			array('LGTD', 'require', '测站经度必须填写！'),
 			array('LTTD', 'require', '测站纬度必须填写！'),
 		);
-		if($this->validate($rules)->create($param) && $this->add()){
+		if($this->add()){
 			return array(
 				'type'	=> 'Success',
 				'msg'	=> '水质测站数据添加成功！',
