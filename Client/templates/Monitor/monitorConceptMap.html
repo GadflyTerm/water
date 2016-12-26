@@ -1,0 +1,124 @@
+
+<ng-include src="template.quick_sidebar"></ng-include>
+
+<div class="col-md-12">
+	<div class="panel panel-warning">
+		<div class="panel-heading">
+			<div class="row">
+				<h4 class="col-md-10"><i class="fa fa-list-alt"></i> 水库报表管理</h4>
+				<div class="col-md-2 col-sm-2 col-xs-2 text-right">
+					<a href="" class="btn">导出数据 <i class="fa fa-mail-forward"></i></a>
+				</div>
+			</div>
+		</div>
+		<div class="panel-body">
+			<!--=== 选择 ===-->
+			<div class="row">
+				<div class="col-md-12 text-right mb5">
+					<a class="btn btn-default ml3" ng-repeat="item in Tcate">
+						{{item.text}}报表
+					</a>
+				</div>
+				<div class="col-md-3 col-md-offset-6 col-sm-4 col-xs-4">
+					<div class="select">
+						<form action="" class="form-horizontal">
+							<div class="form-group">
+								<lable class="col-md-3 col-sm-3 col-xs-4 control-label">水库</lable>
+								<div class="col-md-9 col-sm-9 col-xs-8">
+									<select name="请选择水库" class="form-control" >
+										<option ng-repeat="li in lists"  value="请选择水库">{{li.rsvname}}</option>
+									</select>
+								</div>
+							</div>
+						</form>
+					</div>
+				</div>
+				<div class="col-md-3 col-sm-4 col-xs-4">
+					<div class="input-group input-medium date date-picker"
+						 data-date="12-02-2012"
+						 data-date-format="dd-mm-yyyy"
+						 data-date-viewmode="years">
+						<input type="text" class="form-control" readonly>
+						<span class="input-group-btn">
+							<button class="btn default" type="button"><i class="fa fa-calendar"></i></button>
+						</span>
+					</div>
+					<!--<div class="select">-->
+						<!--<form action="" class="form-horizontal">-->
+							<!--<div class="form-group">-->
+								<!--<lable for="select" class="col-md-3 col-sm-3 col-xs-4 control-label">选择月份</lable>-->
+								<!--<div class="col-md-9 col-sm-9 col-xs-8">-->
+									<!--<select class="form-control" id="select">-->
+										<!--<option>1月</option>-->
+										<!--<option>2月</option>-->
+										<!--<option>3月</option>-->
+										<!--<option>4月</option>-->
+										<!--<option>5月</option>-->
+										<!--<option>6月</option>-->
+										<!--<option>7月</option>-->
+										<!--<option>8月</option>-->
+										<!--<option>9月</option>-->
+										<!--<option>10月</option>-->
+										<!--<option>11月</option>-->
+										<!--<option>12月</option>-->
+									<!--</select>-->
+								<!--</div>-->
+							<!--</div>-->
+						<!--</form>-->
+					<!--</div>-->
+				</div>
+			</div>
+			<!--=== \ 选择 ===-->
+			<!--=== 表格 ===-->
+			<h2 class="text-center">{{vo.rsvname}}灌区管理月报表 </h2>
+			<table class="table table-bordered table-hover table-condensed">
+				<tr>
+					<th class="text-center">时间</th>
+					<th class="text-center">降雨量</th>
+					<th class="text-center">蒸发量</th>
+					<th class="text-center">库水位</th>
+					<th class="text-center">蓄水量</th>
+					<th class="text-center">总库容</th>
+					<th class="text-center">死库容</th>
+					<th class="text-center">可供水量</th>
+					<th class="text-center">进水量</th>
+					<th class="text-center">供水量</th>
+					<th class="text-center">排洪量</th>
+				</tr>
+				<tr ng-repeat="item in lists">
+					<td><a href="#">{{item.Time}}</a></td>
+					<td>{{vo.Rfall}}</td>
+					<td>{{vo.Ept}}</td>
+					<td>{{vo.WLevel}}</td>
+					<td>{{vo.Rsv}}</td>
+					<td>{{vo.TCPcity}}</td>
+					<td>{{vo.DCPcity}}</td>
+					<td>{{vo.AWSupply}}</td>
+					<td>{{vo.WIntake}}</td>
+					<td>{{vo.WSupply}}</td>
+					<td>{{vo.WOutake}}</td>
+				</tr>
+				<tr ng-if="Mlists.length == 0">
+					<td colspan="7" class="text-center">没有数据</td>
+				</tr>
+			</table>
+			<!--=== \ 表格 ===-->
+		</div>
+		
+		<div class="panel-footer">
+			<nav class="row">
+				<ul class="pagination pagination-sm pull-right" style="margin: 0; padding-right: 10px;">
+					<li><a href="#">第一页</a></li>
+					<li><a href="#">上一页</a></li>
+					<li><a href="#">1</a></li>
+					<li><a href="#">2</a></li>
+					<li><a href="#">3</a></li>
+					<li><a href="#">4</a></li>
+					<li><a href="#">5</a></li>
+					<li><a href="#">下一页</a></li>
+					<li><a href="#">最后一页</a></li>
+				</ul>
+			</nav>
+		</div>
+	</div>
+</div>
