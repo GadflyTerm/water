@@ -36,7 +36,7 @@ define(function (require){
 		$scope.$emit('nav', $scope.nav);
 		$scope.list = []
 		$scope.promise = xhr.service('post', {model: 'station', module: 'listWater'}, function(resp){
-			$scope.list = JSON.parse(resp.data);
+			$scope.list = resp.data;
 		});
 		$scope.action = function(param, id){
 			$uibModal.open({
