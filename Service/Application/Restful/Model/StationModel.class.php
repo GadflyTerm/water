@@ -42,7 +42,7 @@ class StationModel extends Model{
 		);
 	}
 	
-	public function addWater(){
+	public function addWater($param){
 		$this->tableName = 'ST_SWSINF_B';
 		$rules = array(
 			array('STCD', 'require', '测站代码必须填写！'),
@@ -54,12 +54,11 @@ class StationModel extends Model{
 			array('LGTD', 'require', '测站经度必须填写！'),
 			array('LTTD', 'require', '测站纬度必须填写！'),
 		);
-		$data = json_decode(I('post.data'), true);
-		if($this->validate($rules)->create($data) && $this->add()){
+		if($this->validate($rules)->create($param) && $this->add()){
 			return array(
 				'type'	=> 'Success',
 				'msg'	=> '水质测站数据添加成功！',
-				'param'	=> I('post.'),
+				'param'	=> $param,
 				'sql'	=> $this->getLastSql(),
 			);
 		}else{
@@ -68,7 +67,7 @@ class StationModel extends Model{
 				'msg'	=> '水质测站数据添加失败！'.$this->getError(),
 				'error'	=> $this->getError(),
 				'sql'	=> $this->getLastSql(),
-				'param'	=> I('post.'),
+				'param'	=> $param,
 			);
 		}
 	}
