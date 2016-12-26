@@ -11,10 +11,10 @@ return array(
 	'STATIC_PATH'           => dirname(APP_ROOT).'/static',
 	'UPLOAD_PATH'           => dirname(APP_ROOT).'/static',
 	
-	'TOKEN_ON'		=> true,
+	'TOKEN_ON'		=> false,
 	'TOKEN_NAME'	=> '__hash__',
 	'TOKEN_TYPE'	=> 'md5',
-	'TOKEN_RESET'	=> true,
+	'TOKEN_RESET'	=> false,
 	
 /*	'DB_TYPE'   		=> 'Sqlsrv', 			// 数据库类型
 	'DB_HOST'   		=> '114.55.231.186', 	// 服务器地址
