@@ -18,7 +18,7 @@ class AjaxController extends RestController{
 		header('Access-Control-Allow-Headers:x-requested-with,content-type');
 		header("Access-Control-Allow-Credentials: true");
 		$param = I('param.');
-		$param['data'] = I('param.data')?I('param.data', '', false):null;
+		$param['data'] = I('param.data')?json_decode(I('param.data', '', false), true):null;
 		switch ($this->_method){
 			case 'post':
 				$op = 'insert';
@@ -50,7 +50,7 @@ class AjaxController extends RestController{
 		if($action == 'angular'){
 			$msg = '系统在'.$model.'模型中没有找到'.$module.'方法';
 			if(method_exists(D($model), $module))
-				$return = call_user_func(array(D($model), $module), json_decode($param['data'], true));
+				$return = call_user_func(array(D($model), $module), $param);
 			else
 				$return = array('type' => 'Error', 'msg' => $msg);
 		}else{
