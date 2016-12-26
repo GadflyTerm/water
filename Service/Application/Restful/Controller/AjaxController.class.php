@@ -50,13 +50,13 @@ class AjaxController extends RestController{
 		if($action == 'angular'){
 			$msg = '系统在'.$model.'模型中没有找到'.$module.'方法';
 			if(method_exists(D($model), $module))
-				$return = call_user_func(array(D($model), $module), $param);
+				$return = call_user_func(array(D($model), $module), json_decode($param['data'], true));
 			else
 				$return = array('type' => 'Error', 'msg' => $msg);
 		}else{
 			$msg = '系统在'.$action.'控制器中没有找到'.$module.'方法';
 			if(method_exists(A($action), $module))
-				$return = call_user_func(array(A($action), $module), json_decode($param['data'], true));
+				$return = call_user_func(array(A($action), $module), $param);
 			else
 				$return = array('type' => 'Error', 'msg' => $msg);
 		}
