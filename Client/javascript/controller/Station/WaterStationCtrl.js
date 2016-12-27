@@ -37,6 +37,7 @@ define(function (require){
 
 		$scope.currentPage =1;		// 初始当前页
 		$scope.allitem=[];			// 存放所有页
+		$scope.numPages = 25;
 		$scope.promise = xhr.service('post', {model: 'station', module: 'listWater'}, function(resp){
 			var num= resp.data.length;
 			$scope.totalItems =num;	// 共有多少条数据
