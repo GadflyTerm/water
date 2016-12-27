@@ -64,7 +64,7 @@ define(function (require){
 						$scope.action = '新增';
 					}else{
 						$scope.station = {}
-						$scope.promise = xhr.service('post', {model: 'station', module: 'infoWater', data: {STCD: stcd}}, function(resp){
+						$scope.promise = xhr.service('post', {model: 'station', module: 'infoWater', data: JSON.stringify({STCD: stcd})}, function(resp){
 							$scope.station =resp.data;
 							$scope.isShow = {
 								ASRL: ($scope.station.WATP=='1')?true:false,
