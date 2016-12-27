@@ -161,8 +161,8 @@ define(function (require){
 				html: false
 			}, function(){
 				$scope.promise = xhr.service('post', {model: 'station', module: 'delWater', data: JSON.stringify({STCD: stcd})}, function(resp){
-					$scope.list =resp.data;
 					if(resp.type == 'Success'){
+						$state.reload();
 						swal("删除成功!", "您已经成功删除了一条水质采样测站数据", "success");
 					}
 				});
