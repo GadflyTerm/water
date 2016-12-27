@@ -45,8 +45,7 @@ define(function (require){
 				$scope.allitem.push(resp.data.slice(i, i+$scope.numPages))
 			}//此方法可以将一个数组分成多个数组并且放在了一个大数组里面，按每个数组10条数据【因为组件默认为10条数据一页】存放，假如41条数据的话我们将分成5页
 		});
-		console.log($scope);
-		$scope.action = function(param, id){
+		$scope.action = function(param, stcd){
 			$uibModal.open({
 				animation: true,
 				size: 'lg',
@@ -65,7 +64,7 @@ define(function (require){
 						$scope.action = '新增';
 					}else{
 						$scope.station = {}
-						$scope.promise = xhr.service('post', {action: 'station', module: 'infoData', op: 'WaterStation', data: id}, function(resp){
+						$scope.promise = xhr.service('post', {model: 'station', module: 'infoWater', data: {STCD: stcd}}, function(resp){
 							$scope.station =resp.data;
 							$scope.isShow = {
 								ASRL: ($scope.station.WATP=='1')?true:false,
@@ -107,14 +106,14 @@ define(function (require){
 					}
 					$scope.submit = function () {
 						if(param =='add'){
-							$scope.promise = xhr.service('post', {model: 'station', module: 'addWater', op: 'WaterStation', data: JSON.stringify($scope.station)}, function(resp){
+							$scope.promise = xhr.service('post', {model: 'station', module: 'addWater', data: JSON.stringify($scope.station)}, function(resp){
 								if(resp.type == 'Success'){
 									list.push(resp.data);
 									$uibModalInstance.close();
 								}
 							});
 						}else{
-							$scope.promise = xhr.service('post', {model: 'station', module: 'editWater', op: 'WaterStation', data: JSON.stringify($scope.station)}, function(resp){
+							$scope.promise = xhr.service('post', {model: 'station', module: 'editWater', data: JSON.stringify($scope.station)}, function(resp){
 								if(resp.type == 'Success'){
 									$scope.list = resp.data;
 									$uibModalInstance.close();
@@ -135,7 +134,7 @@ define(function (require){
 				}
 			});
 		}
-		$scope.del = function(id){
+		$scope.del = function(stcd){
 			swal({
 				title: "您真的确认要删除数据吗？",
 				text: "这是一条非常重要的水质采样测站数据，删除后将无法恢复!",
@@ -146,7 +145,7 @@ define(function (require){
 				closeOnConfirm: false,
 				html: false
 			}, function(){
-				$scope.promise = xhr.service('post', {action: 'station', module: 'delData', op: 'WaterStation', data: id}, function(resp){
+				$scope.promise = xhr.service('post', {model: 'station', module: 'delWater', data: {STCD: stcd}}, function(resp){
 					$scope.list =resp.data;
 					if(resp.type == 'Success'){
 						swal("删除成功!", "您已经成功删除了一条水质采样测站数据", "success");
