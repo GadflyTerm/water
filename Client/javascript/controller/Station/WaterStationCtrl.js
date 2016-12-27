@@ -123,14 +123,14 @@ define(function (require){
 						if(param =='add'){
 							$scope.promise = xhr.service('post', {model: 'station', module: 'addWater', data: JSON.stringify($scope.station)}, function(resp){
 								if(resp.type == 'Success'){
-									list.push(resp.data);
+									$state.reload();
 									$uibModalInstance.close();
 								}
 							});
 						}else{
 							$scope.promise = xhr.service('post', {model: 'station', module: 'editWater', data: JSON.stringify($scope.station)}, function(resp){
 								if(resp.type == 'Success'){
-									$state.reload()
+									$state.reload();
 									$uibModalInstance.close();
 								}
 							});
