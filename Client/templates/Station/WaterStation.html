@@ -78,12 +78,12 @@
 					<div class="form-group">
 						<label class="col-sm-2 control-label">测站编码</label>
 						<div class="col-sm-4" ng-class="{true: 'has-error', false: 'has-success'}[theForm.STCD.$invalid]">
-							<input type="text" class="form-control input-sm" ng-model="station.STCD" name="STCD" 
+							<input type="text" class="form-control input-sm" ng-model="station.STCD" name="STCD" ng-disabled="isShow.STCD"
 								   placeholder="由数字和大写字母组成的8位唯一字符串" ng-minlength="8" ng-maxlength="8" required>
 						</div>
 						<label class="col-sm-2 control-label">测站名称</label>
 						<div class="col-sm-4" ng-class="{true: 'has-error', false: 'has-success'}[theForm.STNM.$invalid]">
-							<input type="text" class="form-control input-sm" ng-model="station.STNM" name="STNM" 
+							<input type="text" class="form-control input-sm" ng-model="station.STNM" name="STNM" ng-disabled="isShow.STNM"
 								   placeholder="测站编码所代表测站的中文名称" required>
 						</div>
 					</div>

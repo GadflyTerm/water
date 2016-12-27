@@ -57,6 +57,8 @@ define(function (require){
 							WSFL: '2'
 						};
 						$scope.isShow = {
+							STCD: false,
+							STNM: false,
 							ASRL: true,
 							ASAR: false,
 							ASRC: false
@@ -78,6 +80,8 @@ define(function (require){
 								ASRC: parseFloat(resp.data.ASRC),
 							}
 							$scope.isShow = {
+								STCD: true,
+								STNM: true,
 								ASRL: ($scope.station.WATP=='1')?true:false,
 								ASAR: ($scope.station.WATP=='2')?true:false,
 								ASRC: ($scope.station.WATP=='3')?true:false

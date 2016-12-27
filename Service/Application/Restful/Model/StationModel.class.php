@@ -76,9 +76,7 @@ class StationModel extends CommonModel{
 		$this->tableName = 'ST_SWSINF_B';
 		$validate = array(
 			array('STCD', 'require', '测站代码必须填写！'),
-			array('STCD', '', '测站代码已经存在！', 0, 'unique', 1),
 			array('STNM', 'require', '测站名称必须填写！'),
-			array('STNM', '', '测站名称已经存在！', 0, 'unique', 1),
 			array('STCT', 'require', '测站类别必须选择！'),
 			array('WATP', 'require', '水域类型必须选择！'),
 			array('LGTD', 'require', '测站经度必须填写！'),
