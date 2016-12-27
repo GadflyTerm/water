@@ -4,49 +4,22 @@
  */
 define(function (require){
 	var app = require('../../app');
-	app.filter('stationType', function(){
-		return function(param){
-			switch(param){
-				case '1':
-					return '地表水水质站';
-				case '2':
-					return '地下水水质站';
-				case '3':
-					return '大气降水水质站'
-			}
-		}
-	});
-	app.filter('waterType', function(){
-		return function(param){
-			switch(param){
-				case '1':
-					return '河流';
-				case '2':
-					return '湖泊';
-				case '3':
-					return '水库'
-			}
-		}
-	});
-	app.filter('headwaterType', function(){
-		return function(param){
-			switch(param){
-				case '1':
-					return '水源地水质站';
-				case '2':
-					return '非水源地水质站'
-			}
-		}
-	});
-	app.controller('WaterSamplingCtrl', function($scope, $log, $uibModal, xhr){
+	app.controller('WaterSamplingCtrl', function($scope, $log, $uibModal, $state, xhr){
 		$scope.nav = {
 			home: {title: '首页', url: 'Home'},
 			library: {title: '水质采样数据列表', url: ''},
 		}
 		$scope.$emit('nav', $scope.nav);
-		$scope.list = []
-		$scope.promise = xhr.service('post', {action: 'station', module: 'getLists', op: 'WaterSampling', data: JSON.stringify($scope.station)}, function(resp){
-			$scope.list =resp.data;
+
+		$scope.currentPage =1;		// 初始当前页
+		$scope.allitem=[];			// 存放所有页
+		$scope.numPages = 25;
+		$scope.promise = xhr.service('post', {model: 'Sampling', module: 'waterList'}, function(resp){
+			var num= resp.data.length;
+			$scope.totalItems =num;	// 共有多少条数据
+			for(var i=0; i<num; i+=$scope.numPages){
+				$scope.allitem.push(resp.data.slice(i, i+$scope.numPages));
+			}//此方法可以将一个数组分成多个数组并且放在了一个大数组里面，按每个数组10条数据【因为组件默认为10条数据一页】存放，假如41条数据的话我们将分成5页
 		});
 		$scope.action = function(param, id){
 			$uibModal.open({
@@ -55,29 +28,66 @@ define(function (require){
 				templateUrl: 'actionModalContent.html',
 				controller: function($scope, list, $uibModalInstance){
 					if(param =='add'){
-						$scope.promise = xhr.service('post', {action: 'station', module: 'getLists', op: 'WaterStation', data: JSON.stringify($scope.station)}, function(resp){
+						$scope.promise = xhr.service('post', {model: 'station', module: 'listWater'}, function(resp){
 							$scope.station =resp.data;
 						});
 						$scope.sampling = {}
 						$scope.sampling.TM = new Date();
+						$scope.isShow = {
+							STCD: false,
+							TM: false,
+						}
 						$scope.action = '新增';
 					}else{
-						$scope.promise = xhr.service('post', {action: 'station', module: 'infoData', op: 'WaterSampling', data: id}, function(resp){
+						$scope.promise = xhr.service('post', {model: 'Sampling', module: 'waterInfo', data: {id: id}}, function(resp){
 							$scope.station =resp.station;
-							$scope.sampling =resp.data;
-							$scope.sampling.TM = new Date(resp.data.TM);
+							$scope.sampling = {
+								STCD: resp.data.STCD,
+								TM: new Date(resp.data.TM),
+								CODCR: Number(resp.data.CODCR),
+								LAS: Number(resp.data.LAS),
+								SLYQ: Number(resp.data.SLYQ),
+								AO: Number(resp.data.AO),
+								BOD5: Number(resp.data.BOD5),
+								FCG: Number(resp.data.FCG),
+								WT: Number(resp.data.WT),
+								PH: Number(resp.data.PH),
+								HG: Number(resp.data.HG),
+								CD: Number(resp.data.CD),
+								ARS: Number(resp.data.ARS),
+								PB: Number(resp.data.PB),
+								CU: Number(resp.data.CU),
+								ZN: Number(resp.data.ZN),
+								SE: Number(resp.data.SE),
+								S2: Number(resp.data.S2),
+								SS: Number(resp.data.SS),
+								SO: Number(resp.data.SO),
+								CL: Number(resp.data.CL),
+								CR6: Number(resp.data.CR6),
+								F: Number(resp.data.F),
+								BXQ: Number(resp.data.BXQ),
+								BEN: Number(resp.data.BEN),
+								B: Number(resp.data.B),
+								CN: Number(resp.data.CN),
+								OIL: Number(resp.data.OIL),
+								SE: Number(resp.data.SE),
+							};
 						});
+						$scope.isShow = {
+							STCD: true,
+							TM: true,
+						}
 						$scope.action = '编辑';
 					}
 					$scope.submit = function () {
 						if(param =='add'){
-							$scope.promise = xhr.service('post', {action: 'station', module: 'addData', op: 'WaterSampling', data: JSON.stringify($scope.sampling)}, function(resp){
-								list.push(resp.data);
+							$scope.promise = xhr.service('post', {model: 'Sampling', module: 'waterAdd', data: $scope.sampling}, function(resp){
+								$state.reload();
 								$uibModalInstance.close();
 							});
 						}else{
-							$scope.promise = xhr.service('post', {action: 'station', module: 'editData', op: 'WaterSampling', data: JSON.stringify($scope.sampling)}, function(resp){
-								$scope.list =resp.data;
+							$scope.promise = xhr.service('post', {model: 'Sampling', module: 'waterEdit', data: $scope.sampling}, function(resp){
+								$state.reload();
 								$uibModalInstance.close();
 							});
 						}
@@ -106,9 +116,9 @@ define(function (require){
 				closeOnConfirm: false,
 				html: false
 			}, function(){
-				$scope.promise = xhr.service('post', {action: 'station', module: 'delData', op: 'WaterSampling', data: id}, function(resp){
-					$scope.list =resp.data;
+				$scope.promise = xhr.service('post', {model: 'Sampling', module: 'waterDel', data: {id: id}}, function(resp){
 					if(resp.type == 'Success'){
+						$state.reload();
 						swal("删除成功!", "您已经成功删除了一条水质采样数据", "success");
 					}
 				});

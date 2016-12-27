@@ -25,7 +25,7 @@
 									</button>
 								</th>
 							</tr>
-							<tr ng-repeat="vo in list">
+							<tr ng-repeat="vo in allitem[currentPage-1]">
 								<td>{{vo.STCD}}</td>
 								<td>{{vo.STNM}}</td>
 								<td>{{vo.STCT|stationType}}</td>
@@ -48,6 +48,26 @@
 									</div>
 								</td>
 							</tr>
+							<tr>
+								<td colspan="7" class="test-right">
+									<uib-pagination class="pagination-sm embed-responsive-item"
+													total-items="totalItems"
+													ng-model="currentPage"
+													previous-text="上一页"
+													next-text="下一页"
+													first-text="首页"
+													last-text="尾页"
+													force-ellipses="'3'"
+													boundary-links="true"
+													boundary-link-numbers="true"
+													max-size="3"
+													rotate="false"
+													num-pages="'25'"
+									>
+									</uib-pagination>
+								</td>
+								<td></td>
+							</tr>
 						</table>
 					</div>
 				</div>
@@ -67,15 +87,15 @@
 					<div class="form-group">
 						<label class="col-sm-2 control-label">测站编码</label>
 						<div class="col-sm-4" ng-class="{true: 'has-error', false: 'has-success'}[theForm.STCD.$invalid]">
-							<select class="form-control input-sm" ng-model="sampling.STCD" name="STCD" 
-									ng-options="item.STCD as (item.STNM + '-[' + item.STCD + ']') for item in station" 
-									required>
+							<select class="form-control input-sm" ng-model="sampling.STCD" name="STCD" ng-disabled="isShow.STCD"
+									ng-options="item.STCD as (item.STNM + '-[' + item.STCD + ']') for item in station" required>
 								<option value="">请选择一个水质测站</option>
 							</select>
 						</div>
 						<label class="col-sm-2 control-label">采集日期</label>
 						<div class="col-sm-4" ng-class="{true: 'has-error', false: 'has-success'}[theForm.WT.$invalid]">
-							<input type="datetime-local" class="form-control input-sm" ng-model="sampling.TM" name="TM" required>
+							<input type="datetime-local" class="form-control input-sm" ng-model="sampling.TM" 
+								   name="TM"  ng-disabled="isShow.TM" required>
 						</div>
 					</div>
 					<div class="form-group">

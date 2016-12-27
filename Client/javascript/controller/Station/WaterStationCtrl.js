@@ -42,7 +42,7 @@ define(function (require){
 			var num= resp.data.length;
 			$scope.totalItems =num;	// 共有多少条数据
 			for(var i=0; i<num; i+=$scope.numPages){
-				$scope.allitem.push(resp.data.slice(i, i+$scope.numPages))
+				$scope.allitem.push(resp.data.slice(i, i+$scope.numPages));
 			}//此方法可以将一个数组分成多个数组并且放在了一个大数组里面，按每个数组10条数据【因为组件默认为10条数据一页】存放，假如41条数据的话我们将分成5页
 		});
 		$scope.action = function(param, stcd){

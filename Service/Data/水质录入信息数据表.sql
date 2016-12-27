@@ -138,7 +138,12 @@ GO
 SET ANSI_PADDING ON
 GO
 
+IF EXISTS(SELECT TABLE_NAME FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_NAME = 'ST_AWQMD_D')
+	DROP TABLE [dbo].[ST_AWQMD_D]
+GO
+
 CREATE TABLE [dbo].[ST_AWQMD_D](
+	[id] [int] IDENTITY(1,1) NOT NULL,
 	[STCD] [char](8) NOT NULL,
 	[TM] [datetime] NOT NULL,
 	[WT] [numeric](3, 1) NULL,
@@ -168,9 +173,10 @@ CREATE TABLE [dbo].[ST_AWQMD_D](
 	[B] [numeric](4, 2) NULL,
 	[FCG] [numeric](10, 0) NULL,
 	[AO] [numeric](10, 0) NULL,
-	[anomaly] [text] NULL,
+	[ANOMALY] [text] NULL,
 	CONSTRAINT [PK_ST_AWQMD_D] PRIMARY KEY CLUSTERED
 		(
+			[id] ASC,
 			[STCD] ASC,
 			[TM] ASC
 		)WITH (PAD_INDEX  = OFF, STATISTICS_NORECOMPUTE  = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS  = ON, ALLOW_PAGE_LOCKS  = ON) ON [PRIMARY]
@@ -263,6 +269,9 @@ EXEC sys.sp_addextendedproperty @name=N'MS_Description', @value=N'粪大肠菌�
 GO
 
 EXEC sys.sp_addextendedproperty @name=N'MS_Description', @value=N'蛔虫卵数' , @level0type=N'SCHEMA',@level0name=N'dbo', @level1type=N'TABLE',@level1name=N'ST_AWQMD_D', @level2type=N'COLUMN',@level2name=N'AO'
+GO
+
+EXEC sys.sp_addextendedproperty @name=N'MS_Description', @value=N'水质异常分析' , @level0type=N'SCHEMA',@level0name=N'dbo', @level1type=N'TABLE',@level1name=N'ST_AWQMD_D', @level2type=N'COLUMN',@level2name=N'ANOMALY'
 GO
 
 EXEC sys.sp_addextendedproperty @name=N'MS_Description', @value=N'水质监测数据记录表' , @level0type=N'SCHEMA',@level0name=N'dbo', @level1type=N'TABLE',@level1name=N'ST_AWQMD_D'
