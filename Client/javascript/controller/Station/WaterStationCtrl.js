@@ -28,7 +28,7 @@ define(function (require){
 			}
 		}
 	});
-	app.controller('WaterStationCtrl', function($scope, $log, $uibModal, xhr){
+	app.controller('WaterStationCtrl', function($scope, $log, $uibModal, $state, xhr){
 		$scope.nav = {
 			home: {title: '首页', url: 'Home'},
 			library: {title: '水质采样测站列表', url: ''},
@@ -130,7 +130,7 @@ define(function (require){
 						}else{
 							$scope.promise = xhr.service('post', {model: 'station', module: 'editWater', data: JSON.stringify($scope.station)}, function(resp){
 								if(resp.type == 'Success'){
-									$scope.list = resp.data;
+									$state.reload()
 									$uibModalInstance.close();
 								}
 							});
