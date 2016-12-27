@@ -65,7 +65,18 @@ define(function (require){
 					}else{
 						$scope.station = {}
 						$scope.promise = xhr.service('post', {model: 'station', module: 'infoWater', data: JSON.stringify({STCD: stcd})}, function(resp){
-							$scope.station =resp.data;
+							$scope.station = resp.data;
+							$scope.station = {
+								STCD: resp.data.STCD,
+								STNM: resp.data.STNM,
+								STCT: resp.data.STCT,
+								WATP: resp.data.WATP,
+								LGTD: parseFloat(resp.data.LGTD),
+								LTTD: parseFloat(resp.data.LTTD),
+								ASRL: parseFloat(resp.data.ASRL),
+								ASAR: parseFloat(resp.data.ASAR),
+								ASRC: parseFloat(resp.data.ASRC),
+							}
 							$scope.isShow = {
 								ASRL: ($scope.station.WATP=='1')?true:false,
 								ASAR: ($scope.station.WATP=='2')?true:false,

@@ -326,7 +326,7 @@ class CommonModel extends Model{
 				if(!$data || is_null($data))
 					$return = array('type' => 'Error', 'msg' => '对数据库的查询发生错误：'.$model->getError());
 				else
-					$return = array('type' => 'Success', 'msg' => $curd['msg'], 'ac' => 'getField', 'data' => $data);
+					$return = array('type' => 'Success', 'msg' => $curd['msg'], 'ac' => 'getField', 'field' => $param['field'], 'value' => $data);
 				break;
 			case 'setField':
 				$data = $model->setField($param['field'], $param['data']);
