@@ -169,6 +169,8 @@ define(function (require){
 					cache: false,
 					timeout: 30000,
 				}
+				if(!isNull(param.data))
+					param.data = (typeof param.data == 'object')?JSON.stringify(param.data):param.data
 				switch(method.toLowerCase()){
 					case 'get':
 					case 'delete':

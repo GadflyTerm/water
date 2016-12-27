@@ -66,7 +66,7 @@ define(function (require){
 						$scope.action = '新增';
 					}else{
 						$scope.station = {}
-						$scope.promise = xhr.service('post', {model: 'station', module: 'infoWater', data: JSON.stringify({STCD: stcd})}, function(resp){
+						$scope.promise = xhr.service('post', {model: 'station', module: 'infoWater', data: {STCD: stcd}}, function(resp){
 							$scope.station = resp.data;
 							$scope.station = {
 								STCD: resp.data.STCD,
@@ -121,14 +121,14 @@ define(function (require){
 					}
 					$scope.submit = function () {
 						if(param =='add'){
-							$scope.promise = xhr.service('post', {model: 'station', module: 'addWater', data: JSON.stringify($scope.station)}, function(resp){
+							$scope.promise = xhr.service('post', {model: 'station', module: 'addWater', data: $scope.station}, function(resp){
 								if(resp.type == 'Success'){
 									$state.reload();
 									$uibModalInstance.close();
 								}
 							});
 						}else{
-							$scope.promise = xhr.service('post', {model: 'station', module: 'editWater', data: JSON.stringify($scope.station)}, function(resp){
+							$scope.promise = xhr.service('post', {model: 'station', module: 'editWater', data: $scope.station}, function(resp){
 								if(resp.type == 'Success'){
 									$state.reload();
 									$uibModalInstance.close();
@@ -160,7 +160,7 @@ define(function (require){
 				closeOnConfirm: false,
 				html: false
 			}, function(){
-				$scope.promise = xhr.service('post', {model: 'station', module: 'delWater', data: JSON.stringify({STCD: stcd})}, function(resp){
+				$scope.promise = xhr.service('post', {model: 'station', module: 'delWater', data: {STCD: stcd}}, function(resp){
 					if(resp.type == 'Success'){
 						$state.reload();
 						swal("删除成功!", "您已经成功删除了一条水质采样测站数据", "success");
