@@ -1,11 +1,41 @@
 
 <div class="col-md-12">
-	<div class="col-md-12">
-		<!--quick sidebar-->
-		<a href="javascript:;" class="page-quick-sidebar-toggler">
-			<i class="icon-close"></i>
-		</a>
-		<ng-include src="template.quick_sidebar"></ng-include>
-		<!--quick sidebar-->
+	<!--=== 侧栏 ===-->
+	<div class="sidebar-r" style="height: 660px; margin-top:-130px; margin-right:-90px">
+		<ul class="nav nav-tabs">
+			<li class="active">
+				<a href="#" data-target="#tab_1_1" data-toggle="tab"><i class="fa fa-laptop"></i></a>
+			</li>
+			<li>
+				<a href="#" data-target="#tab_1_2" data-toggle="tab"><i class="fa fa-calendar"></i></a>
+			</li>
+			<li>
+				<a href="#" data-target="#tab_1_3" data-toggle="tab"><i class="fa fa-pie-chart"></i></a>
+			</li>
+		</ul>
 	</div>
+	<!--=== \快捷侧栏 ===-->
+	
+	<div class="tab-content">
+		<div class="tab-pane  active" id="tab_1_1">
+			<ng-include src="template.monitorMap"></ng-include>
+		</div>
+		<div class="tab-pane" id="tab_1_2">
+			<ng-include src="template.monitorTable"></ng-include>
+		</div>
+		<div class="tab-pane" id="tab_1_3">
+			<ng-include src="template.monitorConceptMap"></ng-include>
+		</div>
+	</div>
+	
+
 </div>
+
+<!--<script type="text/javascript">-->
+	<!--/* Init Metronic's core jquery plugins and layout scripts */-->
+	<!--$(document).ready(function() {-->
+		<!--$('.quick-sidebar-toggler').click(function () {-->
+			<!--$('body').toggleClass('quick-sidebar-open');-->
+		<!--});-->
+	<!--});-->
+<!--</script>-->

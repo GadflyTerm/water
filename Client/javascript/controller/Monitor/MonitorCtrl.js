@@ -4,7 +4,7 @@
 define(function (require){
 	var app = require('../../app');
 	//var app = require('quick_sidebar');
-	app.controller('MonitorMapCtrl', function($scope){
+	app.controller('MonitorCtrl', function($scope){
 		/*xhr.service('post', {action: 'ac'}, function(resp){
 		 $scope.myData = resp.data;
 		 });*/
@@ -14,6 +14,9 @@ define(function (require){
 		});
 		$scope.template = {
 			quick_sidebar: 'templates/Monitor/quick-sidebar.html',
+			monitorMap: 'templates/Monitor/monitorMap.html',
+			monitorTable: 'templates/Monitor/monitorTable.html',
+			monitorConceptMap: 'templates/Monitor/monitorConceptMap.html',
 		}
 
 		$scope.Wlists = {

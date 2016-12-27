@@ -141,7 +141,24 @@ define(function (require){
 					return deferred.promise;
 				}]
 			}
-		});
+		})
+
+
+			.state('Monitor', {				//实时地图
+				url: '/Monitor',
+				templateUrl: 'templates/Monitor/monitor.html',
+				controller: 'MonitorCtrl',
+				resolve: {
+					ReportReservoirCtrl: ["$q", function($q){
+						var deferred = $q.defer();
+						require(['../javascript/controller/Monitor/MonitorCtrl'], function(){
+							deferred.resolve();
+						});
+						return deferred.promise;
+					}]
+				}
+			})
+		;
 		$urlRouterProvider.otherwise('/Home');
 	});
 	app.factory('xhr', function($http, $window, toastr){
