@@ -314,7 +314,7 @@ class CommonModel extends Model{
 				if(!$data || is_null($data))
 					$return = array('type' => 'Error', 'msg' => '对数据库的查询发生错误：'.$model->getError());
 				else
-					$return = array('type' => 'Success', 'msg' => $curd['msg'], 'ac' => 'Find', 'data' => $this->_arrayKeyUpper($data));
+					$return = array('type' => 'Success', 'msg' => $curd['msg'], 'ac' => 'Find', 'data' => array_change_key_case($data, CASE_UPPER));
 				break;
 			case 'getField':
 				$data = $model->getField($param['field']);
