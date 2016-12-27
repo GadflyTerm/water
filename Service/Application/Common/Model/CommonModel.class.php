@@ -219,44 +219,60 @@ class CommonModel extends Model{
 				}
 				break;
 			case 'add':
-				$recid = $model->add($curd['data']);
+				if($param['validate'] || $param['auto']){
+					if($param['validate']) $model = $model->validate($param['validate']);
+					if($param['auto']) $model = $model->auto($param['auto']);
+					if($model->create($param['data']) && $model->add())
+						$return = array('type' => 'Success', 'msg' => $curd['msg'], 'ac' => 'Insert');
+					else
+						$return = array('type' => 'Error', 'msg' => '向数据库新增数据记录时发生错误：'.$model->getError());
+				}else{
+					if($model->add($param['data']))
+						$return = array('type' => 'Success', 'msg' => $curd['msg'], 'ac' => 'Insert');
+					else
+						$return = array('type' => 'Error', 'msg' => '向数据库新增数据记录时发生错误：'.$model->getError());
+				}
 				$debug = array(
-					'data'      => $curd['data'],
-					'insID'     => $curd['model']->getLastInsID(),
-					'sqlError'  => $curd['model']->getError(),
-					'execute'   => $curd['model']->getLastSql(),
+					'data'      => $param['data'],
+					'insID'     => $model->getLastInsID(),
+					'sqlError'  => $model->getError(),
+					'execute'   => $model->getLastSql(),
 				);
-				if($recid == $debug['insID'])
-					$return = array('type' => 'Success', 'msg' => $curd['msg'], 'pk' => $recid, 'ac' => 'Insert');
-				else
-					$return = array('type' => 'Error', 'msg' => '向数据库新增数据记录时发生错误');
 				break;
 			case 'save':
-				$recid = $model->save($curd['data']);
-				$debug = array(
-					'data'      => $curd['data'],
-					'where'     => $curd['where'],
-					'sqlError'  => $curd['model']->getError(),
-					'execute'   => $curd['model']->getLastSql(),
-				);
-				if($recid){
-					$pk = $model->getField($curd['model']->getPk());
-					$return = array('type' => 'Success', 'msg' => $curd['msg'], 'pk' => $pk, 'ac' => 'Update');
+				if($param['validate'] || $param['auto']){
+					if($param['validate']) $model = $model->validate($param['validate']);
+					if($param['auto']) $model = $model->auto($param['auto']);
+					if($model->create($param['data']) && $model->save())
+						$return = array('type' => 'Success', 'msg' => $curd['msg'], 'ac' => 'Insert');
+					else
+						$return = array('type' => 'Error', 'msg' => '向数据库指定记录进行变更操作时发生错误：'.$model->getError());
 				}else{
-					$return = array('type' => 'Error', 'msg' => '向数据库指定记录进行变更操作时发生错误', 'sql' => $model->getLastSql());
+					if ($model->save($param['data'])){
+						$pk = $model->getField($model->getPk());
+						$return = array('type' => 'Success', 'msg' => $curd['msg'], 'pk' => $pk, 'ac' => 'Update');
+					}else{
+						$return = array('type' => 'Error', 'msg' => '向数据库指定记录进行变更操作时发生错误：'.$model->getError());
+					}
 				}
+				$debug = array(
+					'data'      => $param['data'],
+					'where'     => $curd['where'],
+					'sqlError'  => $model->getError(),
+					'execute'   => $model->getLastSql(),
+				);
 				break;
 			case 'delete':
 				$recid = $model->delete();
 				$debug = array(
 					'where'     => $curd['where'],
-					'sqlError'  => $curd['model']->getError(),
-					'execute'   => $curd['model']->getLastSql(),
+					'sqlError'  => $model->getError(),
+					'execute'   => $model->getLastSql(),
 				);
 				if($recid)
 					$return = array('type' => 'Success', 'msg' => $curd['msg'], 'ac' => 'Delete');
 				else
-					$return = array('type' => 'Error', 'msg' => '对数据库指定记录进行删除操作时发生错误');
+					$return = array('type' => 'Error', 'msg' => '对数据库指定记录进行删除操作时发生错误：'.$model->getError());
 				break;
 			case 'select':
 				if(is_null($curd['page'])){
@@ -280,51 +296,57 @@ class CommonModel extends Model{
 				$debug = array(
 					'where'     => $curd['where'],
 					'page'      => $page,
+					'sqlError'  => $model->getError(),
 					'execute'   => $model->getLastSql(),
 				);
 				if($data)
 					$return = array('type' => 'Success', 'msg' => $curd['msg'], 'ac' => 'Select', 'data' => $this->_arrayKeyUpper($data));
 				else
-					$return = array('type' => 'Error', 'msg' => '对数据库的查询发生错误');
+					$return = array('type' => 'Error', 'msg' => '对数据库的查询发生错误：'.$model->getError());
 				break;
 			case 'find':
 				$data = $model->find();
 				$debug = array(
 					'where'     => $curd['where'],
+					'sqlError'  => $model->getError(),
 					'execute'   => $model->getLastSql(),
 				);
 				if(!$data || is_null($data))
-					$return = array('type' => 'Error', 'msg' => '对数据库的查询发生错误');
+					$return = array('type' => 'Error', 'msg' => '对数据库的查询发生错误：'.$model->getError());
 				else
 					$return = array('type' => 'Success', 'msg' => $curd['msg'], 'ac' => 'Find', 'data' => $this->_arrayKeyUpper($data));
 				break;
 			case 'getField':
-				$data = $model->getField($curd['field']);
+				$data = $model->getField($param['field']);
 				$debug = array(
 					'where'     => $curd['where'],
-					'sqlError'  => $curd['model']->getError(),
-					'execute'   => $curd['model']->getLastSql(),
+					'sqlError'  => $model->getError(),
+					'execute'   => $model->getLastSql(),
 				);
 				if(!$data || is_null($data))
-					$return = array('type' => 'Error', 'msg' => '对数据库的查询发生错误');
+					$return = array('type' => 'Error', 'msg' => '对数据库的查询发生错误：'.$model->getError());
 				else
 					$return = array('type' => 'Success', 'msg' => $curd['msg'], 'ac' => 'getField', 'data' => $data);
 				break;
 			case 'setField':
-				$data = $model->setField($curd['field'], $curd['data']);
+				$data = $model->setField($param['field'], $param['data']);
 				$debug = array(
 					'where'     => $curd['where'],
-					'sqlError'  => $curd['model']->getError(),
-					'execute'   => $curd['model']->getLastSql(),
+					'sqlError'  => $model->getError(),
+					'execute'   => $model->getLastSql(),
 				);
 				if(!$data || is_null($data))
-					$return = array('type' => 'Error', 'msg' => '对数据库的查询发生错误');
+					$return = array('type' => 'Error', 'msg' => '对数据库的查询发生错误：'.$model->getError());
 				else
-					$return = array('type' => 'Success', 'msg' => $curd['msg'], 'ac' => 'setField', 'field' => $curd['field'], 'value' => $curd['data']);
+					$return = array('type' => 'Success', 'msg' => $curd['msg'], 'ac' => 'setField', 'field' => $param['field'], 'value' => $param['data']);
 				break;
 			default:
-				$return = array('type' => 'Error', 'msg' => '没有指定数据库操作类型');
-				$debug = array();
+				$return = array('type' => 'Error', 'msg' => '没有指定数据库操作类型：'.$model->getError());
+				$debug = array(
+					'where'     => $curd['where'],
+					'sqlError'  => $model->getError(),
+					'execute'   => $model->getLastSql(),
+				);
 		}
 		return array_merge($return, $debug);
 	}

@@ -41,10 +41,15 @@ class StationModel extends CommonModel{
 			array('lable' => '测试用水库六', 'value' => 'sk6'),
 		);
 	}
-	
+
+	/**
+	 * 添加新的水质测站数据
+	 * @param $param
+	 * @return array
+	 */
 	public function addWater($param){
 		$this->tableName = 'ST_SWSINF_B';
-		$rules = array(
+		$validate = array(
 			array('STCD', 'require', '测站代码必须填写！'),
 			array('STCD', '', '测站代码已经存在！', 0, 'unique', 1),
 			array('STNM', 'require', '测站名称必须填写！'),
@@ -54,35 +59,76 @@ class StationModel extends CommonModel{
 			array('LGTD', 'require', '测站经度必须填写！'),
 			array('LTTD', 'require', '测站纬度必须填写！'),
 		);
-		if($this->validate($rules)->create($param['data']) && $this->add()){
-			return array(
-				'type'	=> 'Success',
-				'msg'	=> '水质测站数据添加成功！',
-				'param'	=> $param,
-				'data'	=> $param['data'],
-			);
-		}else{
-			return array(
-				'type'	=> 'Error',
-				'msg'	=> '水质测站数据添加失败！'.$this->getError(),
-				'error'	=> $this->getError(),
-				'sql'	=> $this->getLastSql(),
-				'param'	=> $param,
-			);
-		}
+		return $this->curd(array(
+			'validate'	=> $validate,
+			'type'		=> 'add',
+			'data'		=> $param['data'],
+			'msg'		=> '水质测站数据添加成功！'
+		));
 	}
-	
-	public function editWater(){}
-	
-	public function infoWater(){}
-	
-	public function delWater(){}
-	
-	public function listWater($param){
+
+	/**
+	 * 编辑水质测站数据
+	 * @param $param
+	 * @return array
+	 */
+	public function editWater($param){
+		$this->tableName = 'ST_SWSINF_B';
+		$validate = array(
+			array('STCD', 'require', '测站代码必须填写！'),
+			array('STCD', '', '测站代码已经存在！', 0, 'unique', 1),
+			array('STNM', 'require', '测站名称必须填写！'),
+			array('STNM', '', '测站名称已经存在！', 0, 'unique', 1),
+			array('STCT', 'require', '测站类别必须选择！'),
+			array('WATP', 'require', '水域类型必须选择！'),
+			array('LGTD', 'require', '测站经度必须填写！'),
+			array('LTTD', 'require', '测站纬度必须填写！'),
+		);
+		return $this->curd(array(
+			'validate'	=> $validate,
+			'type'		=> 'save',
+			'where'		=> '[STCD]="'.$param['STCD'].'"',
+			'data'		=> $param['data'],
+			'msg'		=> '水质测站数据修改成功！'
+		));
+	}
+
+	/**
+	 * 查询指定记录的水质测站数据
+	 * @param $param
+	 * @return array
+	 */
+	public function infoWater($param){
+		$this->tableName = 'ST_SWSINF_B';
+		return $this->curd(array(
+			'type'		=> 'find',
+			'where'		=> '[STCD]="'.$param['STCD'].'"',
+			'msg'		=> '水质测站数据查询成功！'
+		));
+	}
+
+	/**
+	 * 删除水质测站数据
+	 * @param $param
+	 * @return array
+	 */
+	public function delWater($param){
+		$this->tableName = 'ST_SWSINF_B';
+		return $this->curd(array(
+			'type'		=> 'delete',
+			'where'		=> '[STCD]="'.$param['STCD'].'"',
+			'msg'		=> '水质测站数据删除成功！'
+		));
+	}
+
+	/**
+	 * 获得所有水质测站数据记录
+	 * @return array
+	 */
+	public function listWater(){
 		$this->tableName = 'ST_SWSINF_B';
 		return $this->curd(array(
 			'type'	=> 'select',
-			'page'	=> $param['p']
 		));
 	}
 }
