@@ -87,7 +87,7 @@ class StationModel extends CommonModel{
 		return $this->curd(array(
 			'validate'	=> $validate,
 			'type'		=> 'save',
-			'where'		=> '[STCD]="'.$param['data']['STCD'].'"',
+			'where'		=> array('[STCD]' => $param['data']['STCD']),
 			'data'		=> $param['data'],
 			'msg'		=> '水质测站数据修改成功！'
 		));
@@ -102,7 +102,7 @@ class StationModel extends CommonModel{
 		$this->tableName = 'ST_SWSINF_B';
 		return $this->curd(array(
 			'type'		=> 'find',
-			'where'		=> '[STCD]="'.$param['data']['STCD'].'"',
+			'where'		=> array('[STCD]' => $param['data']['STCD']),
 			'msg'		=> '水质测站数据查询成功！'
 		));
 	}
@@ -116,7 +116,7 @@ class StationModel extends CommonModel{
 		$this->tableName = 'ST_SWSINF_B';
 		return $this->curd(array(
 			'type'		=> 'delete',
-			'where'		=> '[STCD]="'.$param['data']['STCD'].'"',
+			'where'		=> array('[STCD]' => $param['data']['STCD']),
 			'msg'		=> '水质测站数据删除成功！'
 		));
 	}
