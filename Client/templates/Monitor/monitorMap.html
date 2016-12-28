@@ -54,7 +54,7 @@
 			<div class="row">
 				<div class="col-md-6">
 					<table class="table table-bordered table-hover table-condensed">
-						<tr>
+						<tr class="D-center">
 							<th>丙间水库</th>
 							<th>丙间水库</th>
 						</tr>
@@ -89,52 +89,43 @@
 <script type="text/ng-template" id="detailModalContent.html">
 	<div class="modal-header">
 		<h3 class="modal-title">
-			雨量站
+			雨量站详情
 			<div class="pull-right">
 				<button class="btn btn-default" ng-click="close()">X</button>
 			</div>
-
 		</h3>
-
 	</div>
 	<div class="modal-body" >
 		<div class="well">
-			<div class="row">
-				<div class="col-md-6">
-					<table class="table table-bordered table-hover table-condensed">
-						<tr>
-							<th>水库名称</th>
-							<th>降水时间</th>
-							<th>时段降水量</th>
-							<th>当前累计降水量</th>
-						</tr>
-						<tr>
-							<td>丙间水库</td>
-							<td>10-23 8：00</td>
-							<td>5</td>
-							<td>30</td>
-						</tr>
-						<tr>
-							<td>丙间水库</td>
-							<td>10-23 8：05</td>
-							<td>5</td>
-							<td>30</td>
-						</tr>
-						<tr>
-							<td>丙间水库</td>
-							<td>10-23 8：00</td>
-							<td>5</td>
-							<td>30</td>
-						</tr>
-						<tr ng-if="lists.length == 0">
-							<td colspan="4" class="text-center">没有数据</td>
-						</tr>
-					</table>
-				</div>
-				<div class="col-md-6">
-					图表
-				</div>
-			</div>
+			<table class="table table-bordered table-hover table-condensed">
+				<tr class="D-center">
+					<th>水库名称</th>
+					<th>降水时间</th>
+					<th>时段降水量</th>
+					<th>当前累计降水量</th>
+				</tr>
+				<tr>
+					<td>丙间水库</td>
+					<td>10-23 8：00</td>
+					<td>5</td>
+					<td>30</td>
+				</tr>
+				<tr>
+					<td>丙间水库</td>
+					<td>10-23 8：05</td>
+					<td>5</td>
+					<td>30</td>
+				</tr>
+				<tr>
+					<td>丙间水库</td>
+					<td>10-23 8：00</td>
+					<td>5</td>
+					<td>30</td>
+				</tr>
+				<tr ng-if="lists.length == 0">
+					<td colspan="4" class="text-center">没有数据</td>
+				</tr>
+			</table>
 		</div>
 	</div>
 	<div class="modal-footer">

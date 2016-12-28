@@ -27,60 +27,91 @@ define(function (require){
 					$scope.close = function () {
 						$uibModalInstance.dismiss();
 					};
+					$scope.detail = function(){
+						$uibModal.open({
+							animation: true,
+							size: 'lg',
+							templateUrl: 'detailModalContent.html',
+							controller: function($scope, $uibModalInstance){
+								$scope.close = function () {
+									$uibModalInstance.dismiss();
+								};
+							},
+							controllerAs: '$scope',
+						});
+					}
 				},
 				controllerAs: '$scope',
 			});
 		}
-		$scope.detail = function(){
-			$uibModal.open({
-				animation: true,
-				size: 'lg',
-				templateUrl: 'detailModalContent.html',
-				controller: function($scope, $uibModalInstance){
-					$scope.close = function () {
-						$uibModalInstance.dismiss();
-					};
-				},
-				controllerAs: '$scope',
-			});
+		
+		$scope.Reservoirlists = [{
+			id:1,
+			Rname:'江川水库',
+			Dtime:'2016-12-08',
+			wline:'19',
+			Rfall:'25',
+		},{
+			id:2,
+			Rname:'丙间水库',
+			Dtime:'2016-12-02',
+			wline:'18',
+			Rfall:'19',
+		},{
+			id:3,
+			Rname:'红河水库',
+			Dtime:'2016-12-07',
+			wline:'17',
+			Rfall:'26',
+		},]
+		$scope.Rainfalllists = [{
+			id:1,
+			Rname:'江川站',
+			Rtime:'2016-12-08',
+			TRline:'20',
+			ARfall:'66',
+		},{
+			id:2,
+			Rname:'红河站',
+			Rtime:'2016-12-08',
+			TRline:'20',
+			ARfall:'66',
+		}]
+		$scope.Gateslists = [{
+			id:1,
+			Gname:'开合闸',
+			open:'2m',
+			Sfall:'120',
+			ARfall:'10-33',
+		},{
+			id:2,
+			Gname:'姚丰闸',
+			open:'2m',
+			Sfall:'110',
+			ARfall:'10-33',
+		}]
+		$scope.FlowLlists = [{
+			id:1,
+			Rname:'成功站',
+			time:'2016-12-08',
+			Wline:'20',
+			Sfall:'10-25',
+		},{
+			id:2,
+			Rname:'理想站',
+			time:'2016-12-08',
+			Wline:'20',
+			Sfall:'10-25',
+		}]
+		$scope.Moisturelists = {
+			id:1,
+			Rname:'成功站',
+			date:'80',
+			Rt:'60',
+			Rf:'25',
+			Rs:'10-26',
 		}
-
-		$scope.Wlists = {
-			id:1,
-			rsvname:'江川水库',
-			date:'2016-12-08',
-			Ept:'20',
-			Rfall:'33',
-		},
-		$scope.Rlists = {
-			id:1,
-			rsvname:'红河水库',
-			date:'2016-12-08',
-			Ept:'20',
-			Rfall:'33',
-		},
-		$scope.Zlists = {
-			id:1,
-			rsvname:'开合闸',
-			date:'2016-12-08',
-			Ept:'20',
-			Rfall:'33',
-		},
-		$scope.Llists = {
-			id:1,
-			rsvname:'成功站',
-			date:'2016-12-08',
-			Ept:'20',
-			Rfall:'33',
-		},
-		$scope.myData = {
-			type: 'Success',
-			msg: '数据获取成功',
-			data: [
-				{ss: 'ss0', dd: 'dd0'},
-				{ss: 'ss1', dd: 'dd1'},
-			]
-		}
+		
 	});
 
 });
