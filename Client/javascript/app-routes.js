@@ -50,7 +50,7 @@ define(function (require){
 					return deferred.promise;
 				}]
 			}
-		}).state('StationAdd', {            // 登陆
+		}).state('StationAdd', {            
 			url: '/StationAdd',
 			templateUrl: 'templates/Station/action.html',
 			controller: 'StationAddCtrl',
@@ -63,7 +63,7 @@ define(function (require){
 					return deferred.promise;
 				}]
 			}
-		}).state('StationEdit', {            // 登陆
+		}).state('StationEdit', {           
 			url: '/StationEdit:id',
 			templateUrl: 'templates/Station/action.html',
 			controller: 'StationEditCtrl',
@@ -76,38 +76,12 @@ define(function (require){
 					return deferred.promise;
 				}]
 			}
-		}).state('ReportIndex', {            // 报表
-			url: '/ReportIndex',
-			templateUrl: 'templates/Report/index.html',
-			controller: 'ReportIndexCtrl',
-			resolve: {
-				ReportIndexCtrl: ["$q", function($q){
-					var deferred = $q.defer();
-					require(['../javascript/controller/ReportIndexCtrl'], function(){	//异步加载controller／directive/filter/service
-						deferred.resolve();
-					});
-					return deferred.promise;
-				}]
-			}
-		}).state('ReportReservoir', { 
-			url: '/ReportReservoir:id',
-			templateUrl: 'templates/Report/reservoir.html',
-			controller: 'ReportReservoirCtrl',
-			resolve: {
-				ReportReservoirCtrl: ["$q", function($q){
-					var deferred = $q.defer();
-					require(['../javascript/controller/reportReservoirCtrl'], function(){	//异步加载controller／directive/filter/service
-						deferred.resolve();
-					});
-					return deferred.promise;
-				}]
-			}
 		}).state('WaterStandard', {			// 水质标准管理
 			url: '/WaterStandard',
 			templateUrl: 'templates/Station/WaterStandard.html',
 			controller: 'WaterStandardCtrl',
 			resolve: {
-				ReportReservoirCtrl: ["$q", function($q){
+				WaterStandardCtrl: ["$q", function($q){
 					var deferred = $q.defer();
 					require(['../javascript/controller/Station/WaterStandardCtrl'], function(){	//异步加载controller／directive/filter/service
 						deferred.resolve();
@@ -120,7 +94,7 @@ define(function (require){
 			templateUrl: 'templates/Station/WaterSampling.html',
 			controller: 'WaterSamplingCtrl',
 			resolve: {
-				ReportReservoirCtrl: ["$q", function($q){
+				WaterSamplingCtrl: ["$q", function($q){
 					var deferred = $q.defer();
 					require(['../javascript/controller/Station/WaterSamplingCtrl'], function(){	//异步加载controller／directive/filter/service
 						deferred.resolve();
@@ -133,7 +107,7 @@ define(function (require){
 			templateUrl: 'templates/Station/WaterStation.html',
 			controller: 'WaterStationCtrl',
 			resolve: {
-				ReportReservoirCtrl: ["$q", function($q){
+				WaterStationCtrl: ["$q", function($q){
 					var deferred = $q.defer();
 					require(['../javascript/controller/Station/WaterStationCtrl'], function(){	//异步加载controller／directive/filter/service
 						deferred.resolve();
@@ -143,13 +117,39 @@ define(function (require){
 			}
 		})
 
-
-			.state('Monitor', {				//实时地图
+			.state('ReportIndex', {            // 报表
+				url: '/ReportIndex',
+				templateUrl: 'templates/Report/index.html',
+				controller: 'ReportIndexCtrl',
+				resolve: {
+					ReportIndexCtrl: ["$q", function($q){
+						var deferred = $q.defer();
+						require(['../javascript/controller/Report/ReportIndexCtrl'], function(){
+							deferred.resolve();
+						});
+						return deferred.promise;
+					}]
+				}
+			}).state('ReportReservoir', {
+			url: '/ReportReservoir:id',
+			templateUrl: 'templates/Report/reservoir.html',
+			controller: 'ReportIndexCtrl',
+			resolve: {
+				ReportIndexCtrl: ["$q", function($q){
+					var deferred = $q.defer();
+					require(['../javascript/controller/Report/ReportIndexCtrl'], function(){
+						deferred.resolve();
+					});
+					return deferred.promise;
+				}]
+			}
+		})
+			.state('Monitor', {				//实时监测
 				url: '/Monitor',
 				templateUrl: 'templates/Monitor/monitor.html',
 				controller: 'MonitorCtrl',
 				resolve: {
-					ReportReservoirCtrl: ["$q", function($q){
+					MonitorCtrl: ["$q", function($q){
 						var deferred = $q.defer();
 						require(['../javascript/controller/Monitor/MonitorCtrl'], function(){
 							deferred.resolve();

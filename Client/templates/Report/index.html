@@ -20,11 +20,11 @@
 							<button ui-sref-active="active" ng-click="yearClick" class="btn  btn-default btn-sm">年报表</button>
 						</div>
 						
-						<div ng-show="" class="col-md-4 col-sm-5 col-xs-6 col-md-offset-8 text-right">
+						<div ng-show="showTab.mouth"  class="col-md-12 mt15">
 							<div class="select">
 								<form action="#" class="form-horizontal">
 									<div class="form-group">
-										<lable class="col-md-5 col-sm-4 col-xs-5 control-label">选择年份</lable>
+										<lable class="col-md-5 col-sm-4 col-xs-5 control-label">选择日期</lable>
 										<div class="col-md-7 col-sm-8 col-xs-7 input-group input-medium date date-picker">
 											<!--<input time="false" class="form-control" date="true" mdc-datetime-picker type="text" id="date"-->
 											<!--placeholder="mouth" lang="zh-cn"-->
@@ -47,12 +47,12 @@
 								</form>
 							</div>
 						</div>
-						<div ng-show="showTab.mouth" class="col-md-4 col-sm-5 col-xs-6 col-md-offset-8 text-right">
+						<div ng-show="showTab.day" class="mt15">
 							<div class="select">
 								<form action="" class="form-horizontal">
 									<div class="form-group">
-										<lable for="select" class="col-md-3 col-sm-3 col-xs-4 control-label">选择月份</lable>
-										<div class="col-md-9 col-sm-9 col-xs-8">
+										<lable for="select" class="col-md-4 col-sm-4 col-xs-4 control-label">选择月份</lable>
+										<div class="col-md-8 col-sm-8 col-xs-8">
 											<select class="form-control">
 												<option>1月</option>
 												<option>2月</option>
@@ -68,17 +68,16 @@
 												<option>12月</option>
 											</select>
 										</div>
-
 									</div>
 								</form>
 							</div>
 						</div>
-						<div ng-show="showTab.day" class="col-md-4 col-sm-5 col-xs-6 col-md-offset-8 text-right">
+						<div class="mt15">
 							<div class="select">
 								<form action="" class="form-horizontal">
 									<div class="form-group">
-										<lable for="select" class="col-md-3 col-sm-3 col-xs-4 control-label">选择日期</lable>
-										<div class="col-md-9 col-sm-9 col-xs-8">
+										<lable for="select" class="col-md-4 col-sm-4 col-xs-4 control-label">选择年份</lable>
+										<div class="col-md-8 col-sm-8 col-xs-8">
 											<select class="form-control" id="select">
 												<option>2016</option>
 												<option>2015</option>
@@ -103,7 +102,7 @@
 			</div>
 			<!--=== \ 选择 ===-->
 			<!--=== 表格 ===-->
-			<div class="col-md-12">
+			<div class="well">
 				<div class="table-scrollable table-scrollable-borderless">
 					<table class="table table-bordered table-hover table-condensed">
 						<tr>
@@ -141,6 +140,7 @@
 					</table>
 				</div>
 			</div>
+			
 			<!--=== \ 表格 ===-->
 		</div>
 		<div class="panel-footer">

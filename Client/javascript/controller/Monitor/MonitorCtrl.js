@@ -1,10 +1,10 @@
 /**
- * Created by gadfly on 2016/12/14.
+ * Created by lengyan on 2016/12/20.
  */
 define(function (require){
 	var app = require('../../app');
 	//var app = require('quick_sidebar');
-	app.controller('MonitorCtrl', function($scope){
+	app.controller('MonitorCtrl', function($scope, $log, $uibModal, xhr){
 		/*xhr.service('post', {action: 'ac'}, function(resp){
 		 $scope.myData = resp.data;
 		 });*/
@@ -18,6 +18,32 @@ define(function (require){
 			monitorTable: 'templates/Monitor/monitorTable.html',
 			monitorConceptMap: 'templates/Monitor/monitorConceptMap.html',
 		}
+		$scope.action = function(){
+			$uibModal.open({
+				animation: true,
+				size: 'lg',
+				templateUrl: 'actionModalContent.html',
+				controller: function($scope, $uibModalInstance){
+					$scope.close = function () {
+						$uibModalInstance.dismiss();
+					};
+				},
+				controllerAs: '$scope',
+			});
+		}
+		$scope.detail = function(){
+			$uibModal.open({
+				animation: true,
+				size: 'lg',
+				templateUrl: 'detailModalContent.html',
+				controller: function($scope, $uibModalInstance){
+					$scope.close = function () {
+						$uibModalInstance.dismiss();
+					};
+				},
+				controllerAs: '$scope',
+			});
+		}
 
 		$scope.Wlists = {
 			id:1,
@@ -25,35 +51,28 @@ define(function (require){
 			date:'2016-12-08',
 			Ept:'20',
 			Rfall:'33',
-		};
+		},
 		$scope.Rlists = {
 			id:1,
 			rsvname:'红河水库',
 			date:'2016-12-08',
 			Ept:'20',
 			Rfall:'33',
-		};
+		},
 		$scope.Zlists = {
 			id:1,
 			rsvname:'开合闸',
 			date:'2016-12-08',
 			Ept:'20',
 			Rfall:'33',
-		};
+		},
 		$scope.Llists = {
 			id:1,
 			rsvname:'成功站',
 			date:'2016-12-08',
 			Ept:'20',
 			Rfall:'33',
-		};
-		$scope.Slists = {
-			id:1,
-			rsvname:'基地站',
-			date:'2016-12-08',
-			Ept:'20',
-			Rfall:'33',
-		};
+		},
 		$scope.myData = {
 			type: 'Success',
 			msg: '数据获取成功',

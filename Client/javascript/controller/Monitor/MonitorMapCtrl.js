@@ -1,64 +1,57 @@
 /**
- * Created by gadfly on 2016/12/14.
+ * Created by Mia on 2016/12/27.
+ */
+/**
+ * 实时监测地图
+ * Created by Mia on 2016/12/27.
  */
 define(function (require){
 	var app = require('../../app');
-	//var app = require('quick_sidebar');
-	app.controller('MonitorMapCtrl', function($scope){
-		/*xhr.service('post', {action: 'ac'}, function(resp){
-		 $scope.myData = resp.data;
-		 });*/
-		$scope.$emit('nav', {
-			home: {title: '实时监控', url: 'Home'},
-			library: {title: '地图', url: ''},
-		});
-		$scope.template = {
-			quick_sidebar: 'templates/Monitor/quick-sidebar.html',
+	app.controller('WaterSamplingCtrl', function($scope, $log, $uibModal, xhr){
+		$scope.nav = {
+			home: {title: '首页', url: 'Home'},
+			library: {title: '实时监测 地图', url: ''},
 		}
+		$scope.$emit('nav', $scope.nav);
 
-		$scope.Wlists = {
-			id:1,
-			rsvname:'江川水库',
-			date:'2016-12-08',
-			Ept:'20',
-			Rfall:'33',
-		};
-		$scope.Rlists = {
-			id:1,
-			rsvname:'红河水库',
-			date:'2016-12-08',
-			Ept:'20',
-			Rfall:'33',
-		};
-		$scope.Zlists = {
-			id:1,
-			rsvname:'开合闸',
-			date:'2016-12-08',
-			Ept:'20',
-			Rfall:'33',
-		};
-		$scope.Llists = {
-			id:1,
-			rsvname:'成功站',
-			date:'2016-12-08',
-			Ept:'20',
-			Rfall:'33',
-		};
-		$scope.Slists = {
-			id:1,
-			rsvname:'基地站',
-			date:'2016-12-08',
-			Ept:'20',
-			Rfall:'33',
-		};
-		$scope.myData = {
-			type: 'Success',
-			msg: '数据获取成功',
-			data: [
-				{ss: 'ss0', dd: 'dd0'},
-				{ss: 'ss1', dd: 'dd1'},
-			]
+		$scope.action = function(param, id){
+			$uibModal.open({
+				animation: true,
+				size: 'lg',
+				templateUrl: 'dotModalContent.html',
+				controller: function($scope, list, $uibModalInstance){
+					if(param =='add'){
+						$scope.promise = xhr.service('post', {model: 'station', module: 'listWater'}, function(resp){
+							$scope.station =resp.data;
+						});
+						$scope.sampling = {}
+						$scope.sampling.TM = new Date();
+						$scope.isShow = {
+							STCD: false,
+							TM: false,
+						}
+						$scope.action = '模态';
+					}else{
+						$scope.promise = xhr.service('post', {model: 'Sampling', module: 'waterInfo', data: {id: id}}, function(resp){
+							$scope.station =resp.station;
+							$scope.sampling = {
+								STCD: resp.data.STCD,
+								TM: new Date(resp.data.TM),
+								CODCR: Number(resp.data.CODCR)
+							};
+						});
+						$scope.isShow = {
+							STCD: true,
+							TM: true,
+						}
+						$scope.action = '编辑';
+					}
+					$scope.close = function () {
+						$uibModalInstance.dismiss('close');
+					};
+				},
+				controllerAs: '$scope',
+			});
 		}
 	});
-
 });

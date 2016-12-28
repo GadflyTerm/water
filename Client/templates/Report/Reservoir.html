@@ -12,9 +12,11 @@
 			<!--=== 选择 ===-->
 			<div class="row">
 				<div class="col-md-12 text-right mb5">
-					<a class="btn btn-default ml3" ng-repeat="item in Tcate">
-						{{item.text}}报表
-					</a>
+					<div class="btn-group">
+						<button ui-sref-active="active" ng-click="dayClick" class="btn btn-default btn-sm">日报表</button>
+						<button ui-sref-active="active" ng-click="mouthClick" class="btn  btn-default btn-sm">月报表</button>
+						<button ui-sref-active="active" ng-click="yearClick" class="btn  btn-default btn-sm">年报表</button>
+					</div>
 				</div>
 				<div class="col-md-3 col-md-offset-6 col-sm-4 col-xs-4">
 					<div class="select">

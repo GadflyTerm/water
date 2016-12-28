@@ -80,34 +80,49 @@ define(function (require){
 				$scope.isActive = true;
 			}
 		$scope.dayClick = function(){
-			xhr.service('get',{ac:'ac'},function(resp){
-				$scope.showTab = {
-					year:false,
-					mouth:false,
-					day:true
-				}
-				$scope.list = resp.date;
-			})
+			$scope.showTab = {
+				year:false,
+				mouth:false,
+				day:true
+			}
+			// xhr.service('get',{ac:'ac'},function(){
+			// 	$scope.showTab = {
+			// 		year:false,
+			// 		mouth:false,
+			// 		day:true
+			// 	}
+			// 	//$scope.lists = resp.date;
+			// })
 		}
 		$scope.mouthClick = function(){
-			xhr.service('get',{ac:'ac'},function(resp){
-				$scope.showTab = {
-					year:false,
-					mouth:true,
-					day:false
-				}
-				$scope.list = resp.date;
-			})
+			$scope.showTab = {
+				year:false,
+				mouth:true,
+				day:false
+			}
+			// xhr.service('get',{ac:'ac'},function(){
+			// 	$scope.showTab = {
+			// 		year:false,
+			// 		mouth:true,
+			// 		day:false
+			// 	}
+			// 	//$scope.lists = resp.date;
+			// })
 		}
 		$scope.yearClick = function(){
-			xhr.service('get',{ac:'ac'}, function(resp){
-				$scope.showTab = {
-					year:true,
-					mouth:false,
-					day:false
-				}
-				$scope.list = resp.date;
-			})
+			$scope.showTab = {
+				year:true,
+				mouth:false,
+				day:false
+			}
+			// xhr.service('get',{ac:'ac'}, function(resp){
+			// 	$scope.showTab = {
+			// 		year:true,
+			// 		mouth:false,
+			// 		day:false
+			// 	}
+			// 	$scope.lists = resp.date;
+			// })
 		}
 	});
 	
