@@ -25,11 +25,8 @@
 								<form action="" class="form-horizontal">
 									<div class="form-group">
 										<lable for="select" class="col-md-4 col-sm-4 col-xs-4 control-label">选择日期</lable>
-										<div class="input-group input-medium date date-picker" data-date-format="dd-mm-yyyy" data-date-start-date="+0d">
-											<input type="text" class="form-control" readonly>
-											<span class="input-group-btn">
-						<button class="btn default" type="button"><i class="fa fa-calendar"></i></button>
-						</span>
+										<div class="col-md-8 col-sm-8 col-xs-8">
+											<input id="dateField"  class="form-control" datepicker ng-model="$parent.currentDate"  select="updateMyText(date)">
 										</div>
 									</div>
 								</form>
@@ -40,17 +37,7 @@
 								<form action="#" class="form-horizontal">
 									<div class="form-group">
 										<lable class="col-md-5 col-sm-4 col-xs-5 control-label">选择月份</lable>
-										<div class="col-md-7 col-sm-8 col-xs-7 input-group input-medium date date-picker">
-											<!--<input time="false" class="form-control" date="true" mdc-datetime-picker type="text" id="date"-->
-											<!--placeholder="mouth" lang="zh-cn"-->
-											<!--ng-model="mouth" min-date="minDate" max-date="maxDate">-->
-											<!--<span class="input-group-btn">-->
-											<!--<button class="btn default" type="button">-->
-											<!--<i class="fa fa-calendar"></i>-->
-											<!--</button>-->
-											<!--</span>-->
-
-											<div class="col-md-8 col-sm-8 col-xs-8">
+										<div class="col-md-8 col-sm-8 col-xs-8">
 												<select class="form-control">
 													<option>1月</option>
 													<option>2月</option>
@@ -66,8 +53,6 @@
 													<option>12月</option>
 												</select>
 											</div>
-
-										</div>
 									</div>
 								</form>
 							</div>
@@ -170,3 +155,11 @@
 		</div>
 	</div>
 </div>
+
+<script>
+	$('.date-picker').datepicker({
+		language: 'zh-CN',
+		autoclose: true,
+		todayHighlight: true
+	})
+</script>

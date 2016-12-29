@@ -13,9 +13,9 @@
 			<!--=== 选择 ===-->
 			<div class="actions text-right">
 				<div class="btn-group">
-					<button ui-sref-active="active" ng-click="dayClick" class="btn btn-default btn-sm">日报表</button>
+					<button  ng-click="dayClick" class="btn btn-default btn-sm">日报表</button>
 					<button ui-sref-active="active" ng-click="monthClick" class="btn  btn-default btn-sm">月报表</button>
-					<button ui-sref-active="active" ng-click="yearClick" class="btn  btn-default btn-sm">年报表</button>
+					<button  ng-click="yearClick" class="btn  btn-default btn-sm">年报表</button>
 				</div>
 				
 				<div class="row mtb15">
@@ -24,15 +24,19 @@
 						<div ng-show="showTab.day" class="">
 							<div class="select">
 								<form action="" class="form-horizontal">
-									<div class="">
-										<lable for="select" class="col-md-4 col-sm-4 col-xs-4 control-label">选择日期</lable>
-										<div class="input-group input-medium date date-picker" data-date-format="dd-mm-yyyy" data-date-start-date="+0d">
-											<input type="text" class="form-control" readonly>
-											<span class="input-group-btn">
-						<button class="btn default" type="button"><i class="fa fa-calendar"></i></button>
-						</span>
-										</div>
+									<lable for="select" class="col-md-4 col-sm-4 col-xs-4 control-label">选择日期</lable>
+									<div class="col-md-8 col-sm-8 col-xs-8 ">
+										<input id="dateField"  class="form-control" datepicker ng-model="$parent.currentDate"  select="updateMyText(date)">
+										<!--<span class="input-group-btn">-->
+											<!--<button class="btn btn-default"  type="button"><i class="fa fa-calendar"></i></button>-->
+										<!--</span>-->
 									</div>
+									<!--<div class="input-group input-medium date" data-date-format="dd-mm-yyyy" data-date-start-date="+0d">-->
+											<!--<input type="text" class="form-control" readonly>-->
+											<!--<span class="input-group-btn">-->
+						<!--<button class="btn btn-default" type="button"><i class="fa fa-calendar"></i></button>-->
+						<!--</span>-->
+										<!--</div>-->
 								</form>
 							</div>
 						</div>
@@ -161,3 +165,10 @@
 		</div>
 	</div>
 </div>
+<script>
+	$('.date-picker').datepicker({
+		language: 'zh-CN',
+		autoclose: true,
+		todayHighlight: true
+	})
+</script>
