@@ -120,11 +120,11 @@ define(function (require){
 			.state('ReportIndex', {            // 报表
 				url: '/ReportIndex',
 				templateUrl: 'templates/Report/index.html',
-				controller: 'ReportIndexCtrl',
+				controller: 'ReportCtrl',
 				resolve: {
-					ReportIndexCtrl: ["$q", function($q){
+					ReportCtrl: ["$q", function($q){
 						var deferred = $q.defer();
-						require(['../javascript/controller/Report/ReportIndexCtrl'], function(){
+						require(['../javascript/controller/Report/ReportCtrl'], function(){
 							deferred.resolve();
 						});
 						return deferred.promise;
@@ -133,11 +133,11 @@ define(function (require){
 			}).state('ReportReservoir', {
 			url: '/ReportReservoir:id',
 			templateUrl: 'templates/Report/reservoir.html',
-			controller: 'ReportIndexCtrl',
+			controller: 'ReportCtrl',
 			resolve: {
-				ReportIndexCtrl: ["$q", function($q){
+				ReportCtrl: ["$q", function($q){
 					var deferred = $q.defer();
-					require(['../javascript/controller/Report/ReportIndexCtrl'], function(){
+					require(['../javascript/controller/Report/ReportCtrl'], function(){
 						deferred.resolve();
 					});
 					return deferred.promise;

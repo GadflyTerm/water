@@ -1,7 +1,7 @@
 
 	<!--=== 快捷侧栏 ===-->
 	<div class="quick-sidebar-wrapper">
-		<a class="quick-sidebar-toggler" href="javascript:;">
+		<a class="quick-sidebar-toggler" id="toggleQs" href="javascript:;">
 			展开
 		</a>
 		<div class="quick-sidebar">
@@ -75,9 +75,9 @@
 								<th>时段降水量</th>
 								<th>当前累积降水量</th>
 							</tr>
-							<tr ng-repeat="vo in Gateslists">
+							<tr ng-repeat="vo in Rainfalllists">
 									<td>{{vo.Rname}}</td>
-									<td>{{vo.Rtime}}</td>
+									<td>{{vo.Dtime}}</td>
 									<td>{{vo.TRline}}</td>
 									<td>{{vo.ARfall}}</td>
 							</tr>
@@ -117,7 +117,7 @@
 							</tr>
 							<tr ng-repeat="vo in FlowLlists">
 									<td>{{vo.Rname}}</td>
-									<td>{{vo.time}}</td>
+									<td>{{vo.Dtime}}</td>
 									<td>{{vo.Wline}}</td>
 									<td>{{vo.Sfall}}</td>
 							</tr>
@@ -138,7 +138,7 @@
 							</tr>
 							<tr ng-repeat="vo in Moisturelists">
 									<td>{{vo.Rname}}</td>
-									<td>{{vo.date}}</td>
+									<td>{{vo.Dtime}}</td>
 									<td>{{vo.Rt}}</td>
 									<td>{{vo.Rf}}</td>
 									<td>{{vo.Rs}}</td>
@@ -159,6 +159,15 @@
 	$(document).ready(function() {
 		$('.quick-sidebar-toggler').click(function () {
 			$('body').toggleClass('quick-sidebar-open');
+			$('#toggleQs').text('收起')
 		});
+//		function toggleQs() {
+//			if ($("body").class("quick-sidebar-open") == "none") {
+//				$('#toggleQs').text('展开');
+//			} else {
+//				$('#toggleQs').text('收起');
+//			}
+//		}
 	});
+	
 </script>

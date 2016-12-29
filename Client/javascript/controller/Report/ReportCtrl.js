@@ -8,7 +8,7 @@ define(function (require){
 	// require('material_datetimepicker');
 	// app.useModule('ngMaterialDatePicker');
 	// require('datepicker');
-	app.controller('ReportIndexCtrl', function($scope,xhr){
+	app.controller('ReportCtrl', function($scope,xhr){
 		/*xhr.service('post', {action: 'ac'}, function(resp){
 			$scope.myData = resp.data;
 		});*/
@@ -76,54 +76,47 @@ define(function (require){
 				{ss: 'ss1', dd: 'dd1'},
 			]
 		}
+
 		function ctr($scope){
-				$scope.isActive = true;
-			}
-		$scope.dayClick = function(){
-			$scope.showTab = {
-				year:false,
-				mouth:false,
-				day:true
-			}
-			// xhr.service('get',{ac:'ac'},function(){
-			// 	$scope.showTab = {
-			// 		year:false,
-			// 		mouth:false,
-			// 		day:true
-			// 	}
-			// 	//$scope.lists = resp.date;
-			// })
+			$scope.isActive = true;
 		}
-		$scope.mouthClick = function(){
-			$scope.showTab = {
-				year:false,
-				mouth:true,
-				day:false
-			}
-			// xhr.service('get',{ac:'ac'},function(){
-			// 	$scope.showTab = {
-			// 		year:false,
-			// 		mouth:true,
-			// 		day:false
-			// 	}
-			// 	//$scope.lists = resp.date;
-			// })
+
+		$scope.showTab = {
+			year:false,
+			mouth:false,
+			day:true
+		}
+
+		$scope.dayClick = function(){
+			xhr.service('get',{ac:'ac'},function(resp){
+				$scope.showTab = {
+					year:false,
+					mouth:false,
+					day:true
+				}
+				$scope.lists = resp.date;
+			})
+		}
+		$scope.monthClick = function(){
+			xhr.service('get',{ac:'ac'},function(resp){
+				$scope.showTab = {
+					year:false,
+					mouth:true,
+					day:false
+				}
+				$scope.lists = resp.date;
+			})
 		}
 		$scope.yearClick = function(){
-			$scope.showTab = {
-				year:true,
-				mouth:false,
-				day:false
-			}
-			// xhr.service('get',{ac:'ac'}, function(resp){
-			// 	$scope.showTab = {
-			// 		year:true,
-			// 		mouth:false,
-			// 		day:false
-			// 	}
-			// 	$scope.lists = resp.date;
-			// })
+			xhr.service('get',{ac:'ac'},function(resp){
+				$scope.showTab = {
+					year:true,
+					mouth:false,
+					day:false
+				}
+				$scope.lists = resp.date;
+			})
 		}
-	});
-	
+
+	 });
 });

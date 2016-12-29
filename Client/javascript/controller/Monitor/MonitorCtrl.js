@@ -67,13 +67,13 @@ define(function (require){
 		$scope.Rainfalllists = [{
 			id:1,
 			Rname:'江川站',
-			Rtime:'2016-12-08',
+			Dtime:'2016-12-08',
 			TRline:'20',
 			ARfall:'66',
 		},{
 			id:2,
 			Rname:'红河站',
-			Rtime:'2016-12-08',
+			Dtime:'2016-12-08',
 			TRline:'20',
 			ARfall:'66',
 		}]
@@ -93,24 +93,31 @@ define(function (require){
 		$scope.FlowLlists = [{
 			id:1,
 			Rname:'成功站',
-			time:'2016-12-08',
+			Dtime:'2016-12-08',
 			Wline:'20',
 			Sfall:'10-25',
 		},{
 			id:2,
 			Rname:'理想站',
-			time:'2016-12-08',
+			Dtime:'2016-12-08',
 			Wline:'20',
 			Sfall:'10-25',
 		}]
-		$scope.Moisturelists = {
+		$scope.Moisturelists = [{
 			id:1,
 			Rname:'成功站',
-			date:'80',
+			Dtime:'2016-12-12',
 			Rt:'60',
 			Rf:'25',
 			Rs:'10-26',
-		}
+		},{
+			id:1,
+			Rname:'姚丰站',
+			Dtime:'2016-12-11',
+			Rt:'60',
+			Rf:'25',
+			Rs:'10-26',
+		}]
 		
 	});
 
