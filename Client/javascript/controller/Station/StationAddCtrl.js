@@ -283,9 +283,9 @@ define(function (require){
 			}
 			postData.STBPRP.STTP = $scope.station.STBPRP.STTP.value;
 			console.log(postData, 'info');
-			$scope.promise = xhr.service({model: 'Station', module: 'stationAdd', data: postData}, function(resp){
+			/*$scope.promise = xhr.service({model: 'Station', module: 'stationAdd', data: postData}, function(resp){
 				console.log(resp);
-			})
+			})*/
 		}
 	});
 	app.controller('riverwayCurveCtrl', function($scope, Upload, toastr){
