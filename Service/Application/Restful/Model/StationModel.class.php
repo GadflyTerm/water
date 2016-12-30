@@ -154,8 +154,7 @@ class StationModel extends CommonModel{
 		);
 		$data = $param['data'];
 		$data['STBPRP']['MODITIME'] = date("Y-m-d H:i:s");
-		$LOCALITY = C('OPT.LOCALITY');
-		$data['STBPRP']['LOCALITY'] = $LOCALITY[33]['lable'];
+		$data['STBPRP']['LOCALITY'] = '33';
 		$base = $this->curd(array(
 			'validate'	=> $validate_base,
 			'type'		=> 'add',
