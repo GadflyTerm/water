@@ -228,6 +228,8 @@ class StationModel extends CommonModel{
 			}else{
 				$return = $task;
 			}
+		}else{
+			$return = $base;
 		}
 		return $return;
 	}
@@ -328,7 +330,6 @@ class StationModel extends CommonModel{
 	 * @return array
 	 */
 	protected function addSTSMTASK($param){
-		$this->tableName = 'ST_STSMTASK_B';
 		$validate = array(
 			array('STCD', 'require', '测站代码必须填写！'),
 			array('STCD', '', '测站代码已经存在！', 0, 'unique', 1),
@@ -338,6 +339,7 @@ class StationModel extends CommonModel{
 		$param['SPHONE']='0871-65155666';
 		Log::write(json_encode($param));
 		return $this->curd(array(
+			'model'		=> 'StStsmtaskB',
 			'validate'	=> $validate,
 			'type'		=> 'add',
 			'data'		=> $param,
