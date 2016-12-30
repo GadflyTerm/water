@@ -11,7 +11,7 @@ define(function (require){
 		$scope.currentPage =1;		// 初始当前页
 		$scope.allitem=[];			// 存放所有页
 		$scope.numPages = 25;
-		$scope.promise = xhr.service('post', {model: 'Sampling', module: 'waterList'}, function(resp){
+		$scope.promise = xhr.service('post', {model: 'Station', module: 'stationList'}, function(resp){
 			var num= resp.data.length;
 			$scope.totalItems =num;	// 共有多少条数据
 			for(var i=0; i<num; i+=$scope.numPages){
@@ -30,10 +30,10 @@ define(function (require){
 				closeOnConfirm: false,
 				html: false
 			}, function(){
-				$scope.promise = xhr.service('post', {model: 'Sampling', module: 'waterDel', data: {STCD: STCD}}, function(resp){
+				$scope.promise = xhr.service('post', {model: 'Station', module: 'stationDel', data: {STCD: STCD}}, function(resp){
 					if(resp.type == 'Success'){
 						$state.reload();
-						swal("删除成功!", "您已经成功删除了一条水质采样数据", "success");
+						swal("删除成功!", "您已经成功删除了一条测站基础数据", "success");
 					}
 				});
 			});

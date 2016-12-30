@@ -270,6 +270,30 @@ class StationModel extends CommonModel{
 	 */
 	public function stationDel($param){
 		$this->tableName = 'ST_STBPRP_B';
+		$info = $this->where($param['data'])->find();
+		switch ($info['STTP']){
+			case 'MM':		// 气象站
+			case 'PP':		// 雨量站
+				break;
+			case 'ZZ':		// 河道水位站
+			case 'ZQ':		// 河道水文站
+				$this->delRVFCCH($param['data']);
+				$this->delZQRL($param['data']);
+				break;
+			case 'DD':		// 堰闸水文站
+				$this->delWASRL($param['data']);
+				break;
+			case 'RR':		// 水库水文站
+				$this->delRSVRFCCH($param['data']);
+				$this->delRSVRSTRL($param['data']);
+				$this->delRSVRFSR($param['data']);
+				$this->delZVARL($param['data']);
+				break;
+			case 'SS':		// 墒情站
+				$this->delSOILCH($param['data']);
+				break;
+			default:
+		}
 		return $this->curd(array(
 			'type'		=> 'delete',
 			'where'		=> array('[STCD]' => $param['data']['STCD']),
@@ -325,6 +349,20 @@ class StationModel extends CommonModel{
 	}
 
 	/**
+	 * 删除测站河道防洪指标数据
+	 * @param $where
+	 * @return array
+	 */
+	protected function delRVFCCH($where){
+		$this->tableName = 'ST_RVFCCH_B';
+		return $this->curd(array(
+			'type'		=> 'delete',
+			'where'		=> $where,
+			'msg'		=> '测站河道防洪指标数据删除成功！'
+		));
+	}
+
+	/**
 	 * 新增库湖防汛指标数据
 	 * @param $param
 	 * @return array
@@ -341,6 +379,20 @@ class StationModel extends CommonModel{
 			'type'		=> 'add',
 			'data'		=> $param,
 			'msg'		=> '库湖防汛指标数据添加成功！'
+		));
+	}
+
+	/**
+	 * 删除库湖防汛指标数据
+	 * @param $where
+	 * @return array
+	 */
+	protected function delRSVRFCCH($where){
+		$this->tableName = 'ST_RSVRFCCH_B';
+		return $this->curd(array(
+			'type'		=> 'delete',
+			'where'		=> $where,
+			'msg'		=> '库湖防汛指标数据删除成功！'
 		));
 	}
 
@@ -371,6 +423,21 @@ class StationModel extends CommonModel{
 	}
 
 	/**
+	 * 删除河道水位流量关系曲线数据
+	 * @param $where
+	 * @param string $table
+	 * @return array
+	 */
+	protected function delZQRL($where, $table='ST_ZQRL_B'){
+		$this->tableName = $table;
+		return $this->curd(array(
+			'type'		=> 'delete',
+			'where'		=> $where,
+			'msg'		=> '河道水位流量关系曲线数据删除成功！'
+		));
+	}
+
+	/**
 	 * 新增水库库容关系曲线
 	 * @param $param
 	 * @param $stcd
@@ -378,6 +445,15 @@ class StationModel extends CommonModel{
 	 */
 	protected function addZVARL($param, $stcd){
 		return $this->addZQRL($param, $stcd, 'ST_ZVARL_B');
+	}
+
+	/**
+	 * 删除水库库容关系曲线
+	 * @param $where
+	 * @return array
+	 */
+	protected function delZVARL($where){
+		return $this->delZQRL($where, 'ST_ZVARL_B');
 	}
 
 	/**
@@ -403,6 +479,20 @@ class StationModel extends CommonModel{
 	}
 
 	/**
+	 * 删除测站堰闸关系数据
+	 * @param $where
+	 * @return array
+	 */
+	protected function delWASRL($where){
+		$this->tableName = 'ST_WASRL_B';
+		return $this->curd(array(
+			'type'		=> 'delete',
+			'where'		=> $where,
+			'msg'		=> '测站堰闸关系数据删除成功！'
+		));
+	}
+
+	/**
 	 * 测站土壤墒情特征值
 	 * @param $param
 	 * @return array
@@ -423,6 +513,20 @@ class StationModel extends CommonModel{
 	}
 
 	/**
+	 * 删除测站土壤墒情特征值数据
+	 * @param $where
+	 * @return array
+	 */
+	protected function delSOILCH($where){
+		$this->tableName = 'ST_SOILCH_B';
+		return $this->curd(array(
+			'type'		=> 'delete',
+			'where'		=> $where,
+			'msg'		=> '测站土壤墒情特征值数据删除成功！'
+		));
+	}
+
+	/**
 	 * 库（湖）站汛限水位
 	 * @param $param
 	 * @param $stcd
@@ -439,6 +543,20 @@ class StationModel extends CommonModel{
 			'type'		=> 'addAll',
 			'data'		=> $data,
 			'msg'		=> '测站数据添加成功！'
+		));
+	}
+
+	/**
+	 * 删除测站库（湖）站汛限水位数据
+	 * @param $where
+	 * @return array
+	 */
+	protected function delRSVRFSR($where){
+		$this->tableName = 'ST_RSVRFSR_B';
+		return $this->curd(array(
+			'type'		=> 'delete',
+			'where'		=> $where,
+			'msg'		=> '测站库（湖）站汛限水位数据删除成功！'
 		));
 	}
 
@@ -465,6 +583,20 @@ class StationModel extends CommonModel{
 			'type'		=> 'add',
 			'data'		=> $data,
 			'msg'		=> '测站库（湖）站关系数据添加成功！'
+		));
+	}
+
+	/**
+	 * 站测站库（湖）站关系数据
+	 * @param $where
+	 * @return array
+	 */
+	protected function delRSVRSTRL($where){
+		$this->tableName = 'ST_RSVRSTRL_B';
+		return $this->curd(array(
+			'type'		=> 'delete',
+			'where'		=> $where,
+			'msg'		=> '测站测站库（湖）站关系数据删除成功！'
 		));
 	}
 }
