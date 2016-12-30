@@ -282,7 +282,7 @@ define(function (require){
 					break;
 			}
 			postData.STBPRP.STTP = $scope.station.STBPRP.STTP.value;
-			$scope.promise = xhr.service({model: 'Station', module: 'stationAdd', data: postData}, function(resp){
+			$scope.promise = xhr.service('post', {model: 'Station', module: 'stationAdd', data: postData}, function(resp){
 				swal({
 						title: "数据操作成功！",
 						text: resp.msg,
