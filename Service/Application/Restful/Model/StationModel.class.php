@@ -8,6 +8,7 @@
 
 namespace Restful\Model;
 use Common\Model\CommonModel;
+use think\Log;
 
 class StationModel extends CommonModel{
 	protected $tableName = 'ST_STBPRP_B';
@@ -335,6 +336,7 @@ class StationModel extends CommonModel{
 			array('MPHONE', 'require', '测站联系人的手机号码必须填写！'),
 		);
 		$param['SPHONE']='0871-65155666';
+		Log::write(json_encode($param));
 		return $this->curd(array(
 			'validate'	=> $validate,
 			'type'		=> 'add',
