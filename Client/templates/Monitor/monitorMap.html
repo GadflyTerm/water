@@ -1,125 +1,137 @@
 
 <ng-include src="template.quick_sidebar"></ng-include>
 
-<div class="col-md-12">
-	地图地图
-	<div class="panel panel-warning">
-		<div class="panel-heading">
-			<div class="row">
-				<h4 class="col-md-10"><i class="fa fa-list-alt"></i> 水库报表管理</h4>
-				<div class="col-md-2 col-sm-2 col-xs-2 text-right">
-					<a href="" class="btn">导出数据 <i class="fa fa-mail-forward"></i></a>
+<div class="">
+	<button type="button" class="btn btn-default mb30" ng-click="action()">模态框</button>
+	<div class="category-st-wrap">
+		<form action="" class="form-horizontal">
+			<div class="form-group">
+				<div class="checkbox">
+					<label>
+						<input type="checkbox"> 水库水位
+					</label>
+				</div>
+				<div class="checkbox">
+					<label>
+						<input type="checkbox"> 降雨量
+					</label>
+				</div>
+				<div class="checkbox">
+					<label>
+						<input type="checkbox"> 河道流量
+					</label>
+				</div>
+				<div class="checkbox">
+					<label>
+						<input type="checkbox"> 土壤墒情
+					</label>
+				</div>
+				<div class="checkbox">
+					<label>
+						<input type="checkbox"> 实时视频
+					</label>
 				</div>
 			</div>
-		</div>
-		<div class="panel-body">
-			<!--=== 选择 ===-->
-			<div class="row">
-				<div class="col-md-12 text-right mb5">
-					<a class="btn btn-default ml3" ng-repeat="item in Tcate">
-						{{item.text}}报表
-					</a>
-				</div>
-				<div class="col-md-3 col-md-offset-6 col-sm-4 col-xs-4">
-					<div class="select">
-						<form action="" class="form-horizontal">
-							<div class="form-group">
-								<lable class="col-md-3 col-sm-3 col-xs-4 control-label">水库</lable>
-								<div class="col-md-9 col-sm-9 col-xs-8">
-									<select name="请选择水库" class="form-control" >
-										<option ng-repeat="li in lists"  value="请选择水库">{{li.rsvname}}</option>
-									</select>
-								</div>
-							</div>
-						</form>
-					</div>
-				</div>
-				<div class="col-md-3 col-sm-4 col-xs-4">
-					<div class="input-group input-medium date date-picker"
-						 data-date="12-02-2012"
-						 data-date-format="dd-mm-yyyy"
-						 data-date-viewmode="years">
-						<input type="text" class="form-control" readonly>
-						<span class="input-group-btn">
-							<button class="btn default" type="button"><i class="fa fa-calendar"></i></button>
-						</span>
-					</div>
-					<!--<div class="select">-->
-					<!--<form action="" class="form-horizontal">-->
-					<!--<div class="form-group">-->
-					<!--<lable for="select" class="col-md-3 col-sm-3 col-xs-4 control-label">选择月份</lable>-->
-					<!--<div class="col-md-9 col-sm-9 col-xs-8">-->
-					<!--<select class="form-control" id="select">-->
-					<!--<option>1月</option>-->
-					<!--<option>2月</option>-->
-					<!--<option>3月</option>-->
-					<!--<option>4月</option>-->
-					<!--<option>5月</option>-->
-					<!--<option>6月</option>-->
-					<!--<option>7月</option>-->
-					<!--<option>8月</option>-->
-					<!--<option>9月</option>-->
-					<!--<option>10月</option>-->
-					<!--<option>11月</option>-->
-					<!--<option>12月</option>-->
-					<!--</select>-->
-					<!--</div>-->
-					<!--</div>-->
-					<!--</form>-->
-					<!--</div>-->
-				</div>
-			</div>
-			<!--=== \ 选择 ===-->
-			<!--=== 表格 ===-->
-			<h2 class="text-center">{{vo.rsvname}}灌区管理月报表 </h2>
-			<table class="table table-bordered table-hover table-condensed">
-				<tr>
-					<th class="text-center">时间</th>
-					<th class="text-center">降雨量</th>
-					<th class="text-center">蒸发量</th>
-					<th class="text-center">库水位</th>
-					<th class="text-center">蓄水量</th>
-					<th class="text-center">总库容</th>
-					<th class="text-center">死库容</th>
-					<th class="text-center">可供水量</th>
-					<th class="text-center">进水量</th>
-					<th class="text-center">供水量</th>
-					<th class="text-center">排洪量</th>
-				</tr>
-				<tr ng-repeat="item in lists">
-					<td><a href="#">{{item.Time}}</a></td>
-					<td>{{vo.Rfall}}</td>
-					<td>{{vo.Ept}}</td>
-					<td>{{vo.WLevel}}</td>
-					<td>{{vo.Rsv}}</td>
-					<td>{{vo.TCPcity}}</td>
-					<td>{{vo.DCPcity}}</td>
-					<td>{{vo.AWSupply}}</td>
-					<td>{{vo.WIntake}}</td>
-					<td>{{vo.WSupply}}</td>
-					<td>{{vo.WOutake}}</td>
-				</tr>
-				<tr ng-if="Mlists.length == 0">
-					<td colspan="7" class="text-center">没有数据</td>
-				</tr>
-			</table>
-			<!--=== \ 表格 ===-->
-		</div>
+		</form>
+	</div>
+	<div class="lhmap" style="height:500px; overflow: auto; cursor:pointer" >
+		<img class="w-full" src="img/map.jpg" alt="">
+	</div>
+	
+</div>
 
-		<div class="panel-footer">
-			<nav class="row">
-				<ul class="pagination pagination-sm pull-right" style="margin: 0; padding-right: 10px;">
-					<li><a href="#">第一页</a></li>
-					<li><a href="#">上一页</a></li>
-					<li><a href="#">1</a></li>
-					<li><a href="#">2</a></li>
-					<li><a href="#">3</a></li>
-					<li><a href="#">4</a></li>
-					<li><a href="#">5</a></li>
-					<li><a href="#">下一页</a></li>
-					<li><a href="#">最后一页</a></li>
-				</ul>
-			</nav>
+<script type="text/ng-template" id="actionModalContent.html">
+	<div class="modal-header">
+		<h3 class="modal-title" id="modal-title">
+			雨量站
+			<div class="pull-right">
+				<button type="button" class="btn btn-default" ng-click="detail()">详情</button>
+				<button class="btn btn-default" ng-click="close()">X</button>
+			</div>
+			
+		</h3>
+		
+	</div>
+	<div class="modal-body" id="modal-body">
+		<div class="well">
+			<div class="row">
+				<div class="col-md-6">
+					<table class="table table-bordered table-hover table-condensed">
+						<tr class="D-center">
+							<th>丙间水库</th>
+							<th>丙间水库</th>
+						</tr>
+						<tr>
+							<td>降水时间</td>
+							<td>10-23 8：00：00</td>
+						</tr>
+						<tr>
+							<td>时段降水量（mm）</td>
+							<td>15</td>
+						</tr>
+						<tr>
+							<td>当前累积降水量（mm）</td>
+							<td>30</td>
+						</tr>
+						<tr ng-if="lists.length == 0">
+							<td colspan="4" class="text-center">没有数据</td>
+						</tr>
+					</table>
+				</div>
+				<div class="col-md-6">
+					图表
+				</div>
+			</div>
 		</div>
 	</div>
-</div>
+	<div class="modal-footer">
+		图表
+	</div>
+</script>
+
+<script type="text/ng-template" id="detailModalContent.html">
+	<div class="modal-header">
+		<h3 class="modal-title">
+			雨量站详情
+			<div class="pull-right">
+				<button class="btn btn-default" ng-click="close()">X</button>
+			</div>
+		</h3>
+	</div>
+	<div class="modal-body" >
+		<div class="well">
+			<table class="table table-bordered table-hover table-condensed">
+				<tr class="D-center">
+					<th>水库名称</th>
+					<th>降水时间</th>
+					<th>时段降水量</th>
+					<th>当前累计降水量</th>
+				</tr>
+				<tr>
+					<td>丙间水库</td>
+					<td>10-23 8：00</td>
+					<td>5</td>
+					<td>30</td>
+				</tr>
+				<tr>
+					<td>丙间水库</td>
+					<td>10-23 8：05</td>
+					<td>5</td>
+					<td>30</td>
+				</tr>
+				<tr>
+					<td>丙间水库</td>
+					<td>10-23 8：00</td>
+					<td>5</td>
+					<td>30</td>
+				</tr>
+				<tr ng-if="lists.length == 0">
+					<td colspan="4" class="text-center">没有数据</td>
+				</tr>
+			</table>
+		</div>
+	</div>
+	<div class="modal-footer">
+		图表
+	</div>
+</script>

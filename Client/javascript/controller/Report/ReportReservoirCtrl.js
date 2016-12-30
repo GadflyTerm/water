@@ -12,11 +12,7 @@ define(function (require){
 			library: {title: '灌区报表管理', url: ''},
 		}
 		$scope.$emit('nav', $scope.nav);
-		$scope.Tcate = [
-			{id:'1',text:'年'},
-			{id:'2',text:'月',},
-			{id:'3',text:'日',}
-		]
+		
 		$scope.lists = [{
 			id:1,
 			date:'2016-12-08',

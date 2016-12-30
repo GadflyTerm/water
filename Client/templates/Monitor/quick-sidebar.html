@@ -1,8 +1,8 @@
 
 	<!--=== 快捷侧栏 ===-->
 	<div class="quick-sidebar-wrapper">
-		<a class="quick-sidebar-toggler" href="javascript:;">
-			收起
+		<a class="quick-sidebar-toggler" id="toggleQs" href="javascript:;">
+			展开
 		</a>
 		<div class="quick-sidebar">
 			<div class="nav-justified">
@@ -43,7 +43,7 @@
 						</a>
 					</li>
 				</ul>
-				<div class="tab-content">
+				<div class="tab-content p10">
 					<!--水库-->
 					<div class="tab-pane active quick-sidebar-reservoir" id="quick_sidebar_tab_1">
 						<div class="table-scrollable table-scrollable-borderless">
@@ -54,11 +54,11 @@
 									<th>水位</th>
 									<th>库容</th>
 								</tr>
-								<tr ng-repeat="">
-									<td>水库名称</td>
-									<td>200</td>
-									<td>70</td>
-									<td>100</td>
+								<tr ng-repeat="vo in Reservoirlists">
+									<td>{{vo.Rname}}</td>
+									<td>{{vo.Dtime}}</td>
+									<td>{{vo.wline}}</td>
+									<td>{{vo.Rfall}}</td>
 								</tr>
 								<tr ng-if="lists.length == 0">
 									<td colspan="4" class="text-center">没有数据</td>
@@ -75,11 +75,11 @@
 								<th>时段降水量</th>
 								<th>当前累积降水量</th>
 							</tr>
-							<tr ng-repeat="">
-								<td>站点名称</td>
-								<td>10</td>
-								<td>15</td>
-								<td>10-25</td>
+							<tr ng-repeat="vo in Rainfalllists">
+									<td>{{vo.Rname}}</td>
+									<td>{{vo.Dtime}}</td>
+									<td>{{vo.TRline}}</td>
+									<td>{{vo.ARfall}}</td>
 							</tr>
 							<tr ng-if="lists.length == 0">
 								<td colspan="4" class="text-center">没有数据</td>
@@ -95,11 +95,11 @@
 								<th>瞬时流量</th>
 								<th>累积流量</th>
 							</tr>
-							<tr>
-								<td>闸门名称</td>
-								<td>2m</td>
-								<td>120</td>
-								<td>10-23</td>
+							<tr ng-repeat="vo in Gateslists">
+									<td>{{vo.Gname}}</td>
+									<td>{{vo.open}}</td>
+									<td>{{vo.Sfall}}</td>
+									<td>{{vo.ARfall}}</td>
 							</tr>
 							<tr ng-if="lists.length == 0">
 								<td colspan="4" class="text-center">没有数据</td>
@@ -115,11 +115,11 @@
 								<th>水位</th>
 								<th>瞬时流量</th>
 							</tr>
-							<tr ng-repeat="">
-								<td>站点名称</td>
-								<td>15m</td>
-								<td>8m/s</td>
-								<td>10-25</td>
+							<tr ng-repeat="vo in FlowLlists">
+									<td>{{vo.Rname}}</td>
+									<td>{{vo.Dtime}}</td>
+									<td>{{vo.Wline}}</td>
+									<td>{{vo.Sfall}}</td>
 							</tr>
 							<tr ng-if="lists.length == 0">
 								<td colspan="4" class="text-center">没有数据</td>
@@ -136,12 +136,12 @@
 								<th>40cm</th>
 								<th>60cm</th>
 							</tr>
-							<tr ng-repeat="">
-								<td>站点名称</td>
-								<td>80</td>
-								<td>60</td>
-								<td>25</td>
-								<td>10-26</td>
+							<tr ng-repeat="vo in Moisturelists">
+									<td>{{vo.Rname}}</td>
+									<td>{{vo.Dtime}}</td>
+									<td>{{vo.Rt}}</td>
+									<td>{{vo.Rf}}</td>
+									<td>{{vo.Rs}}</td>
 							</tr>
 							<tr ng-if="lists.length == 0">
 								<td colspan="4" class="text-center">没有数据</td>
@@ -159,6 +159,15 @@
 	$(document).ready(function() {
 		$('.quick-sidebar-toggler').click(function () {
 			$('body').toggleClass('quick-sidebar-open');
+			$('#toggleQs').text('收起')
 		});
+//		function toggleQs() {
+//			if ($("body").class("quick-sidebar-open") == "none") {
+//				$('#toggleQs').text('展开');
+//			} else {
+//				$('#toggleQs').text('收起');
+//			}
+//		}
 	});
+	
 </script>
