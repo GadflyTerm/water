@@ -330,17 +330,17 @@ class StationModel extends CommonModel{
 	 * @return array
 	 */
 	protected function addSTSMTASK($param){
-		$validate = array(
+		/*$validate = array(
 			array('STCD', 'require', '测站代码必须填写！'),
 			array('STCD', '', '测站代码已经存在！', 0, 'unique', 1),
 			array('OFFICER', 'require', '测站联系人必须填写！'),
 			array('MPHONE', 'require', '测站联系人的手机号码必须填写！'),
-		);
+		);*/
 		$param['SPHONE']='0871-65155666';
 		Log::write(json_encode($param));
 		return $this->curd(array(
 			'model'		=> 'StStsmtaskB',
-			'validate'	=> $validate,
+			//'validate'	=> $validate,
 			'type'		=> 'add',
 			'data'		=> $param,
 			'msg'		=> '测站报送任务添加成功！'
