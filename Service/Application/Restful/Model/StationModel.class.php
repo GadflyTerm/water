@@ -336,8 +336,7 @@ class StationModel extends CommonModel{
 			array('OFFICER', 'require', '测站联系人必须填写！'),
 			array('MPHONE', 'require', '测站联系人的手机号码必须填写！'),
 		);*/
-		$param['SPHONE']='0871-65155666';
-		Log::write(json_encode($param));
+		$param['SPHONE']='087165155666';
 		return $this->curd(array(
 			'model'		=> 'StStsmtaskB',
 			//'validate'	=> $validate,
@@ -348,8 +347,8 @@ class StationModel extends CommonModel{
 	}
 	
 	protected function delSTSMTASK($where){
-		$this->tableName = 'ST_STSMTASK_B';
 		return $this->curd(array(
+			'model'		=> 'StStsmtaskB',
 			'type'		=> 'delete',
 			'where'		=> $where,
 			'msg'		=> '测站报送任务数据删除成功！'
