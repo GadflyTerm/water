@@ -138,7 +138,7 @@ class StationModel extends CommonModel{
 	 */
 	public function stationAdd($param){
 		$this->tableName = 'ST_STBPRP_B';
-		$validate_base = array(
+		$validate = array(
 			array('STCD', 'require', '测站代码必须填写！'),
 			array('STCD', '', '测站代码已经存在！', 0, 'unique', 1),
 			array('STNM', 'require', '测站名称必须填写！'),
@@ -148,15 +148,11 @@ class StationModel extends CommonModel{
 			array('LGTD', 'require', '测站经度必须填写！'),
 			array('LTTD', 'require', '测站纬度必须填写！'),
 		);
-		$validate_task = array(
-			array('OFFICER', 'require', '测站联系人必须填写！'),
-			array('MPHONE', 'require', '测站联系人的手机号码必须填写！'),
-		);
 		$data = $param['data'];
 		$data['STBPRP']['MODITIME'] = date("Y-m-d H:i:s");
 		$data['STBPRP']['LOCALITY'] = '33';
 		$base = $this->curd(array(
-			'validate'	=> $validate_base,
+			'validate'	=> $validate,
 			'type'		=> 'add',
 			'data'		=> $data['STBPRP'],
 			'msg'		=> '测站数据添加成功！'
@@ -164,12 +160,7 @@ class StationModel extends CommonModel{
 		if($base['type'] == 'Success'){
 			$data['STSMTASK']['STCD'] = $data['STBPRP']['STCD'];
 			$data['STSMTASK']['MODITIME'] = date("Y-m-d H:i:s");
-			$task = $this->curd(array(
-				'validate'	=> $validate_task,
-				'type'		=> 'add',
-				'data'		=> $data['STSMTASK'],
-				'msg'		=> '测站报送任务数据添加成功！'
-			));
+			$task = $this->addSTSMTASK($data['STSMTASK']);
 			if($task['type'] == 'Suceess'){
 				switch ($data['STBPRP']['STTP']){
 					case 'MM':		// 气象站
@@ -295,6 +286,7 @@ class StationModel extends CommonModel{
 				break;
 			default:
 		}
+		$this->delSTSMTASK($param['data']);
 		return $this->curd(array(
 			'type'		=> 'delete',
 			'where'		=> array('[STCD]' => $param['data']['STCD']),
@@ -326,6 +318,37 @@ class StationModel extends CommonModel{
 			'type'	=> 'select',
 			'where'	=> is_null($param)?'STCD<>"0"':$param['data'],
 			'msg'	=> '成功获得所有测站数据记录'
+		));
+	}
+
+	/**
+	 * 新增测站报送任务
+	 * @param $param
+	 * @return array
+	 */
+	protected function addSTSMTASK($param){
+		$this->tableName = 'ST_STSMTASK_B';
+		$validate = array(
+			array('STCD', 'require', '测站代码必须填写！'),
+			array('STCD', '', '测站代码已经存在！', 0, 'unique', 1),
+			array('OFFICER', 'require', '测站联系人必须填写！'),
+			array('MPHONE', 'require', '测站联系人的手机号码必须填写！'),
+		);
+		$param['SPHONE']='0871-65155666';
+		return $this->curd(array(
+			'validate'	=> $validate,
+			'type'		=> 'add',
+			'data'		=> $param,
+			'msg'		=> '测站报送任务添加成功！'
+		));
+	}
+	
+	protected function delSTSMTASK($where){
+		$this->tableName = 'ST_STSMTASK_B';
+		return $this->curd(array(
+			'type'		=> 'delete',
+			'where'		=> $where,
+			'msg'		=> '测站报送任务数据删除成功！'
 		));
 	}
 
