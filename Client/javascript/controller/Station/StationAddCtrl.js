@@ -286,7 +286,7 @@ define(function (require){
 				swal({
 						title: "数据操作成功！",
 						text: resp.msg,
-						type: resp.type,
+						type: resp.type.toLowerCase(),
 						showCancelButton: false,
 						confirmButtonColor: "#DD6B55",
 						confirmButtonText: "确定",
