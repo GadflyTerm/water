@@ -216,8 +216,11 @@ define(function (require){
 			}
 		}
 	});
-	app.run(function(xhr) {
+	app.run(function(editableOptions, editableThemes, xhr) {
 		xhr.getBase(true);
+		editableThemes.bs3.inputClass = 'input-sm';
+		editableThemes.bs3.buttonsClass = 'btn-sm';
+		editableOptions.theme = 'bs3';
 	});
 	app.controller('topCtrl', function($scope){
 		$scope.$on('nav', function(event, data){

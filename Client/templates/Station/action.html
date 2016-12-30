@@ -38,7 +38,12 @@
 							<ng-include src="template.RR_tab"></ng-include>
 						</div>
 					</uib-tab>
-					<uib-tab index="4" heading="第三步 设置库(湖)容量曲线" ng-show="tab.RR_tab">
+					<uib-tab index="4" heading="第三步 库(湖)汛限水位数据" ng-show="tab.RR_tab">
+						<div class="well">
+							<ng-include src="template.waterLevel"></ng-include>
+						</div>
+					</uib-tab>
+					<uib-tab index="5" heading="第四步 设置库(湖)容量曲线" ng-show="tab.RR_tab">
 						<div class="well">
 							<div class="row">
 								<ng-include src="template.reservoir"></ng-include>
@@ -55,7 +60,7 @@
 							</div>
 						</div>
 					</uib-tab>
-					<uib-tab index="5" heading="第二步 设置墒情特征值" ng-show="tab.SS_tab">
+					<uib-tab index="6" heading="第二步 设置墒情特征值" ng-show="tab.SS_tab">
 						<div class="well">
 							<ng-include src="template.SS_tab"></ng-include>
 						</div>

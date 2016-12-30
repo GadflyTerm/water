@@ -3,8 +3,6 @@
  */
 define(function (require){
 	var app = require('../../app');
-	require('angular_xeditable');
-	app.useModule('xeditable');
 	require('ng_file_upload');
 	app.useModule('ngFileUpload');
 	app.controller('StationAddCtrl', function($scope, $window, xhr){
@@ -23,6 +21,9 @@ define(function (require){
 			},
 			WASRL: {
 				RLMRK: 'D'
+			},
+			RSVRSTRL: {
+				IOMRK: 'Z'
 			},
 			STSMTASK: {
 				OFFICER: '',
@@ -46,16 +47,17 @@ define(function (require){
 			SS_tab: 'templates/Station/form/SS_tab.html',
 			riverway: 'templates/Station/form/riverwayCurve.html',
 			reservoir: 'templates/Station/form/reservoirCurve.html',
+			waterLevel: 'templates/Station/form/waterLevel.html'
 		}
-		$scope.relevance = function(){
-			switch($scope.ajax.relev){
+		$scope.relevance = function(param){
+			switch(param){
 				case 0:
-					$scope.promise = xhr.service('get', {action: 'station', module: 'getLists', op: 'getZZlist'}, function(resp){
+					$scope.promise = xhr.service('post', {model: 'Station', module: 'stationList', data: 'STTP = "ZZ" OR STTP = "ZQ"'}, function(resp){
 						$scope.RLSTCD = resp.data;
 					});
 					break;
 				case 1:
-					$scope.promise = xhr.service('get', {action: 'station', module: 'getLists', op: 'getRRlist'}, function(resp){
+					$scope.promise = xhr.service('post', {model: 'Station', module: 'stationList', data: {STTP: 'RR'}}, function(resp){
 						$scope.RLSTCD = resp.data;
 					});
 					break;
@@ -74,6 +76,7 @@ define(function (require){
 						heading: '水库水文',
 						STBPRP_title: '第一步 ' + $scope.station.STBPRP.STTP.lable + '基础信息'
 					};
+					$scope.relevance(1);
 					break;
 				case 'ZZ':
 					$scope.tab = {
@@ -214,9 +217,18 @@ define(function (require){
 		$scope.nextStep = function(param){
 			$scope.activeJustified = isNull(param)?$scope.tab.active:param;
 		};
+		$scope.$on('ZQRL', function(event, data){
+			$scope.station.ZQRL = data;
+		});
+		$scope.$on('ZVARL', function(event, data){
+			$scope.station.ZVARL = data;
+		});
+		$scope.$on('RSVRFSR', function(event, data){
+			$scope.station.RSVRFSR = data;
+		});
 		$scope.submit = function(){
 			var postData;
-			switch($scope.station.STBPRP.STTP){
+			switch($scope.station.STBPRP.STTP.value){
 				case 'PP':
 					"雨量站数据";
 					postData = {
@@ -240,21 +252,19 @@ define(function (require){
 						STBPRP: $scope.station.STBPRP,
 						STSMTASK: $scope.station.STSMTASK,
 						RVFCCH: $scope.station.RVFCCH,
+						ZQRL: $scope.station.ZQRL
 					}
-					$scope.$on('ZQRL', function(event, data){
-						postData.ZQRL = data;
-					});
 					break;
 				case 'RR':
 					"水库水文站数据";
 					postData = {
 						STBPRP: $scope.station.STBPRP,
+						RSVRSTRL: $scope.station.RSVRSTRL,
 						STSMTASK: $scope.station.STSMTASK,
 						RSVRFCCH: $scope.station.RSVRFCCH,
+						RSVRFSR: $scope.station.RSVRFSR,
+						ZVARL: $scope.station.ZVARL
 					}
-					$scope.$on('ZQRL', function(event, data){
-						postData.ZVARL = data;
-					});
 					break;
 				case 'DD':
 					"堰闸水文站数据";
@@ -271,8 +281,9 @@ define(function (require){
 					}
 					break;
 			}
-			console.log(postData);
-			$scope.promise = xhr.service({ac: 'station', op: 'addStation'}, function(resp){
+			postData.STBPRP.STTP = $scope.station.STBPRP.STTP.value;
+			console.log(postData, 'info');
+			$scope.promise = xhr.service({model: 'Station', module: 'stationAdd', data: postData}, function(resp){
 				console.log(resp);
 			})
 		}
@@ -281,7 +292,7 @@ define(function (require){
 		$scope.ZQRL = [];
 		$scope.addRiverwayCurve = function(){
 			$scope.inserted = {
-				LNNM: '',
+				LNNM: 'dfhdfh',
 				BGTM: '',
 				PTNO: '',
 				Z: '',
@@ -289,7 +300,6 @@ define(function (require){
 				COMMENTS: ''
 			};
 			$scope.ZQRL.push($scope.inserted);
-			$scope.$emit('ZQRL', $scope.ZQRL);
 		}
 		$scope.uploadFile = function(){
 			if ($scope.file) {
@@ -324,6 +334,10 @@ define(function (require){
 				});
 			}
 		};
+		$scope.saveZQRL = function(){
+			$scope.$emit('ZQRL', $scope.ZQRL);
+		}
+		
 	});
 	app.controller('reservoirCurveCtrl', function($scope, Upload){
 		$scope.ZVARL = []
@@ -336,7 +350,6 @@ define(function (require){
 				WSFA: ''
 			};
 			$scope.ZVARL.push($scope.inserted);
-			$scope.$emit('ZVARL', $scope.ZVARL);
 		}
 		$scope.uploadFile = function(){
 			if ($scope.file) {
@@ -368,5 +381,54 @@ define(function (require){
 				});
 			}
 		};
+		$scope.saveZVARL = function(){
+			$scope.$emit('ZVARL', $scope.ZVARL);
+		}
+	});
+	app.controller('waterLevelCtrl', function($scope, $filter, editableThemes){
+		$scope.RSVRFSR = [
+			{BGMD: '', EDMD: '', FSLTDZ: '', FSLTDW: '', FSTP: 1},
+			{BGMD: '', EDMD: '', FSLTDZ: '', FSLTDW: '', FSTP: 2},
+			{BGMD: '', EDMD: '', FSLTDZ: '', FSLTDW: '', FSTP: 3},
+			{BGMD: '', EDMD: '', FSLTDZ: '', FSLTDW: '', FSTP: 4},
+		];
+		$scope.statuses = [
+			{value: 1, text: '主汛期'},
+			{value: 2, text: '后汛期'},
+			{value: 3, text: '过渡期'},
+			{value: 4, text: '其它'}
+		];
+		$scope.opened = {
+			l: [],
+			r: []
+		}
+		$scope.open = function($event, index, ac) {
+			$event.preventDefault();
+			$event.stopPropagation();
+			var x;
+			for (x in $scope.opened.l){
+				$scope.opened.l[x] = false;
+				$scope.opened.r[x] = false;
+			}
+			if(ac == 'l'){
+				$scope.opened.l[index]= !$scope.opened.l[index];
+			}
+			if(ac == 'r'){
+				$scope.opened.r[index]= !$scope.opened.r[index];
+			}
+		};
+		$scope.addWaterLevel = function(){
+			$scope.inserted = {
+				BGMD: '',
+				EDMD: '',
+				FSLTDZ: '',
+				FSLTDW: '',
+				FSTP: 1
+			};
+			$scope.RSVRFSR.push($scope.inserted);
+		}
+		$scope.saveRSVRFSR = function(){
+			$scope.$emit('RSVRFSR', $scope.RSVRFSR);
+		}
 	});
 });

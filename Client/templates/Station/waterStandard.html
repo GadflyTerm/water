@@ -19,32 +19,33 @@
 								<th class="text-center vertical-center-30">是否启用</th>
 								<th class="text-center col-md-2 vertical-center-30">
 									<button type="button" class="btn btn-default btn-block btn-sm" ng-click="addRiverwayCurve()">
-										<i class="fa fa-plus-circle"></i> 添加采样
+										<i class="fa fa-plus-circle"></i> 添加采样标准
 									</button>
 								</th>
 							</tr>
-							<tr ng-repeat="val in Standard">
+							<tr ng-repeat="vo in allitem[currentPage-1]">
 								<td class="vertical-center-30 text-center">
-									{{val.label}}
+									{{vo.label}}
 								</td>
 								<td class="vertical-center-30 text-center">
-									{{val.field}}
+									{{vo.field}}
 								</td>
 								<td class="vertical-center-30 text-center">
-									<span editable-number="val.value" e-name="value" e-form="rowform" onbeforesave="checkName($data, val.id)">
-										{{val.value||'未设置'}}
+									<span editable-number="vo.value" e-name="value" e-form="rowform" 
+										  onbeforesave="checkName($data, vo.id)">
+										{{vo.value||'未设置'}}
 									</span>
 								</td>
 								<td class="vertical-center-30 text-center">
-									{{val.prickle}}
+									{{vo.prickle}}
 								</td>
 								<td class="vertical-center-30 text-center">
 									<span editable-checkbox="val.status" e-name="Z" e-form="rowform" e-title="启用">
-										{{(val.status==1)?'启用':'关闭'}}
+										{{(vo.status==1)?'启用':'关闭'}}
 									</span>
 								</td>
 								<td style="white-space: nowrap" class="text-center">
-									<form editable-form name="rowform" onbeforesave="saveUser($data, val.id)" ng-show="rowform.$visible" class="form-buttons form-inline" shown="inserted == val">
+									<form editable-form name="rowform" onbeforesave="saveUser($data, vo.id)" ng-show="rowform.$visible" class="form-buttons form-inline">
 										<button type="submit" ng-disabled="rowform.$waiting" 
 												class="btn btn-sm btn-primary"><i class="fa fa-check-circle"></i> 保存
 										</button>
@@ -55,6 +56,16 @@
 										<button type="button" class="btn btn-sm btn-primary" ng-click="rowform.$show()"><i class="fa fa-edit"></i> 编辑</button>
 										<button type="button" class="btn btn-sm btn-danger" ng-click="removeUser($index)"><i class="fa fa-trash"></i> 删除</button>
 									</div>
+								</td>
+							</tr>
+							<tr>
+								<td colspan="6" class="test-right">
+									<ul uib-pagination class="pagination-sm embed-responsive-item" 
+										style="float:right;margin: 0 15px 0 0;" total-items="totalItems" 
+										ng-model="currentPage" previous-text="上一页" next-text="下一页" first-text="首页" 
+										last-text="尾页" boundary-links="true" boundary-link-numbers="true" 
+										rotate="false">
+									</ul>
 								</td>
 							</tr>
 						</table>

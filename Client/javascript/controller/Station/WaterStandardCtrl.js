@@ -3,27 +3,37 @@
  */
 define(function (require){
 	var app = require('../../app');
-	require('angular_xeditable');
-	app.useModule('xeditable');
-	app.controller('WaterStandardCtrl', function($scope, $filter, editableOptions, editableThemes, xhr){
+	app.controller('WaterStandardCtrl', function($scope, $filter, xhr){
 		$scope.nav = {
 			home: {title: '首页', url: 'Home'},
 			library: {title: '水质异常参照标准数据列表', url: ''},
 		}
 		$scope.$emit('nav', $scope.nav);
-		editableThemes.bs3.inputClass = 'input-sm';
-		editableThemes.bs3.buttonsClass = 'btn-sm';
-		editableOptions.theme = 'bs3';
+		$scope.Standard = [];
+		$scope.currentPage =1;		// 初始当前页
+		$scope.allitem=[];			// 存放所有页
+		$scope.numPages = 10;
 		$scope.promise = xhr.service('get', {action: 'station', module: 'getLists', op: 'WaterStandard'}, function(resp){
-			$scope.Standard = resp.data;
+			var Standard = [];
+			for (var p in resp.data){
+				Standard.push(resp.data[p]);
+			}
+			var num= Standard.length;
+			$scope.totalItems =num;	// 共有多少条数据
+			for(var i=0; i<num; i+=$scope.numPages){
+				$scope.allitem.push(Standard.slice(i, i+$scope.numPages));
+			}
 		});
 		$scope.statuses = [
 			{value: 0, text: '禁用'},
 			{value: 1, text: '启用'}
 		];
 		$scope.submit = function() {
+			$scope.Standard = [];
 			$scope.promise = xhr.service('POST', {action: 'station', module: 'setXediTable', op: 'WaterStandard', data: JSON.stringify($scope.Standard)}, function(resp){
-				$scope.Standard = resp.data;
+				for (var p in resp.data){
+					$scope.Standard.push(resp.data[p]);
+				}
 			});
 		}
 	});

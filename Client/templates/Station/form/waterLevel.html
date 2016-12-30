@@ -1,0 +1,55 @@
+<style>
+	.vertical-center-30 {line-height:30px!important;}
+</style>
+<table class="table table-bordered table-hover table-condensed" ng-controller="waterLevelCtrl">
+	<tr style="font-weight: bold" class="">
+		<th class="text-center col-md-2 vertical-center-30" >开始月日</th>
+		<th class="text-center col-md-2 vertical-center-30" >结束月日</th>
+		<th class="text-center col-md-2 vertical-center-30" >汛限水位</th>
+		<th class="text-center col-md-2 vertical-center-30" >汛限库容</th>
+		<th class="text-center col-md-2 vertical-center-30" >汛限类别</th>
+		<th class="text-center col-md-2 vertical-center-30">
+			<button type="button" class="btn btn-default btn-block btn-sm" ng-click="addWaterLevel()">
+				<i class="fa fa-plus-circle"></i> 添加汛限数据
+			</button>
+		</th>
+	</tr>
+	<tr ng-repeat="(index, val) in RSVRFSR">
+		<td class="vertical-center-30">
+			<span editable-bsdate="val.BGMD" e-name="BGMD" e-form="rowform" e-is-open="opened.l[index]" 
+				  e-ng-click="open($event, index, 'l')" e-datepicker-popup="MM-dd">
+				{{(val.BGMD|date:'MM月dd日')||'empty'}}
+			</span>
+		</td>
+		<td class="vertical-center-30">
+			<span editable-bsdate="val.EDMD" e-name="EDMD" e-form="rowform" e-is-open="opened.r[index]"
+				  e-ng-click="open($event, index, 'r')" e-datepicker-popup="MM-dd">
+				{{(val.EDMD|date:'MM月dd日')||'empty'}}
+			</span>
+		</td>
+		<td class="vertical-center-30">
+			<span editable-number="val.FSLTDZ" e-name="FSLTDZ" e-form="rowform">
+				{{val.FSLTDZ||'empty'}}
+			</span>
+		</td>
+		<td class="vertical-center-30">
+			<span editable-number="val.FSLTDW" e-name="FSLTDW" e-form="rowform">
+				{{val.FSLTDW||'empty'}}
+			</span>
+		</td>
+		<td class="vertical-center-30">
+			<span editable-select="val.FSTP" e-name="FSTP" e-form="rowform" e-ng-options="s.value as s.text for s in statuses"></span>
+		</td>
+		<td style="white-space: nowrap" class="text-center">
+			<form editable-form name="rowform" onbeforesave="saveRSVRFSR()" ng-show="rowform.$visible" class="form-buttons form-inline" shown="inserted == val">
+				<button type="submit" ng-disabled="rowform.$waiting" class="btn btn-primary btn-sm"><i 
+						class="fa fa-check-circle"></i> 保存</button>
+				<button type="button" ng-disabled="rowform.$waiting" ng-click="rowform.$cancel()" class="btn btn-default btn-sm"><i class="fa fa-minus-circle"></i> 取消</button>
+			</form>
+			<div class="buttons vertical-center-30" ng-show="!rowform.$visible">
+				<button type="button" class="btn btn-sm btn-primary" ng-click="rowform.$show()"><i class="fa fa-edit"></i> 编辑</button>
+				<button type="button" class="btn btn-sm btn-danger" ng-click="removeUser($index)"><i class="fa fa-trash"></i> 删除</button>
+			</div>
+		</td>
+	</tr>
+</table>

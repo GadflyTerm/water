@@ -50,13 +50,12 @@
 			</span>
 		</td>
 		<td class="vertical-center-30">
-			<span editable-text="val.COMMENTS" e-name="COMMENTS" e-form="rowform" 
-				  onbeforesave="checkName($data, val.id)">
+			<span editable-text="val.COMMENTS" e-name="COMMENTS" e-form="rowform" onbeforesave="checkName($data, val.id)">
 				{{val.COMMENTS||'empty'}}
 			</span>
 		</td>
 		<td style="white-space: nowrap" class="text-center">
-			<form editable-form name="rowform" onbeforesave="saveUser($data, val.id)" ng-show="rowform.$visible" class="form-buttons form-inline" shown="inserted == val">
+			<form editable-form name="rowform" onbeforesave="saveZQRL()" ng-show="rowform.$visible" class="form-buttons form-inline" shown="inserted == val">
 				<button type="submit" ng-disabled="rowform.$waiting" class="btn btn-primary"><i class="fa fa-check-circle"></i> 保存</button>
 				<button type="button" ng-disabled="rowform.$waiting" ng-click="rowform.$cancel()" class="btn btn-default"><i class="fa fa-minus-circle"></i> 取消</button>
 			</form>
@@ -70,7 +69,7 @@
 		<td colspan="7">
 			<nav class="row" style="margin-right: 5px;">
 				<ul class="pagination pagination-sm pull-right" style="margin: 0; padding-right: 10px;">
-					<li><a href="#">第一页</a></li>
+					<li><a ng-href="#" ng-click="test()">第一页</a></li>
 					<li><a href="#">上一页</a></li>
 					<li><a href="#">1</a></li>
 					<li><a href="#">2</a></li>
