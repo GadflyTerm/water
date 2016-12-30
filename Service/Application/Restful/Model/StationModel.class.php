@@ -361,14 +361,9 @@ class StationModel extends CommonModel{
 	 * @return array
 	 */
 	protected function addRVFCCH($param){
-		$this->tableName = 'ST_RVFCCH_B';
-		$validate = array(
-			array('STCD', 'require', '测站代码必须填写！'),
-			array('STCD', '', '测站代码已经存在！', 0, 'unique', 1),
-		);
 		$param['MODITIME'] = date("Y-m-d H:i:s");
 		return $this->curd(array(
-			'validate'	=> $validate,
+			'model'		=> 'StRvfcchB',
 			'type'		=> 'add',
 			'data'		=> $param,
 			'msg'		=> '河道防洪指标数据添加成功！'
@@ -381,8 +376,8 @@ class StationModel extends CommonModel{
 	 * @return array
 	 */
 	protected function delRVFCCH($where){
-		$this->tableName = 'ST_RVFCCH_B';
 		return $this->curd(array(
+			'model'		=> 'StRvfcchB',
 			'type'		=> 'delete',
 			'where'		=> $where,
 			'msg'		=> '测站河道防洪指标数据删除成功！'
@@ -395,14 +390,9 @@ class StationModel extends CommonModel{
 	 * @return array
 	 */
 	protected function addRSVRFCCH($param){
-		$this->tableName = 'ST_RSVRFCCH_B';
-		$validate = array(
-			array('STCD', 'require', '测站代码必须填写！'),
-			array('STCD', '', '测站代码已经存在！', 0, 'unique', 1),
-		);
 		$param['MODITIME'] = date("Y-m-d H:i:s");
 		return $this->curd(array(
-			'validate'	=> $validate,
+			'model'		=> 'StRsvrfcchB',
 			'type'		=> 'add',
 			'data'		=> $param,
 			'msg'		=> '库湖防汛指标数据添加成功！'
@@ -415,8 +405,8 @@ class StationModel extends CommonModel{
 	 * @return array
 	 */
 	protected function delRSVRFCCH($where){
-		$this->tableName = 'ST_RSVRFCCH_B';
 		return $this->curd(array(
+			'model'		=> 'StRsvrfcchB',
 			'type'		=> 'delete',
 			'where'		=> $where,
 			'msg'		=> '库湖防汛指标数据删除成功！'
@@ -430,19 +420,14 @@ class StationModel extends CommonModel{
 	 * @param string $table
 	 * @return array
 	 */
-	protected function addZQRL($param, $stcd, $table='ST_ZQRL_B'){
-		$this->tableName = $table;
-		$validate = array(
-			array('STCD', 'require', '测站代码必须填写！'),
-			array('STCD', '', '测站代码已经存在！', 0, 'unique', 1),
-		);
+	protected function addZQRL($param, $stcd, $table='StZqrlB'){
 		foreach($param AS $key => $val){
 			$data[$key] = $val;
 			$data[$key]['STCD'] = $stcd;
 			$data[$key]['MODITIME'] = date("Y-m-d H:i:s");
 		}
 		return $this->curd(array(
-			'validate'	=> $validate,
+			'model'		=> $table,
 			'type'		=> 'addAll',
 			'data'		=> $data,
 			'msg'		=> '测站数据添加成功！'
@@ -455,9 +440,9 @@ class StationModel extends CommonModel{
 	 * @param string $table
 	 * @return array
 	 */
-	protected function delZQRL($where, $table='ST_ZQRL_B'){
-		$this->tableName = $table;
+	protected function delZQRL($where, $table='StZqrlB'){
 		return $this->curd(array(
+			'model'		=> $table,
 			'type'		=> 'delete',
 			'where'		=> $where,
 			'msg'		=> '河道水位流量关系曲线数据删除成功！'
@@ -471,7 +456,7 @@ class StationModel extends CommonModel{
 	 * @return array
 	 */
 	protected function addZVARL($param, $stcd){
-		return $this->addZQRL($param, $stcd, 'ST_ZVARL_B');
+		return $this->addZQRL($param, $stcd, 'StZvarlB');
 	}
 
 	/**
@@ -480,7 +465,7 @@ class StationModel extends CommonModel{
 	 * @return array
 	 */
 	protected function delZVARL($where){
-		return $this->delZQRL($where, 'ST_ZVARL_B');
+		return $this->delZQRL($where, 'StZvarlB');
 	}
 
 	/**
@@ -489,16 +474,9 @@ class StationModel extends CommonModel{
 	 * @return array
 	 */
 	protected function addWASRL($param){
-		$this->tableName - 'ST_WASRL_B';
 		$param['MODITIME'] = date("Y-m-d H:i:s");
-		$validate = array(
-			array('STCD', 'require', '测站代码必须填写！'),
-			array('STCD', '', '测站代码已经存在！', 0, 'unique', 1),
-			array('RLSTCD', 'require', '关联测站代码必须填写！'),
-			array('RLMRK', 'require', '堰闸关系标志必须填写！'),
-		);
 		return $this->curd(array(
-			'validate'	=> $validate,
+			'model'		=> 'StWasrlB',
 			'type'		=> 'add',
 			'data'		=> $param,
 			'msg'		=> '测站堰闸关系数据添加成功！'
@@ -511,8 +489,8 @@ class StationModel extends CommonModel{
 	 * @return array
 	 */
 	protected function delWASRL($where){
-		$this->tableName = 'ST_WASRL_B';
 		return $this->curd(array(
+			'model'		=> 'StWasrlB',
 			'type'		=> 'delete',
 			'where'		=> $where,
 			'msg'		=> '测站堰闸关系数据删除成功！'
@@ -525,14 +503,9 @@ class StationModel extends CommonModel{
 	 * @return array
 	 */
 	protected function addSOILCH($param){
-		$this->tableName - 'ST_SOILCH_B';
 		$param['MODITIME'] = date("Y-m-d H:i:s");
-		$validate = array(
-			array('STCD', 'require', '测站代码必须填写！'),
-			array('STCD', '', '测站代码已经存在！', 0, 'unique', 1),
-		);
 		return $this->curd(array(
-			'validate'	=> $validate,
+			'model'		=> 'StSoilchB',
 			'type'		=> 'add',
 			'data'		=> $param,
 			'msg'		=> '测站土壤墒情特征值数据添加成功！'
@@ -545,8 +518,8 @@ class StationModel extends CommonModel{
 	 * @return array
 	 */
 	protected function delSOILCH($where){
-		$this->tableName = 'ST_SOILCH_B';
 		return $this->curd(array(
+			'model'		=> 'StSoilchB',
 			'type'		=> 'delete',
 			'where'		=> $where,
 			'msg'		=> '测站土壤墒情特征值数据删除成功！'
@@ -560,13 +533,13 @@ class StationModel extends CommonModel{
 	 * @return array
 	 */
 	protected function addRSVRFSR($param, $stcd){
-		$this->tableName - 'ST_RSVRFSR_B';
 		foreach($param AS $key => $val){
 			$data[$key] = $val;
 			$data[$key]['STCD'] = $stcd;
 			$data[$key]['MODITIME'] = date("Y-m-d H:i:s");
 		}
 		return $this->curd(array(
+			'model'		=> 'StRsvrfsrB',
 			'type'		=> 'addAll',
 			'data'		=> $data,
 			'msg'		=> '测站数据添加成功！'
@@ -579,8 +552,8 @@ class StationModel extends CommonModel{
 	 * @return array
 	 */
 	protected function delRSVRFSR($where){
-		$this->tableName = 'ST_RSVRFSR_B';
 		return $this->curd(array(
+			'model'		=> 'StRsvrfsrB',
 			'type'		=> 'delete',
 			'where'		=> $where,
 			'msg'		=> '测站库（湖）站汛限水位数据删除成功！'
@@ -594,19 +567,14 @@ class StationModel extends CommonModel{
 	 * @return array
 	 */
 	protected function addRSVRSTRL($param, $stcd){
-		$this->tableName - 'ST_RSVRSTRL_B';
 		$data = array(
 			'STCD'		=> $stcd,
 			'IOMRK'		=> $param['IOMRK'],
 			'RLSTCD'	=> ($param['RLSTCD'])?$param['RLSTCD']:$stcd,
 			'MODITIME'	=> date("Y-m-d H:i:s")
 		);
-		$validate = array(
-			array('STCD', 'require', '测站代码必须填写！'),
-			array('STCD', '', '测站代码已经存在！', 0, 'unique', 1),
-		);
 		return $this->curd(array(
-			'validate'	=> $validate,
+			'model'		=> 'StRsvrstrlB',
 			'type'		=> 'add',
 			'data'		=> $data,
 			'msg'		=> '测站库（湖）站关系数据添加成功！'
@@ -619,8 +587,8 @@ class StationModel extends CommonModel{
 	 * @return array
 	 */
 	protected function delRSVRSTRL($where){
-		$this->tableName = 'ST_RSVRSTRL_B';
 		return $this->curd(array(
+			'model'		=> 'StRsvrstrlB',
 			'type'		=> 'delete',
 			'where'		=> $where,
 			'msg'		=> '测站测站库（湖）站关系数据删除成功！'

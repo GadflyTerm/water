@@ -1,33 +1,33 @@
-<form class="form-horizontal" role="form" method="post" action="__SELF__">
+<form class="form-horizontal" role="form" name="theForm" novalidate="novalidate">
 	<div class="form-group">
 		<label class="col-sm-2 control-label">测站编码</label>
 		<div class="col-sm-4">
 			<input type="text" class="form-control input-sm" ng-model="station.STBPRP.STCD" name="STCD" 
-				   placeholder="具有唯一性，由数字和大写字母组成的8位字符串" required>
+				   placeholder="具有唯一性，由数字和大写字母组成的8位字符串" ng-class="{true: 'has-error', false: 'has-success'}[theForm.STCD.$invalid]" required>
 		</div>
 		<label class="col-sm-2 control-label">测站名称</label>
 		<div class="col-sm-4">
 			<input type="text" class="form-control input-sm" ng-model="station.STBPRP.STNM" name="STNM" 
-				   placeholder="测站编码所代表测站的中文名称" required>
+				   placeholder="测站编码所代表测站的中文名称" ng-class="{true: 'has-error', false: 'has-success'}[theForm.STNM.$invalid]" required>
 		</div>
 	</div>
 	<div class="form-group">
 		<label class="col-sm-2 control-label">经度</label>
 		<div class="col-sm-4">
 			<input type="text" class="form-control input-sm" ng-model="station.STBPRP.LGTD" name="LGTD" 
-				   placeholder="测站代表点所在地理位置的东经度" required>
+				   placeholder="测站代表点所在地理位置的东经度" ng-class="{true: 'has-error', false: 'has-success'}[theForm.LGTD.$invalid]" required>
 		</div>
 		<label class="col-sm-2 control-label">纬度</label>
 		<div class="col-sm-4">
 			<input type="text" class="form-control input-sm" ng-model="station.STBPRP.LTTD" name="LTTD" 
-				   placeholder="测站代表点所在地理位置的北纬度" required>
+				   placeholder="测站代表点所在地理位置的北纬度" ng-class="{true: 'has-error', false: 'has-success'}[theForm.LTTD.$invalid]" required>
 		</div>
 	</div>
 	<div class="form-group">
 		<label class="col-sm-2 control-label">测站类别</label>
 		<div class="col-sm-4">
 			<select class="form-control input-sm" ng-model="station.STBPRP.STTP" name="STTP" ng-change="mySTTP()" 
-					ng-options="item.lable for item in option.STTP track by item.value" required>
+					ng-options="item.lable for item in option.STTP track by item.value" ng-class="{true: 'has-error', false: 'has-success'}[theForm.STTP.$invalid]" required>
 				<option value="">请选择测站类型</option>
 			</select>
 		</div>
@@ -76,12 +76,12 @@
 		<label class="col-sm-2 control-label">测站联系人</label>
 		<div class="col-sm-4">
 			<input type="text" class="form-control input-sm" ng-model="station.STSMTASK.OFFICER" name="OFFICER" 
-				   placeholder="测站联系人的姓名" required>
+				   placeholder="测站联系人的姓名" ng-class="{true: 'has-error', false: 'has-success'}[theForm.OFFICER.$invalid]" required>
 		</div>
 		<label class="col-sm-2 control-label">联系人手机</label>
 		<div class="col-sm-4">
 			<input type="text" class="form-control input-sm" ng-model="station.STSMTASK.MPHONE"
-				   name="MPHONE" placeholder="测站联系人的手机号码" required>
+				   name="MPHONE" ng-class="{true: 'has-error', false: 'has-success'}[theForm.MPHONE.$invalid]" placeholder="测站联系人的手机号码" required>
 		</div>
 	</div>
 	<div class="form-group">
@@ -99,7 +99,7 @@
 		<label class="col-sm-2 control-label">测站地址</label>
 		<div class="col-sm-10">
 			<input type="text" class="form-control input-sm" ng-model="station.STBPRP.STLC" name="STLC" 
-				   placeholder="测站代表点所在地县级以下详细地址">
+				   placeholder="测站代表点所在地县级以下详细地址" ng-class="{true: 'has-error', false: 'has-success'}[theForm.STLC.$invalid]" required>
 		</div>
 	</div>
 	<div class="form-group">
