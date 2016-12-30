@@ -5,7 +5,7 @@ define(function (require){
 	var app = require('../../app');
 	require('ng_file_upload');
 	app.useModule('ngFileUpload');
-	app.controller('StationAddCtrl', function($scope, $window, xhr){
+	app.controller('StationAddCtrl', function($scope, $window, $state, xhr){
 		$scope.option = JSON.parse($window.sessionStorage.getItem("baseData"));
 		$scope.$emit('nav', {
 			home: {title: '检测站管理', url: 'Home'},
@@ -282,10 +282,20 @@ define(function (require){
 					break;
 			}
 			postData.STBPRP.STTP = $scope.station.STBPRP.STTP.value;
-			console.log(postData, 'info');
-			/*$scope.promise = xhr.service({model: 'Station', module: 'stationAdd', data: postData}, function(resp){
-				console.log(resp);
-			})*/
+			$scope.promise = xhr.service({model: 'Station', module: 'stationAdd', data: postData}, function(resp){
+				swal({
+						title: "数据操作成功！",
+						text: resp.msg,
+						type: resp.type,
+						showCancelButton: false,
+						confirmButtonColor: "#DD6B55",
+						confirmButtonText: "确定",
+						closeOnConfirm: true
+					},
+					function(){
+						$state.go('StationIndex');
+					});
+			});
 		}
 	});
 	app.controller('riverwayCurveCtrl', function($scope, Upload, toastr){
