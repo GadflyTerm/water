@@ -8,6 +8,7 @@
 
 namespace Restful\Model;
 use Common\Model\CommonModel;
+use Think\Storage\Driver\File;
 
 class SamplingModel extends CommonModel{
 	protected $tableName = 'ST_STBPRP_B';
