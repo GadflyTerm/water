@@ -220,6 +220,7 @@ class StationModel extends CommonModel{
 						break;
 					case 'SS':		// 墒情站
 						$data['SOILCH']['STCD'] = $data['STBPRP']['STCD'];
+						Log::write(json_encode($data['SOILCH']));
 						return $this->addSOILCH($data['SOILCH']);
 						break;
 					default:
