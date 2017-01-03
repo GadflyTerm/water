@@ -222,6 +222,7 @@ define(function (require){
 						}else if(angular.isArray(resp.data)){
 							list = resp.data;
 						}
+						
 						resp.pagination.totalItems = list.length;
 						for(var i=0; i<resp.pagination.totalItems; i+=resp.pagination.itemsPerPage){
 							resp.pagination.numPages++;
