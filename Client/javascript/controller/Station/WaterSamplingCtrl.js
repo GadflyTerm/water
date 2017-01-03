@@ -12,6 +12,7 @@ define(function (require){
 		$scope.$emit('nav', $scope.nav);
 
 		$scope.promise = xhr.getList({model: 'Sampling', module: 'waterList'}, {}, function(resp){
+			console.log(resp);
 			$scope.totalItems = resp.pagination.totalItems;
 			$scope.allItem = resp.pagination.allItem;
 			$scope.currentPage = resp.pagination.currentPage;
