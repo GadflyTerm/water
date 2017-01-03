@@ -220,9 +220,7 @@ class StationModel extends CommonModel{
 						break;
 					case 'SS':		// 墒情站
 						$data['SOILCH']['STCD'] = $data['STBPRP']['STCD'];
-						$SOILCH = $this->addSOILCH($data['SOILCH']);
-						if($SOILCH['type'] == 'Success') $return = $base;
-						else $return = $SOILCH;
+						return $this->addSOILCH($data['SOILCH']);
 						break;
 					default:
 				}
@@ -505,6 +503,7 @@ class StationModel extends CommonModel{
 	 */
 	protected function addSOILCH($param){
 		$param['MODITIME'] = date("Y-m-d H:i:s");
+		Log::write(json_encode($param));
 		return $this->curd(array(
 			'model'		=> 'StSoilchB',
 			'type'		=> 'add',
