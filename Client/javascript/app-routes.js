@@ -162,15 +162,15 @@ define(function (require){
 		$urlRouterProvider.otherwise('/Home');
 	});
 	app.factory('xhr', function($http, $window, toastr){
+		var config = {
+			url: baseUrl,
+			cache: false,
+			timeout: 30000,
+		}
+		if(!isNull(param.data))
+			param.data = (typeof param.data == 'object')?JSON.stringify(param.data):param.data
 		return {
 			service: function(method, param, callback){
-				var config = {
-					url: baseUrl,
-					cache: false,
-					timeout: 30000,
-				}
-				if(!isNull(param.data))
-					param.data = (typeof param.data == 'object')?JSON.stringify(param.data):param.data
 				switch(method.toLowerCase()){
 					case 'get':
 					case 'delete':
@@ -201,15 +201,28 @@ define(function (require){
 					if(typeof(callback) == 'function') callback(resp);
 				});
 			},
+			getList: function(param, numPages,callback){
+				config.method = 'get';
+				config.params = param;
+				$http(config).success(function(resp){
+					if(angular.isUndefined(resp.data)){
+						var num = 0;
+					}else{
+						var num = angular.isArray(resp.data)?resp.data.length:1
+					}
+					resp.pagination.totalItems =num;	// 共有多少条数据
+					resp.pagination.allItem=[];
+					for(var i=0; i<num; i+=numPages){
+						resp.pagination.allItem.push(resp.data.slice(i, i+numPages));
+					}
+					if(typeof(callback) == 'function') callback(resp);
+				});
+			},
 			getBase: function(refresh){
 				if(!$window.sessionStorage.getItem('baseData') || refresh){
-					$http({
-						url: baseUrl,
-						cache: false,
-						method: 'get',
-						params: {action: 'Ajax', module: 'getBase'},
-						timeout: 30000
-					}).success(function(resp){
+					config.method = 'get';
+					config.params = {action: 'Ajax', module: 'getBase'};
+					$http(config).success(function(resp){
 						$window.sessionStorage.setItem("baseData", JSON.stringify(resp.data));
 					});
 				}

@@ -17,7 +17,7 @@
 				<th class="text-center">纬度</th>
 				<th style="width: 120px;" class="text-center">操作</th>
 			</tr>
-			<tr ng-repeat="vo in allitem[currentPage-1]">
+			<tr ng-repeat="vo in allItem[currentPage-1]">
 				<td>{{vo.STNM}}</td>
 				<td>{{vo.STTP|stationType}}</td>
 				<td>{{vo.STLC}}</td>
@@ -39,10 +39,18 @@
 		<div class="panel-footer">
 			<div class="row">
 				<div class="col-md-12">
-					<ul uib-pagination class="pagination-sm embed-responsive-item"
-						style="float:right;margin: 0 15px 0 0;" total-items="totalItems"
-						ng-model="currentPage" previous-text="上一页" next-text="下一页" first-text="首页"
-						last-text="尾页" boundary-links="true" boundary-link-numbers="true"
+					<ul uib-pagination class="pagination-sm embed-responsive-item" style="float:right;margin: 0 15px 0 0;" 
+						total-items="totalItems" 
+						max-size="maxSize"
+						items-per-page="numPages"
+						force-ellipses="true"
+						ng-model="currentPage" 
+						previous-text="上一页" 
+						next-text="下一页" 
+						first-text="首页"
+						last-text="尾页" 
+						boundary-links="true" 
+						boundary-link-numbers="true"
 						rotate="false">
 					</ul>
 				</div>
