@@ -9,8 +9,14 @@ define(function (require){
 			library: {title: '水质异常参照标准数据列表', url: ''},
 		}
 		$scope.$emit('nav', $scope.nav);
+		$scope.Standard = [];
 		$scope.currentPage =1;		// 初始当前页
-		$scope.promise = xhr.getList({action: 'station', module: 'getLists', op: 'WaterStandard'}, 10, function(resp){
+		$scope.allitem=[];			// 存放所有页
+		$scope.numPages = 10;
+		$scope.maxSize = 3
+		$scope.promise = xhr.getList({action: 'station', module: 'getLists', op: 'WaterStandard'}, $scope.numPages, function(resp){
+			console.log(resp);
+			$scope.totalItems = resp.pagination.totalItems;
 			$scope.allItem = resp.pagination.allItem;
 		});
 		$scope.statuses = [
