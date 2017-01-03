@@ -13,6 +13,6 @@ class WaterSamplingModel extends ViewModel{
 	public $viewFields = array(
 		'StAwqmdD' => 'STCD, ANOMALY, TM',
 		'StSwsinfB'	=> 'STCD, STNM, STCT, WATP, WSFL',
-		'_on'=>'StAwqmdD.STCD=StSwsinfB.STCD'
+		'_on'=>'StAwqmdD.[STCD]=StSwsinfB.[STCD]'
 	);
 }
