@@ -151,6 +151,7 @@ class StationModel extends CommonModel{
 		);
 		$data = $param['data'];
 		$data['STBPRP']['MODITIME'] = date("Y-m-d H:i:s");
+		$data['STBPRP']['HNNM'] = '珠江水系';
 		$data['STBPRP']['LOCALITY'] = '33';
 		$base = $this->curd(array(
 			'validate'	=> $validate,
