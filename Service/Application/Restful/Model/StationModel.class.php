@@ -163,7 +163,9 @@ class StationModel extends CommonModel{
 			$data['STSMTASK']['STCD'] = $data['STBPRP']['STCD'];
 			$data['STSMTASK']['MODITIME'] = date("Y-m-d H:i:s");
 			$task = $this->addSTSMTASK($data['STSMTASK']);
+			Log::write(json_encode($task), 'INFO');
 			if($task['type'] == 'Suceess'){
+				Log::write(json_encode($task));
 				switch ($data['STBPRP']['STTP']){
 					case 'MM':		// 气象站
 					case 'PP':		// 雨量站
@@ -221,7 +223,7 @@ class StationModel extends CommonModel{
 					case 'SS':		// 墒情站
 						$data['SOILCH']['STCD'] = $data['STBPRP']['STCD'];
 						Log::write(json_encode($data['SOILCH']));
-						return $this->addSOILCH($data['SOILCH']);
+						$return = $this->addSOILCH($data['SOILCH']);
 						break;
 					default:
 				}
