@@ -11,8 +11,8 @@ use Think\Model\ViewModel;
 
 class WaterSamplingModel extends ViewModel{
 	public $viewFields = array(
-		'StStbprpB' => 'STCD, ANOMALY, TM',
+		'StAwqmdD' => 'STCD, ANOMALY, TM',
 		'StSwsinfB'	=> 'STCD, STNM, STCT, WATP, WSFL',
-		'_on'=>'StStbprpB.STCD=StSwsinfB.STCD'
+		'_on'=>'StAwqmdD.STCD=StSwsinfB.STCD'
 	);
 }
