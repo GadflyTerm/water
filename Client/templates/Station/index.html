@@ -38,21 +38,25 @@
 		</table>
 		<div class="panel-footer">
 			<div class="row">
-				<div class="col-md-12">
-					<ul uib-pagination class="pagination-sm embed-responsive-item" style="float:right;margin: 0 15px 0 0;" 
-						total-items="totalItems" 
+				<div class="col-md-10">
+					<ul uib-pagination class="pagination-sm embed-responsive-item" style="float:right;margin: 0 15px 0 0;"
+						total-items="totalItems"
 						max-size="maxSize"
-						items-per-page="numPages"
+						items-per-page="itemsPerPage"
+						num-pages="numPages"
 						force-ellipses="true"
-						ng-model="currentPage" 
-						previous-text="上一页" 
-						next-text="下一页" 
+						ng-model="currentPage"
+						previous-text="上一页"
+						next-text="下一页"
 						first-text="首页"
-						last-text="尾页" 
-						boundary-links="true" 
+						last-text="尾页"
+						boundary-links="true"
 						boundary-link-numbers="true"
 						rotate="false">
 					</ul>
+				</div>
+				<div class="col-md-2">
+					<input type="text" class="form-control input-sm" value="Page: {{currentPage}} / {{numPages}}" readonly>
 				</div>
 			</div>
 		</div>

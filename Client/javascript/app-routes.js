@@ -205,6 +205,14 @@ define(function (require){
 				config.method = 'get';
 				config.params = param;
 				$http(config).success(function(resp){
+					resp.pagination = {
+						currentPage: angular.isUndefined(pagination.currentPage)?1:pagination.currentPage,		// 初始当前页
+						maxSize: angular.isUndefined(pagination.maxSize)?3:pagination.maxSize,					// 限制分页按钮显示的数量大小
+						itemsPerPage: angular.isUndefined(pagination.itemsPerPage)?25:pagination.itemsPerPage,	// 每页最大显示条数的数量
+						totalItems: 0,																			// 共有多少条数据
+						numPages: 0,																			// 显示页面总数
+						allItem: []																				// 分页数据
+					};
 					if(!angular.isUndefined(resp.data)){
 						var list = [];
 						if(angular.isObject(resp.data)){
@@ -214,15 +222,10 @@ define(function (require){
 						}else if(angular.isArray(resp.data)){
 							list = resp.data;
 						}
-						resp.pagination = {
-							currentPage: angular.isUndefined(pagination.currentPage)?1:pagination.currentPage,		// 初始当前页
-							maxSize: angular.isUndefined(pagination.maxSize)?3:pagination.maxSize,					// 限制分页按钮显示的数量大小
-							numPages: angular.isUndefined(pagination.numPages)?25:pagination.numPages,				// 每页最大显示条数的数量
-							totalItems: list.length,																// 共有多少条数据
-							allItem: []
-						};
-						for(var i=0; i<resp.pagination.totalItems; i+=numPages){
-							resp.pagination.allItem.push(list.slice(i, i+numPages));
+						resp.pagination.totalItems = list.length;
+						for(var i=0; i<resp.pagination.totalItems; i+=resp.pagination.itemsPerPage){
+							resp.pagination.numPages++;
+							resp.pagination.allItem.push(list.slice(i, i+resp.pagination.itemsPerPage));
 						}
 					}
 					if(typeof(callback) == 'function') callback(resp);

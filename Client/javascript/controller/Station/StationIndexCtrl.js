@@ -40,8 +40,14 @@ define(function (require){
 		}
 		$scope.currentPage =1;		// 初始当前页
 		$scope.allitem=[];			// 存放所有页
-		$scope.promise = xhr.getList({model: 'Station', module: 'stationList'}, 25, function(resp){
+		$scope.promise = xhr.getList({model: 'Station', module: 'stationList'}, {}, function(resp){
+			console.log(resp);
+			$scope.totalItems = resp.pagination.totalItems;
 			$scope.allItem = resp.pagination.allItem;
+			$scope.currentPage = resp.pagination.currentPage;
+			$scope.itemsPerPage = resp.pagination.itemsPerPage;
+			$scope.numPages = resp.pagination.numPages;
+			$scope.maxSize = resp.pagination.maxSize;
 		});
 		$scope.$emit('nav', $scope.nav);
 		$scope.delete = function(STCD){

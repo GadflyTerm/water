@@ -59,11 +59,12 @@
 								</td>
 							</tr>
 							<tr>
-								<td colspan="6" class="test-right">
+								<td colspan="5" class="test-right">
 									<ul uib-pagination class="pagination-sm embed-responsive-item" style="float:right;margin: 0 15px 0 0;"
 										total-items="totalItems"
 										max-size="maxSize"
-										items-per-page="numPages"
+										items-per-page="itemsPerPage"
+										num-pages="numPages"
 										force-ellipses="true"
 										ng-model="currentPage"
 										previous-text="上一页"
@@ -73,7 +74,9 @@
 										boundary-links="true"
 										boundary-link-numbers="true"
 										rotate="false">
+									</ul>
 								</td>
+								<td><input type="text" class="form-control input-sm" value="Page: {{currentPage}} / {{numPages}}" readonly></td>
 							</tr>
 						</table>
 						<div class="form-group">
