@@ -284,7 +284,7 @@ define(function (require){
 			postData.STBPRP.STTP = $scope.station.STBPRP.STTP.value;
 			$scope.promise = xhr.service('post', {model: 'Station', module: 'stationAdd', data: postData}, function(resp){
 				swal({
-						title: "数据操作成功！",
+						title: (resp.type.toLowerCase()=='success')?"数据操作成功！":"数据操作失败！",
 						text: resp.msg,
 						type: resp.type.toLowerCase(),
 						showCancelButton: false,
