@@ -40,7 +40,7 @@ define(function (require){
 	});
 	app.filter('anomalyType', function(){
 		return function(param){
-			return angular.isUndefined(param)?'正常':'异常';
+			return angular.isString(param)?'异常':'正常';
 		}
 	});
 	app.controller('WaterSamplingCtrl', function($scope, $log, $uibModal, $state, xhr){

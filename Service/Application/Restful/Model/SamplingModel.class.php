@@ -19,11 +19,16 @@ class SamplingModel extends CommonModel{
 	 * @return array
 	 */
 	public function waterList(){
-		$this->tableName = 'ST_AWQMD_D';
+		return array(
+			'type'	=> 'Success',
+			'msg'	=> '水质采样数据读取成功！',
+			'data'	=> D('WaterSampling')->select(),
+		);
+		/*$this->tableName = 'ST_AWQMD_D';
 		return $this->curd(array(
 			'type'	=> 'select',
 			'msg'	=> '水质采样数据读取成功！'
-		));
+		));*/
 	}
 
 	/**
