@@ -41,7 +41,6 @@ define(function (require){
 		$scope.currentPage =1;		// 初始当前页
 		$scope.allitem=[];			// 存放所有页
 		$scope.promise = xhr.getList({model: 'Station', module: 'stationList'}, {}, function(resp){
-			console.log(resp);
 			$scope.totalItems = resp.pagination.totalItems;
 			$scope.allItem = resp.pagination.allItem;
 			$scope.currentPage = resp.pagination.currentPage;

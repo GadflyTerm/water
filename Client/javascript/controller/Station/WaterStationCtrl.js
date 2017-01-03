@@ -39,7 +39,6 @@ define(function (require){
 		$scope.allitem=[];			// 存放所有页
 		$scope.numPages = 25;
 		$scope.promise = xhr.getList({model: 'station', module: 'listWater'}, {}, function(resp){
-			console.log(resp);
 			$scope.totalItems = resp.pagination.totalItems;
 			$scope.allItem = resp.pagination.allItem;
 			$scope.currentPage = resp.pagination.currentPage;
