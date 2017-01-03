@@ -42,7 +42,11 @@ define(function (require){
 		$scope.allitem=[];			// 存放所有页
 		$scope.numPages = 25;
 		$scope.promise = xhr.service('post', {model: 'Station', module: 'stationList'}, function(resp){
-			var num= angular.isUndefined(resp.data.length)?0:resp.data.length;
+			if(angular.isUndefined(resp.data)){
+				var num = 0;
+			}else{
+				var num = angular.isArray(resp.data)?resp.data.length:1
+			}
 			$scope.totalItems =num;	// 共有多少条数据
 			for(var i=0; i<num; i+=$scope.numPages){
 				$scope.allitem.push(resp.data.slice(i, i+$scope.numPages));
