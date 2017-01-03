@@ -205,21 +205,22 @@ define(function (require){
 				config.method = 'get';
 				config.params = param;
 				$http(config).success(function(resp){
-					var list = [];
-					for (var p in resp.data){
-						list.push(resp.data[p]);
-					}
-					if(angular.isUndefined(resp.data)){
-						var num = 0;
-					}else{
-						var num = angular.isArray(resp.data)?resp.data.length:1
-					}
-					resp.pagination = {
-						totalItems: num,	// 共有多少条数据
-						allItem: []
-					};
-					for(var i=0; i<num; i+=numPages){
-						resp.pagination.allItem.push(list.slice(i, i+numPages));
+					if(!angular.isUndefined(resp.data)){
+						var list = [];
+						if(angular.isObject(resp.data)){
+							for (var p in resp.data){
+								list.push(resp.data[p]);
+							}
+						}else if(angular.isArray(resp.data)){
+							list = resp.data;
+						}
+						resp.pagination = {
+							totalItems: list.length,	// 共有多少条数据
+							allItem: []
+						};
+						for(var i=0; i<num; i+=numPages){
+							resp.pagination.allItem.push(list.slice(i, i+numPages));
+						}
 					}
 					if(typeof(callback) == 'function') callback(resp);
 				});
