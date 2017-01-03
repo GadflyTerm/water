@@ -167,8 +167,6 @@ define(function (require){
 			cache: false,
 			timeout: 30000,
 		}
-		if(!isNull(param.data))
-			param.data = (typeof param.data == 'object')?JSON.stringify(param.data):param.data
 		return {
 			service: function(method, param, callback){
 				switch(method.toLowerCase()){
@@ -183,6 +181,8 @@ define(function (require){
 						config.method = method.toLowerCase();
 						config.data = param;
 				}
+				if(!isNull(param.data))
+					param.data = (typeof param.data == 'object')?JSON.stringify(param.data):param.data
 				return $http(config).success(function(resp){
 					switch(resp.type){
 						case 'Success':
