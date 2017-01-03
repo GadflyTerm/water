@@ -4,6 +4,11 @@
  */
 define(function (require){
 	var app = require('../../app');
+	app.filter('stationTypeFilter', function(){
+		return function(param){
+			return angular.isUndefined(param)?'正常':'异常';
+		}
+	});
 	app.controller('WaterSamplingCtrl', function($scope, $log, $uibModal, $state, xhr){
 		$scope.nav = {
 			home: {title: '首页', url: 'Home'},
