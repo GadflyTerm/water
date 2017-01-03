@@ -28,6 +28,16 @@ define(function (require){
 			}
 		}
 	});
+	app.filter('headwaterType', function(){
+		return function(param){
+			switch(param){
+				case '1':
+					return '水源地';
+				case '2':
+					return '非水源地';
+			}
+		}
+	});
 	app.filter('anomalyType', function(){
 		return function(param){
 			return angular.isUndefined(param)?'正常':'异常';
