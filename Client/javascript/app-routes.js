@@ -205,6 +205,10 @@ define(function (require){
 				config.method = 'get';
 				config.params = param;
 				$http(config).success(function(resp){
+					var list = [];
+					for (var p in resp.data){
+						list.push(resp.data[p]);
+					}
 					if(angular.isUndefined(resp.data)){
 						var num = 0;
 					}else{
@@ -215,7 +219,7 @@ define(function (require){
 						allItem: []
 					};
 					for(var i=0; i<num; i+=numPages){
-						resp.pagination.allItem.push(resp.data.slice(i, i+numPages));
+						resp.pagination.allItem.push(list.slice(i, i+numPages));
 					}
 					if(typeof(callback) == 'function') callback(resp);
 				});

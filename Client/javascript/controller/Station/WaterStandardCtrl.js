@@ -9,20 +9,9 @@ define(function (require){
 			library: {title: '水质异常参照标准数据列表', url: ''},
 		}
 		$scope.$emit('nav', $scope.nav);
-		$scope.Standard = [];
 		$scope.currentPage =1;		// 初始当前页
-		$scope.allitem=[];			// 存放所有页
-		$scope.numPages = 10;
-		$scope.promise = xhr.service('get', {action: 'station', module: 'getLists', op: 'WaterStandard'}, function(resp){
-			var Standard = [];
-			for (var p in resp.data){
-				Standard.push(resp.data[p]);
-			}
-			var num= Standard.length;
-			$scope.totalItems =num;	// 共有多少条数据
-			for(var i=0; i<num; i+=$scope.numPages){
-				$scope.allitem.push(Standard.slice(i, i+$scope.numPages));
-			}
+		$scope.promise = xhr.getList({action: 'station', module: 'getLists', op: 'WaterStandard'}, 10, function(resp){
+			$scope.allItem = resp.pagination.allItem;
 		});
 		$scope.statuses = [
 			{value: 0, text: '禁用'},
