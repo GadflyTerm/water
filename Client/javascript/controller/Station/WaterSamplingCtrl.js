@@ -4,7 +4,31 @@
  */
 define(function (require){
 	var app = require('../../app');
-	app.filter('stationTypeFilter', function(){
+	app.filter('stationType', function(){
+		return function(param){
+			switch(param){
+				case '1':
+					return '地表水水质站';
+				case '2':
+					return '地下水水质站';
+				case '3':
+					return '大气降水水质站'
+			}
+		}
+	});
+	app.filter('waterType', function(){
+		return function(param){
+			switch(param){
+				case '1':
+					return '河流';
+				case '2':
+					return '湖泊';
+				case '3':
+					return '水库'
+			}
+		}
+	});
+	app.filter('anomalyType', function(){
 		return function(param){
 			return angular.isUndefined(param)?'正常':'异常';
 		}
