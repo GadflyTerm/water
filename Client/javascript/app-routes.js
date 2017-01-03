@@ -218,7 +218,7 @@ define(function (require){
 							totalItems: list.length,	// 共有多少条数据
 							allItem: []
 						};
-						for(var i=0; i<num; i+=numPages){
+						for(var i=0; i<resp.pagination.totalItems; i+=numPages){
 							resp.pagination.allItem.push(list.slice(i, i+numPages));
 						}
 					}
