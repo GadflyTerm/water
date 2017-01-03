@@ -210,8 +210,10 @@ define(function (require){
 					}else{
 						var num = angular.isArray(resp.data)?resp.data.length:1
 					}
-					resp.pagination.totalItems =num;	// 共有多少条数据
-					resp.pagination.allItem=[];
+					resp.pagination = {
+						totalItems: num,	// 共有多少条数据
+						allItem: []
+					};
 					for(var i=0; i<num; i+=numPages){
 						resp.pagination.allItem.push(resp.data.slice(i, i+numPages));
 					}
