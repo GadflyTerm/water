@@ -276,3 +276,45 @@ GO
 
 EXEC sys.sp_addextendedproperty @name=N'MS_Description', @value=N'水质监测数据记录表' , @level0type=N'SCHEMA',@level0name=N'dbo', @level1type=N'TABLE',@level1name=N'ST_AWQMD_D'
 GO
+
+IF EXISTS(SELECT * FROM SYSOBJECTS WHERE [NAME] = 'ST_WATER_SAMPLING_VIEW' AND [XTYPE] = 'V')
+	DROP VIEW [dbo].[ST_WATER_SAMPLING_VIEW]
+GO
+CREATE VIEW [dbo].[ST_WATER_SAMPLING_VIEW] AS
+	SELECT [AWQMD].STCD,
+		[AWQMD].TM,
+		[AWQMD].WT,
+		[AWQMD].PH,
+		[AWQMD].BOD5,
+		[AWQMD].CODCR,
+		[AWQMD].SS,
+		[AWQMD].LAS,
+		[AWQMD].SO,
+		[AWQMD].id,
+		[AWQMD].CL,
+		[AWQMD].S2,
+		[AWQMD].HG,
+		[AWQMD].CD,
+		[AWQMD].ARS,
+		[AWQMD].CR6,
+		[AWQMD].PB,
+		[AWQMD].CU,
+		[AWQMD].ZN,
+		[AWQMD].SE,
+		[AWQMD].F,
+		[AWQMD].CN,
+		[AWQMD].OIL,
+		[AWQMD].VLPH,
+		[AWQMD].BEN,
+		[AWQMD].SLYQ,
+		[AWQMD].BXQ,
+		[AWQMD].B,
+		[AWQMD].FCG,
+		[AWQMD].ANOMALY,
+		[AWQMD].AO, 
+		[SWSINF].STNM, 
+		[SWSINF].STCT, 
+		[SWSINF].WATP, 
+		[SWSINF].WSFL
+	FROM [dbo].[ST_AWQMD_D] AS AWQMD,  [dbo].[ST_SWSINF_B] AS SWSINF
+	WHERE [AWQMD].[STCD] = [SWSINF].[STCD]
