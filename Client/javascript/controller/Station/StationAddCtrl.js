@@ -132,7 +132,7 @@ define(function (require){
 						DD_tab: false,
 						SS_tab: true,
 						step: true,
-						active: 5,
+						active: 6,
 						heading: '墒情',
 						STBPRP_title: '第一步 ' + $scope.station.STBPRP.STTP.lable + '基础信息'
 					};
