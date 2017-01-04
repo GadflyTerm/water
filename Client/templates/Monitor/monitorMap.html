@@ -79,17 +79,77 @@
 					</table>
 				</div>
 				<div class="col-md-6">
-					图表
+					<img class="w-full" src="img/chart-xxll.jpg" alt="">
 				</div>
 			</div>
 		</div>
 	</div>
 	<div class="modal-footer">
-		图表
+		<img class="w-full" src="img/chart-sq.jpg" alt="">
 	</div>
 </script>
 
 <script type="text/ng-template" id="detailModalContent.html">
+	<div class="modal-header">
+		<h3 class="modal-title">
+			雨量站详情
+			<div class="pull-right">
+				<button class="btn btn-default" ng-click="close()">X</button>
+			</div>
+		</h3>
+	</div>
+	<div class="modal-body" >
+		<div class="row">
+			<div class="col-md-4">
+				<div class="row">
+					<table class="table table-bordered table-hover table-condensed">
+						<tr class="D-center">
+							<th>站点编码</th>
+							<th>0000230</th>
+						</tr>
+						<tr>
+							<td>名称</td>
+							<td></td>
+						</tr>
+						<tr>
+							<td>站点类型</td>
+							<td>视频站</td>
+						</tr>
+					</table>
+				</div>
+				<div class="row">
+
+				</div>
+			</div>
+
+			<div class="col-md-8 pull-right">
+				<div class="pull-right">
+					<embed src='http://player.youku.com/player.php/sid/XMTg5MzQ0Nzk1Mg==/v.swf' allowFullScreen='true' quality='high' width='320' height='240' align='middle' allowScriptAccess='always' type='application/x-shockwave-flash'></embed>
+				</div>
+				
+				
+				<!--<object id="MediaPlayer" width="478" height="300" codebase="http://activex.microsoft.com/activex/controls/mplayer/en/nsmp2inf.-->
+<!--cab#Version=6,1,5,217" type="application/x-oleobject" standby="Loading Microsoft Windows Media Player components..." classid="clsid:22D6F312-B0F6-11D0-94AB-0080C74C7E95" VIEWASTEXT>-->
+					<!--<param name="DisplayBackColor" value="0">-->
+					<!--<param name="DisplayForeColor" value="16777215">-->
+					<!--<param name="DisplayMode" value="0">-->
+					<!--<param name="DisplaySize" value="-1">-->
+					<!--<param name="Filename" value="mms://www-xxx-com/视频文件.wmv">-->
+					<!--&lt;!&ndash; 此处设置播放的视频连接 &ndash;&gt;-->
+					<!--<param name="ShowControls" value="0">-->
+				<!--</object>-->
+				<video width="320" height="240" controls>
+					<source src="movie.mp4" type="video/mp4">
+					<!--<object data="movie.mp4" width="320" height="240">-->
+						<!--<embed src="movie.swf" width="320" height="240">-->
+					<!--</object>-->
+				</video>
+			</div>
+		</div>
+	</div>
+</script>
+
+<script type="text/ng-template" id="mediaModalContent.html">
 	<div class="modal-header">
 		<h3 class="modal-title">
 			雨量站详情
@@ -132,6 +192,6 @@
 		</div>
 	</div>
 	<div class="modal-footer">
-		图表
+		<img class="w-full" src="img/chart-yl.jpg" alt="">
 	</div>
 </script>

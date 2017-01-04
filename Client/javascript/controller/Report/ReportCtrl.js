@@ -88,12 +88,13 @@ define(function (require){
 			})
 		}
 		$scope.monthClick = function(){
+			alert(77);
+			$scope.showTab = {
+				year:false,
+				mouth:true,
+				day:false
+			}
 			xhr.service('get',{ac:'ac'},function(resp){
-				$scope.showTab = {
-					year:false,
-					mouth:true,
-					day:false
-				}
 				$scope.lists = resp.date;
 			})
 		}
