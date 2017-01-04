@@ -115,6 +115,19 @@ define(function (require){
 					return deferred.promise;
 				}]
 			}
+		}).state('SamplingList', {
+			url: '/SamplingList',
+			templateUrl: 'templates/controller/Sampling/list.html',
+			controller: 'listCtrl',
+			resolve: {
+				listCtrl:["$q", function($q){
+					var deferred = $q.defer();
+					require(['../javascript/controller/Sampling/listCtrl'], function(){	//异步加载controller／directive/filter/service
+						deferred.resolve();
+					});
+					return deferred.promise;
+				}]
+			}
 		})
 
 			.state('ReportIndex', {            // 报表

@@ -11,96 +11,83 @@
 		</div>
 		<div class="panel-body">
 			<!--=== 选择 ===-->
-			<div class="actions text-right">
-				<div class="btn-group">
-					<button  ng-click="dayClick" class="btn btn-default btn-sm">日报表</button>
-					<button ui-sref-active="active" ng-click="monthClick" class="btn  btn-default btn-sm">月报表</button>
-					<button  ng-click="yearClick" class="btn  btn-default btn-sm">年报表</button>
-				</div>
-				
+			<div class="actions">
 				<div class="row mtb15">
-					<div class="col-md-9"></div>
-					<div class="col-md-3">
-						<div ng-show="showTab.day" class="">
-							<div class="select">
-								<form action="" class="form-horizontal">
+					<div class="col-md-8">
+						<div class="btn-group">
+							<label class="btn btn-primary btn-sm" ng-model="radioReport" ng-change="changeReport()" 
+								   uib-btn-radio="'day'">日报表</label>
+							<label class="btn btn-primary btn-sm" ng-model="radioReport" ng-change="changeReport()"
+								   uib-btn-radio="'month'">月报表</label>
+							<label class="btn btn-primary btn-sm" ng-model="radioReport" ng-change="changeReport()"
+								   uib-btn-radio="'year'">年报表</label>
+						</div>
+					</div>
+					<div class="col-md-4 text-right">
+						<div class="select" ng-show="showTab.day">
+							<form action="" class="form-horizontal">
+								<div class="form-group">
 									<lable for="select" class="col-md-4 col-sm-4 col-xs-4 control-label">选择日期</lable>
-									<div class="col-md-8 col-sm-8 col-xs-8 ">
-										<input id="dateField"  class="form-control input-sm" datepicker ng-model="$parent.currentDate"  select="updateMyText(date)">
-										<!--<span class="input-group-btn">-->
-											<!--<button class="btn btn-default"  type="button"><i class="fa fa-calendar"></i></button>-->
-										<!--</span>-->
+									<div class="col-md-8 col-sm-8 col-xs-8 input-group">
+										<input type="text" class="form-control input-sm" uib-datepicker-popup="{{format}}" ng-model="dt"
+											   is-open="popupDay.opened" datepicker-options="dateOptions"
+											   ng-required="true" close-text="Close" alt-input-formats="altInputFormats" />
+										<span class="input-group-btn">
+											<button type="button" class="btn btn-default btn-sm" ng-click="openDay()"><i
+													class="glyphicon glyphicon-calendar"></i></button>
+										</span>
 									</div>
-									<!--<div class="input-group input-medium date" data-date-format="dd-mm-yyyy" data-date-start-date="+0d">-->
-											<!--<input type="text" class="form-control" readonly>-->
-											<!--<span class="input-group-btn">-->
-						<!--<button class="btn btn-default" type="button"><i class="fa fa-calendar"></i></button>-->
-						<!--</span>-->
-										<!--</div>-->
-								</form>
-							</div>
+								</div>
+							</form>
 						</div>
-						<div ng-show="showTab.month"  class="">
-							<div class="select">
-								<form action="#" class="form-horizontal">
-									<div class="form-group">
-										<lable class="col-md-5 col-sm-4 col-xs-5 control-label">选择月份</lable>
-										<div class="col-md-7 col-sm-8 col-xs-7 input-group input-medium date date-picker">
-											<!--<input time="false" class="form-control" date="true" mdc-datetime-picker type="text" id="date"-->
-											<!--placeholder="mouth" lang="zh-cn"-->
-											<!--ng-model="mouth" min-date="minDate" max-date="maxDate">-->
-											<!--<span class="input-group-btn">-->
-											<!--<button class="btn default" type="button">-->
-											<!--<i class="fa fa-calendar"></i>-->
-											<!--</button>-->
-											<!--</span>-->
-
-											<div class="col-md-8 col-sm-8 col-xs-8">
-												<select class="form-control">
-													<option>1月</option>
-													<option>2月</option>
-													<option>3月</option>
-													<option>4月</option>
-													<option>5月</option>
-													<option>6月</option>
-													<option>7月</option>
-													<option>8月</option>
-													<option>9月</option>
-													<option>10月</option>
-													<option>11月</option>
-													<option>12月</option>
-												</select>
-											</div>
-
-										</div>
-									</div>
-								</form>
-							</div>
-						</div>
-						<div ng-show="showTab.year" class="">
-							<div class="select">
-								<form action="" class="form-horizontal">
-									<div class="form-group">
-										<lable for="select" class="col-md-4 col-sm-4 col-xs-4 control-label">选择年份</lable>
+						<div class="select" ng-show="showTab.month">
+							<form action="#" class="form-horizontal">
+								<div class="form-group">
+									<lable class="col-md-5 col-sm-4 col-xs-5 control-label">选择月份</lable>
+									<div class="col-md-7 col-sm-8 col-xs-7 input-group input-medium date date-picker">
 										<div class="col-md-8 col-sm-8 col-xs-8">
-											<select class="form-control" id="select">
-												<option>2016</option>
-												<option>2015</option>
-												<option>2014</option>
-												<option>2013</option>
-												<option>2012</option>
-												<option>2011</option>
-												<option>2010</option>
-												<option>2009</option>
-												<option>2008</option>
-												<option>2007</option>
-												<option>2006</option>
-												<option>2005</option>
+											<select class="form-control input-sm">
+												<option>1月</option>
+												<option>2月</option>
+												<option>3月</option>
+												<option>4月</option>
+												<option>5月</option>
+												<option>6月</option>
+												<option>7月</option>
+												<option>8月</option>
+												<option>9月</option>
+												<option>10月</option>
+												<option>11月</option>
+												<option>12月</option>
 											</select>
 										</div>
+
 									</div>
-								</form>
-							</div>
+								</div>
+							</form>
+						</div>
+						<div class="select" ng-show="showTab.year">
+							<form action="" class="form-horizontal">
+								<div class="form-group">
+									<lable for="select" class="col-md-4 col-sm-4 col-xs-4 control-label">选择年份</lable>
+									<div class="col-md-8 col-sm-8 col-xs-8">
+										<select class="form-control input-sm" id="select">
+											<option>2016</option>
+											<option>2015</option>
+											<option>2014</option>
+											<option>2013</option>
+											<option>2012</option>
+											<option>2011</option>
+											<option>2010</option>
+											<option>2009</option>
+											<option>2008</option>
+											<option>2007</option>
+											<option>2006</option>
+											<option>2005</option>
+										</select>
+									</div>
+								</div>
+							</form>
 						</div>
 					</div>
 				</div>
@@ -165,10 +152,3 @@
 		</div>
 	</div>
 </div>
-<script>
-	$('.date-picker').datepicker({
-		language: 'zh-CN',
-		autoclose: true,
-		todayHighlight: true
-	})
-</script>
