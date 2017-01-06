@@ -42,7 +42,7 @@ define(function (require){
 				time: new Date(),
 				hstep: 1,
 				mstep: 5,
-				ismeridian: true,
+				ismeridian: false,
 			}
 			var getNewDatetime = function(){
 				var date = new Date($scope.datetime.date);
