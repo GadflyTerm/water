@@ -22,7 +22,7 @@
 				<td>{{vo.STTP|stationType}}</td>
 				<td>{{vo.STLC}}</td>
 				<td>{{vo.TKTP|taskType}}</td>
-				<td>{{vo.TM|date:'yyyy-MM-dd HH:mm'}}</td>
+				<td>{{vo.TM|dateFormat}}</td>
 				<td class="text-center">
 					<button type="button" class="btn btn-danger btn-xs pull-right btn-del" ng-click="delete(vo.STCD)">
 						<i class="fa fa-trash-o"></i> 删除
