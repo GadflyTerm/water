@@ -18,7 +18,7 @@ define(function (require){
 	});
 	app.filter('dateFormat', function(){
 		return function(param){
-			var dt = new Date(param.toLocaleTimeString());
+			var dt = new Date(param);
 			return dt.getFullYear()+'年'+(dt.getMonth()+1)+'月'+dt.getDate()+'日 '+dt.getHours()+'时'+dt.getMinutes()+'分';
 		}
 	});
