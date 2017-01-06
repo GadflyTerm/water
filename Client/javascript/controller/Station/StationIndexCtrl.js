@@ -3,36 +3,6 @@
  */
 define(function (require){
 	var app = require('../../app');
-	app.filter('stationType', function(){
-		return function(param){
-			switch(param){
-				case 'PP':
-					return '雨量站';
-				case 'ZQ':
-					return '河道水文站';
-				case 'ZZ':
-					return '河道水位站';
-				case 'RR':
-					return '水库水文站';
-				case 'DD':
-					return '堰闸水文站';
-				case 'SS':
-					return '墒情站';
-				case 'MM':
-					return '气象站';
-				case 'BB':
-					return '蒸发站';
-				case 'TT':
-					return '潮位站';
-				case 'DP':
-					return '泵站';
-				case 'ZG':
-					return '地下水站';
-				case 'ZB':
-					return '分洪水位站';
-			}
-		}
-	});
 	app.controller('StationIndexCtrl', function($scope, $state, xhr){
 		$scope.nav = {
 			home: {title: '检测站管理', url: 'Home'},
