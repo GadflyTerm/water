@@ -45,9 +45,10 @@ define(function (require){
 				ismeridian: false,
 			}
 			var getNewDatetime = function(){
-				var date = new Date($scope.datetime.date);
+				var dt = new Date($scope.datetime.date);
 				var time = new Date($scope.datetime.time);
-				return new Date(date.getFullYear(), date.getMonth(), date.getDate(), time.getHours(), time.getMinutes(), '00');
+				dt.setHours(time.getHours(), time.getMinutes());
+				return dt;
 			}
 			$scope.sampling = {
 				TM: getNewDatetime()
@@ -126,7 +127,7 @@ define(function (require){
 				}
 			}
 			$scope.submit = function(){
-				$scope.sampling.TM = getNewDatetime($scope.datetime.date, $scope.datetime.time);
+				$scope.sampling.TM = getNewDatetime();
 				xhr.service('post', {model: 'Sampling', module: 'samplingAdd', data: $scope.sampling}, function(resp){
 					swal({
 							title: (resp.type.toLowerCase()=='success')?"数据操作成功！":"数据操作失败！",

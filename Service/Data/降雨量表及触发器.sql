@@ -93,7 +93,7 @@ BEGIN
 	SELECT @today = today, @yestday = yestday, @tomorrow = tomorrow, @year = year, @month = month, @day = day
 	FROM openrowset('sqloledb','Trusted_Connection=yes','exec [Hydrology_pygq].[dbo].[proc_get_datetime]');
 	SELECT @tol = SUM([DRP]) FROM [dbo].[ST_PPTN_R] WHERE [STCD] = @stcd AND [TM] BETWEEN @today AND @tomorrow;
-	UPDATE [dbo].[ST_PPTN_R] SET [DYP] = @tol WHERE [id] = @id;
+	UPDATE [dbo].[ST_PPTN_R] SET [DYP] = 125 FROM inserted i, [dbo].[ST_PPTN_R] p WHERE p.[id] = i.id;
 
 	SELECT @stnm = [STNM], @sttp = [STTP] FROM [dbo].[ST_STBPRP_B] WHERE [STCD] = @stcd;
 	INSERT [dbo].[ST_TASKLIST_D] ([RELATED], [PK], [STCD], [STNM], [STTP], [TKTP], [TM])
@@ -166,7 +166,7 @@ BEGIN
 	IF(@count > 0)
 		BEGIN
 			SELECT @mydavp = (SUM([ACCP])/count(*)) FROM [dbo].ST_PDMMYSQ_S WHERE [STCD] = @stcd AND [YR] = @year AND [MNTH] = @month AND [PRDTP] = @prdtp;
-			UPDATE [dbo].ST_PDMMYAV_S SET [PRDTP] = @mydavp, [EDYR] = @year, [STTYRNUM] = ([BGYR] - @year + 1), [MODITIME] = GETDATE() 
+			UPDATE [dbo].ST_PDMMYAV_S SET [MYMAVP] = @mydavp, [EDYR] = @year, [STTYRNUM] = ([BGYR] - @year + 1), [MODITIME] = GETDATE() 
 				WHERE [STCD] = @stcd AND [MNTH] = @month AND [PRDTP] = @prdtp;
 		END
 	ELSE
@@ -179,7 +179,7 @@ BEGIN
 	IF(@count > 0)
 		BEGIN
 			SELECT @mydavp = (SUM([ACCP])/count(*)) FROM [dbo].ST_PDMMYSQ_S WHERE [STCD] = @stcd AND [MNTH] = @month AND [PRDTP] = 4;
-			UPDATE [dbo].ST_PDMMYAV_S SET [PRDTP] = @mydavp, [EDYR] = @year, [STTYRNUM] = ([BGYR] - @year + 1), [MODITIME] = GETDATE()
+			UPDATE [dbo].ST_PDMMYAV_S SET [MYMAVP] = @mydavp, [EDYR] = @year, [STTYRNUM] = ([BGYR] - @year + 1), [MODITIME] = GETDATE()
 			WHERE [STCD] = @stcd AND [MNTH] = @month AND [PRDTP] = 4;
 		END
 	ELSE

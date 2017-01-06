@@ -124,6 +124,7 @@ class SamplingModel extends CommonModel{
 			array('STCD', 'require', '测站代码必须填写！'),
 			array('TM', 'require', '测站报送时间必须填写！'),
 		);
+		$param['data']['TKTP'] = 'manual';
 		$sttp = $param['data']['STTP'];
 		unset($param['data']['STTP']);
 		switch ($sttp){
@@ -151,6 +152,7 @@ class SamplingModel extends CommonModel{
 					'STCD'	=> $param['data']['STCD'],
 					'TM'	=> $param['data']['TM'],
 					'DRP'	=> $param['data']['DRP'],
+					'TKTP'	=> $param['data']['TKTP'],
 				);
 				$return = $this->curd(array(
 					'model'		=> 'StPptnR',
