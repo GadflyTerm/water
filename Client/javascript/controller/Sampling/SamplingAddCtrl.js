@@ -158,7 +158,18 @@ define(function (require){
 			$scope.submit = function(){
 				$scope.sampling.TM = getNewDatetime($scope.datetime.date, $scope.datetime.time);
 				xhr.service('post', {model: 'Sampling', module: 'samplingAdd', data: $scope.sampling}, function(resp){
-
+					swal({
+							title: (resp.type.toLowerCase()=='success')?"数据操作成功！":"数据操作失败！",
+							text: resp.msg,
+							type: resp.type.toLowerCase(),
+							showCancelButton: false,
+							confirmButtonColor: "#DD6B55",
+							confirmButtonText: "确定",
+							closeOnConfirm: true
+						},
+						function(){
+							$state.go('SamplingList');
+						});
 				})
 			}
 		});
