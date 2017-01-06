@@ -198,4 +198,12 @@ class SamplingModel extends CommonModel{
 			return $return;
 		}
 	}
+	
+	public function samplingList(){
+		$this->tableName = 'ST_TASKLIST_D';
+		return $this->curd(array(
+			'type'	=> 'select',
+			'msg'	=> '水质采样数据读取成功！'
+		));
+	}
 }

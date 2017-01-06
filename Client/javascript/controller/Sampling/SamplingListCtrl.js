@@ -9,5 +9,13 @@ define(function (require){
 			library: {title: '测站报送数据列表', url: ''},
 		}
 		$scope.$emit('nav', $scope.nav);
+		$scope.promise = xhr.getList({model: 'Sampling', module: 'samplingList'}, {}, function(resp){
+			$scope.totalItems = resp.pagination.totalItems;
+			$scope.allItem = resp.pagination.allItem;
+			$scope.currentPage = resp.pagination.currentPage;
+			$scope.itemsPerPage = resp.pagination.itemsPerPage;
+			$scope.numPages = resp.pagination.numPages;
+			$scope.maxSize = resp.pagination.maxSize;
+		});
 	});
 });

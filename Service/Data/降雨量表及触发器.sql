@@ -55,6 +55,9 @@ GO
 -- Create date: <Create Date,,>
 -- Description:	<Description,,>
 -- =============================================
+USE [Hydrology_pygq]
+GO
+
 IF EXISTS(SELECT * FROM SYSOBJECTS WHERE [NAME] = 'ST_PPTN_R_INSERT_TR' AND [XTYPE] = 'TR')
 	DROP TRIGGER ST_PPTN_R_insert_TR
 GO
@@ -245,7 +248,8 @@ BEGIN
 	EXECUTE sp_executesql @sql;
 	SELECT TOP 1 @today = today, @yestday = yestday, @tomorrow = tomorrow, @year = year, @month = month, @day = day FROM #Tb_frame;
 	SELECT @tol = SUM([DRP]) FROM [dbo].[ST_PPTN_R] WHERE [STCD] = @stcd AND [TM] BETWEEN @today AND @tomorrow;
-	UPDATE [dbo].[ST_PPTN_R] SET [DYP] = ([DYP] - @drp) WHERE [id] > @id AND [TM] <= @tomorrow;
+	UPDATE [dbo].[ST_PPTN_R] SET [DYP] = @tol WHERE [id] = @id;
+	UPDATE [dbo].[ST_PPTN_R] SET [DYP] = ([DYP] + @drp) WHERE [TM] > @tm AND [TM] < @tomorrow;
 	DELETE [dbo].[ST_TASKLIST_D] WHERE [RELATED] = 'ST_PPTN_R' AND [PK] = @id;
 
 	/* 计算并记录日降水量多年同期均值*/
