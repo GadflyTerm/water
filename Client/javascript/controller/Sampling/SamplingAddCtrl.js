@@ -58,20 +58,10 @@ define(function (require){
 				$scope.sampling.STTP = $scope.STCD.STTP;
 				switch($scope.STCD.STTP){
 					case 'MM':
+					case 'PP':
 						$scope.show = {
 							PP: false,
 							MM: true,
-							ZQ: false,
-							ZZ: false,
-							RR: false,
-							DD: false,
-							SS: false
-						}
-						break;
-					case 'PP':
-						$scope.show = {
-							PP: true,
-							MM: false,
 							ZQ: false,
 							ZZ: false,
 							RR: false,
