@@ -3,6 +3,16 @@
  */
 define(function (require){
 	var app = require('../../app');
+	app.filter('taskType', function(){
+		return function(param){
+			switch(param){
+				case 'auto':
+					return '自动报送';
+				case 'manual':
+					return '手动报送'
+			}
+		}
+	});
 	app.controller('SamplingListCtrl', function($scope, $state, xhr){
 		$scope.nav = {
 			home: {title: '测站报送数据管理', url: 'Home'},
