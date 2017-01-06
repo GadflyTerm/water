@@ -124,7 +124,9 @@ class SamplingModel extends CommonModel{
 			array('STCD', 'require', '测站代码必须填写！'),
 			array('TM', 'require', '测站报送时间必须填写！'),
 		);
-		switch ($param['data']['STTP']){
+		$sttp = $param['data']['STTP'];
+		unset($param['data']['STTP']);
+		switch ($sttp){
 			case 'MM':
 			case 'PP':
 				$this->tableName = 'ST_PPTN_R';
@@ -145,15 +147,21 @@ class SamplingModel extends CommonModel{
 				$return['type'] = 'Success';
 				break;
 			case 'RR':
+				$data = array(
+					'STCD'	=> $param['data']['STCD'],
+					'TM'	=> $param['data']['TM'],
+					'DRP'	=> $param['data']['DRP'],
+				);
 				$return = $this->curd(array(
 					'model'		=> 'StPptnR',
 					'validate'	=> array_merge($validate, array(array('DRP', 'require', '时段降水量必须填写！'))),
 					'type'		=> 'add',
-					'data'		=> $param['data'],
+					'data'		=> $data,
 					'msg'		=> '时段降水量数据添加成功！'
 				));
 				if($return['type'] = 'Success'){
 					$this->tableName = 'ST_RSVR_R';
+					unset($param['data']['DRP']);
 					$validate = array_merge($validate, array(
 						array('RZ', 'require', '库上水位必须填写！'),
 					));
