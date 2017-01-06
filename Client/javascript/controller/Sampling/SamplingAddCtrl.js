@@ -46,7 +46,7 @@ define(function (require){
 			}
 			var getNewDatetime = function(){
 				var date = new Date($scope.datetime.date);
-				var time = new Date($scope.datetime.time);
+				var time = new Date($scope.datetime.time.toLocaleTimeString());
 				return new Date(date.getFullYear(), date.getMonth(), date.getDate(), time.getHours(), time.getMinutes(), '00');
 			}
 			$scope.sampling = {
