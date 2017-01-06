@@ -47,7 +47,7 @@ define(function (require){
 			var getNewDatetime = function(){
 				var dt = new Date($scope.datetime.date);
 				var time = new Date($scope.datetime.time);
-				dt.setHours(time.getHours(), time.getMinutes());
+				dt.setHours((time.getHours()+8), time.getMinutes());
 				return dt;
 			}
 			$scope.sampling = {
