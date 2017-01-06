@@ -67,64 +67,68 @@ CREATE TRIGGER ST_PPTN_R_INSERT_TR
    AFTER INSERT
 AS 
 BEGIN
-	DECLARE @id int; 									-- 当前数据表pk
-	DECLARE @stcd char(8);						-- 当前测站编码 
-	DECLARE @stnm char(30);
-	DECLARE @sttp char(2);
-	DECLARE @tktp char(10);
+	DECLARE @id INT; 									-- 当前数据表pk
+	DECLARE @stcd CHAR(8);						-- 当前测站编码 
+	DECLARE @stnm CHAR(30);
+	DECLARE @sttp CHAR(2);
+	DECLARE @tktp CHAR(10);
+	DECLARE @drp NUMERIC(5, 1);
 	DECLARE @tm DATETIME;
-	DECLARE @today datetime; 					-- 今天的时间截
-	DECLARE @yestday datetime;				-- 昨天的时间截
-	DECLARE @tomorrow datetime; 			-- 明天的时间截
+	DECLARE @today DATETIME; 					-- 今天的时间截
+	DECLARE @yestday DATETIME;				-- 昨天的时间截
+	DECLARE @tomorrow DATETIME; 			-- 明天的时间截
 	DECLARE @tol NUMERIC(5, 1);				-- 当天及时总降雨量
-	DECLARE @year int; 								-- 当前年份数
-	DECLARE @month int; 							-- 当前月份数
-	DECLARE @day int; 								-- 当前天数
-	DECLARE @start_year int; 					-- 开始计算均值的年份数
-	DECLARE @count int; 							-- 表单数据数
-	DECLARE @num int; 								-- 算术平均数的分母
+	DECLARE @year INT; 								-- 当前年份数
+	DECLARE @month INT; 							-- 当前月份数
+	DECLARE @day INT; 								-- 当前天数
+	DECLARE @start_year INT; 					-- 开始计算均值的年份数
+	DECLARE @count INT; 							-- 表单数据数
+	DECLARE @num INT; 								-- 算术平均数的分母
 	DECLARE @mydavp NUMERIC(5, 1); 		-- 多年平均旬月降水量
 	DECLARE @total NUMERIC(5, 1); 		-- 日降水量多年同期均值表中的同期降雨量总和
 	DECLARE @average NUMERIC(5, 1);		-- 日降水量多年同期均值表中的平均值
-	DECLARE @prdtp int;								-- 旬月标志：1--上旬， 2--中旬  3--下旬  4--全月
+	DECLARE @prdtp INT;								-- 旬月标志：1--上旬， 2--中旬  3--下旬  4--全月
 	
 	/* 触发累计当天总降雨量 */
-	SELECT @id = [id], @stcd = [STCD], @tm = [TM], @tktp = [TKTP] FROM inserted;
+	SELECT @id = [id], @stcd = [STCD], @drp = [DRP], @tm = [TM], @tktp = [TKTP] FROM inserted;
 	SELECT @today = today, @yestday = yestday, @tomorrow = tomorrow, @year = year, @month = month, @day = day
 	FROM openrowset('sqloledb','Trusted_Connection=yes','exec [Hydrology_pygq].[dbo].[proc_get_datetime]');
 	SELECT @tol = SUM([DRP]) FROM [dbo].[ST_PPTN_R] WHERE [STCD] = @stcd AND [TM] BETWEEN @today AND @tomorrow;
-	UPDATE [dbo].[ST_PPTN_R] SET [DYP] = 125 FROM inserted i, [dbo].[ST_PPTN_R] p WHERE p.[id] = i.id;
+	UPDATE [dbo].[ST_PPTN_R] SET [DYP] = @tol FROM [dbo].[ST_PPTN_R] WHERE [id] = @id;
 
 	SELECT @stnm = [STNM], @sttp = [STTP] FROM [dbo].[ST_STBPRP_B] WHERE [STCD] = @stcd;
 	INSERT [dbo].[ST_TASKLIST_D] ([RELATED], [PK], [STCD], [STNM], [STTP], [TKTP], [TM])
 		VALUES ('ST_PPTN_R', @id, @stcd, @stnm, @sttp, @tktp, @tm);
 	/* 计算并记录日降水量多年同期均值*/
 	SELECT TOP 1 @start_year = [BGYR] FROM [dbo].[ST_PDDMYAV_S] ORDER BY [MODITIME] DESC;
+	SET @start_year = ISNULL(@start_year, @year);
 	SELECT @num = count(*), @total = SUM([MYDAVP]) FROM [dbo].[ST_PDDMYAV_S] WHERE [MNTH] = @month AND [DAY] = @day;
 	SELECT @count = count(*) FROM [dbo].[ST_PDDMYAV_S] WHERE [MNTH] = @month AND [DAY] = @day AND [EDYR] = @year;
 	IF(@count > 0)
 		BEGIN
 			IF(@num > 0)
 				BEGIN
-					SET @average = (@total + @tol) / @num;
+					SET @average = (@total + @drp) / @num;
 				END
 			ELSE
 				BEGIN
-					SET @average = @tol;
+					SET @average = @drp;
 				END
-			UPDATE [dbo].[ST_PDDMYAV_S] SET [MYDAVP] = @average, [MODITIME] = GETDATE() WHERE [STCD] = @stcd AND [MNTH] = @month AND [DAY] = @day AND [BGYR] = @start_year AND [EDYR] = @year;
+			UPDATE [dbo].[ST_PDDMYAV_S] SET [MYDAVP] = @average, [EDYR] = @year, [STTYRNUM] = (@year - [BGYR] + 1), [MODITIME] = GETDATE() 
+				WHERE [STCD] = @stcd AND [MNTH] = @month AND [DAY] = @day;
 		END
 	ELSE
 		BEGIN
 			IF(@num > 0)
 				BEGIN
-					SET @average = (@total + @tol) / (@num + 1);
+					SET @average = (@total + @drp) / (@num + 1);
 				END
 			ELSE
 				BEGIN
-					SET @average = @tol;
+					SET @average = @drp;
 				END
-			INSERT [dbo].[ST_PDDMYAV_S] ([STCD], [MNTH], [DAY], [BGYR], [EDYR], [MYDAVP], [MODITIME]) VALUES (@stcd, @month, @day, @start_year, @year, @average, GETDATE());
+			INSERT [dbo].[ST_PDDMYAV_S] ([STCD], [MNTH], [DAY], [BGYR], [EDYR], [MYDAVP], [STTYRNUM], [MODITIME]) 
+				VALUES (@stcd, @month, @day, @start_year, @year, @average, 1, GETDATE());
 		END
 	
 	/* 触发统计旬月降水量累计表 */
@@ -144,21 +148,21 @@ BEGIN
 	SELECT @count = count(*) FROM [dbo].ST_PDMMYSQ_S WHERE [STCD] = @stcd AND [YR] = @year AND [MNTH] = @month AND [PRDTP] = @prdtp;
 	IF(@count > 0)
 		BEGIN
-			UPDATE [dbo].ST_PDMMYSQ_S SET [ACCP] = ([ACCP] + @tol), [MODITIME] = GETDATE() WHERE [STCD] = @stcd AND [YR] = @year AND [MNTH] = @month AND [PRDTP] = @prdtp;
+			UPDATE [dbo].ST_PDMMYSQ_S SET [ACCP] = ([ACCP] + @drp), [MODITIME] = GETDATE() WHERE [STCD] = @stcd AND [YR] = @year AND [MNTH] = @month AND [PRDTP] = @prdtp;
 		END
 	ELSE
 		BEGIN
-			INSERT [dbo].ST_PDMMYSQ_S ([STCD], [ACCP], [YR], [MNTH], [PRDTP], [MODITIME]) VALUES (@stcd, @tol, @year, @month, @prdtp, GETDATE());
+			INSERT [dbo].ST_PDMMYSQ_S ([STCD], [ACCP], [YR], [MNTH], [PRDTP], [MODITIME]) VALUES (@stcd, @drp, @year, @month, @prdtp, GETDATE());
 		END
 	-- 记录全月数据
 	SELECT @count = count(*) FROM [dbo].ST_PDMMYSQ_S WHERE [STCD] = @stcd AND [YR] = @year AND [MNTH] = @month AND [PRDTP] = 4;
 	IF(@count > 0)
 		BEGIN
-			UPDATE [dbo].ST_PDMMYSQ_S SET [ACCP] = ([ACCP] + @tol), [MODITIME] = GETDATE() WHERE [STCD] = @stcd AND [YR] = @year AND [MNTH] = @month AND [PRDTP] = 4;
+			UPDATE [dbo].ST_PDMMYSQ_S SET [ACCP] = ([ACCP] + @drp), [MODITIME] = GETDATE() WHERE [STCD] = @stcd AND [YR] = @year AND [MNTH] = @month AND [PRDTP] = 4;
 		END
 	ELSE
 		BEGIN
-			INSERT [dbo].ST_PDMMYSQ_S ([STCD], [ACCP], [YR], [MNTH], [PRDTP], [MODITIME]) VALUES (@stcd, @tol, @year, @month, 4, GETDATE());
+			INSERT [dbo].ST_PDMMYSQ_S ([STCD], [ACCP], [YR], [MNTH], [PRDTP], [MODITIME]) VALUES (@stcd, @drp, @year, @month, 4, GETDATE());
 		END
 
 	/* 触发计算旬月降水量均值表 */
@@ -166,7 +170,7 @@ BEGIN
 	IF(@count > 0)
 		BEGIN
 			SELECT @mydavp = (SUM([ACCP])/count(*)) FROM [dbo].ST_PDMMYSQ_S WHERE [STCD] = @stcd AND [YR] = @year AND [MNTH] = @month AND [PRDTP] = @prdtp;
-			UPDATE [dbo].ST_PDMMYAV_S SET [MYMAVP] = @mydavp, [EDYR] = @year, [STTYRNUM] = ([BGYR] - @year + 1), [MODITIME] = GETDATE() 
+			UPDATE [dbo].ST_PDMMYAV_S SET [MYMAVP] = @mydavp, [EDYR] = @year, [STTYRNUM] = (@year - [BGYR] + 1), [MODITIME] = GETDATE() 
 				WHERE [STCD] = @stcd AND [MNTH] = @month AND [PRDTP] = @prdtp;
 		END
 	ELSE
@@ -214,22 +218,22 @@ AS
 BEGIN
 	-- 降雨量表 DELETE 触发器， 用于累加日降雨量
 	SET NOCOUNT ON;
-	DECLARE @id int; 									-- 当前数据表pk
-	DECLARE @stcd char(8);						-- 当前测站编码 
+	DECLARE @id INT; 									-- 当前数据表pk
+	DECLARE @stcd CHAR(8);						-- 当前测站编码 
 	DECLARE @tm DATETIME;							-- 所删除数据的时间截
-	DECLARE @today datetime; 					-- 今天的时间截
-	DECLARE @yestday datetime;				-- 昨天的时间截
-	DECLARE @tomorrow datetime; 			-- 明天的时间截
+	DECLARE @today DATETIME; 					-- 今天的时间截
+	DECLARE @yestday DATETIME;				-- 昨天的时间截
+	DECLARE @tomorrow DATETIME; 			-- 明天的时间截
 	DECLARE @tol NUMERIC(5, 1);				-- 当天及时总降雨量
-	DECLARE @year int; 								-- 当前年份数
-	DECLARE @month int; 							-- 当前月份数
-	DECLARE @day int; 								-- 当前天数
+	DECLARE @year INT; 								-- 当前年份数
+	DECLARE @month INT; 							-- 当前月份数
+	DECLARE @day INT; 								-- 当前天数
 	DECLARE @drp NUMERIC(5, 1);				-- 删除的降雨量
-	DECLARE @num int; 								-- 算术平均数的分母
+	DECLARE @num INT; 								-- 算术平均数的分母
 	DECLARE @mydavp NUMERIC(5, 1); 		-- 多年平均旬月降水量
 	DECLARE @total NUMERIC(5, 1); 		-- 日降水量多年同期均值表中的同期降雨量总和
 	DECLARE @average NUMERIC(5, 1);		-- 日降水量多年同期均值表中的平均值
-	DECLARE @prdtp int;								-- 旬月标志：1--上旬， 2--中旬  3--下旬  4--全月
+	DECLARE @prdtp INT;								-- 旬月标志：1--上旬， 2--中旬  3--下旬  4--全月
 	DECLARE @sql NVARCHAR(1000);			-- 动态生成SQL字符串
 
 	/* 触发累计计算当天总降雨量 */
@@ -295,3 +299,12 @@ BEGIN
 		END
 END
 GO
+
+/**
+清空降雨量数据
+ */
+TRUNCATE TABLE [dbo].[ST_PDMMYSQ_S];
+TRUNCATE TABLE [dbo].[ST_PDMMYAV_S];
+TRUNCATE TABLE [dbo].[ST_PDDMYAV_S];
+TRUNCATE TABLE [dbo].[ST_PPTN_R];
+DELETE [dbo].[ST_TASKLIST_D] WHERE [RELATED] = 'ST_PPTN_R';
