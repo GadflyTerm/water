@@ -5,11 +5,14 @@ define(function (require){
 	var app = require('../../app');
 	app.filter('taskType', function(){
 		return function(param){
-			switch(param){
+			var str = param.replace(/(^\s*)|(\s*$)/g, "");
+			switch(str){
 				case 'auto':
 					return '自动报送';
 				case 'manual':
-					return '手动报送'
+					return '手动报送';
+				default:
+					return '其它报送';
 			}
 		}
 	});
