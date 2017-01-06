@@ -120,11 +120,12 @@ class SamplingModel extends CommonModel{
 	}
 	
 	public function samplingAdd($param){
-		/*$validate = array(
+		$validate = array(
 			array('STCD', 'require', '测站代码必须填写！'),
 			array('TM', 'require', '测站报送时间必须填写！'),
 		);
 		switch ($param['data']['STTP']){
+			case 'MM':
 			case 'PP':
 				$this->tableName = 'ST_PPTN_R';
 				$validate = array_merge($validate, array(
@@ -187,11 +188,6 @@ class SamplingModel extends CommonModel{
 			));
 		}else{
 			return $return;
-		}*/
-		return array(
-			'type'	=> 'Success',
-			'msg'	=> '数据添加成功',
-			'data'	=> $param['data'],
-		);
+		}
 	}
 }
