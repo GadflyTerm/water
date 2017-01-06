@@ -1,0 +1,64 @@
+<div class="col-md-12">
+	<div class="panel panel-warning">
+		<div class="panel-heading">
+			<div class="row">
+				<div class="col-md-10"><i class="fa fa-list-alt"></i> {{nav.home.title}}</div>
+				<div class="col-md-2">
+					<a ui-sref="SamplingAdd" class="btn btn-primary btn-xs btn-block pull-right"><i class="fa fa-plus-circle"></i> 新增</a>
+				</div>
+			</div>
+		</div>
+		<table class="table table-bordered table-hover table-condensed">
+			<tr>
+				<th class="text-center">测站名称</th>
+				<th class="text-center">测站类型</th>
+				<th class="text-center">测站位置</th>
+				<th class="text-center">报送类型</th>
+				<th class="text-center">报送时间</th>
+				<th style="width: 120px;" class="text-center">操作</th>
+			</tr>
+			<tr ng-repeat="vo in allItem[currentPage-1]">
+				<td>{{vo.STNM}}</td>
+				<td>{{vo.STTP|stationType}}</td>
+				<td>{{vo.STLC}}</td>
+				<td>{{vo.LGTD}}</td>
+				<td>{{vo.LTTD}}</td>
+				<td class="text-center">
+					<button type="button" class="btn btn-danger btn-xs pull-right btn-del" ng-click="delete(vo.STCD)">
+						<i class="fa fa-trash-o"></i> 删除
+					</button>
+					<a ui-sref="StationEdit(vo.STCD)" class="btn btn-info btn-xs pull-right">
+						<i class="fa fa-edit"></i> 编辑
+					</a>
+				</td>
+			</tr>
+			<tr ng-if="lists.length == 0">
+				<td colspan="7" class="text-center">没有数据</td>
+			</tr>
+		</table>
+		<div class="panel-footer">
+			<div class="row">
+				<div class="col-md-10">
+					<ul uib-pagination class="pagination-sm embed-responsive-item" style="float:right;margin: 0 15px 0 0;"
+						total-items="totalItems"
+						max-size="maxSize"
+						items-per-page="itemsPerPage"
+						num-pages="numPages"
+						force-ellipses="true"
+						ng-model="currentPage"
+						previous-text="上一页"
+						next-text="下一页"
+						first-text="首页"
+						last-text="尾页"
+						boundary-links="true"
+						boundary-link-numbers="true"
+						rotate="false">
+					</ul>
+				</div>
+				<div class="col-md-2">
+					<input type="text" class="form-control input-sm" value="Page: {{currentPage}} / {{numPages}}" readonly>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>

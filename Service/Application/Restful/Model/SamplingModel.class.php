@@ -118,4 +118,80 @@ class SamplingModel extends CommonModel{
 		}
 		return is_null($return)?null:json_encode($return);
 	}
+	
+	public function samplingAdd($param){
+		/*$validate = array(
+			array('STCD', 'require', '测站代码必须填写！'),
+			array('TM', 'require', '测站报送时间必须填写！'),
+		);
+		switch ($param['data']['STTP']){
+			case 'PP':
+				$this->tableName = 'ST_PPTN_R';
+				$validate = array_merge($validate, array(
+					array('DRP', 'require', '时段降水量必须填写！'),
+				));
+				$msg = '时段降水量';
+				$return['type'] = 'Success';
+				break;
+			case 'ZQ':
+			case 'ZZ':
+				$this->tableName = 'ST_RIVER_R';
+				$validate = array_merge($validate, array(
+					array('Z', 'require', '水位必须填写！'),
+					array('Q', 'require', '流量必须填写！'),
+				));
+				$msg = '河道水情';
+				$return['type'] = 'Success';
+				break;
+			case 'RR':
+				$return = $this->curd(array(
+					'model'		=> 'StPptnR',
+					'validate'	=> array_merge($validate, array(array('DRP', 'require', '时段降水量必须填写！'))),
+					'type'		=> 'add',
+					'data'		=> $param['data'],
+					'msg'		=> '时段降水量数据添加成功！'
+				));
+				if($return['type'] = 'Success'){
+					$this->tableName = 'ST_RSVR_R';
+					$validate = array_merge($validate, array(
+						array('RZ', 'require', '库上水位必须填写！'),
+					));
+					$msg = '水库水情';
+				}
+				break;
+			case 'DD':
+				$this->tableName = 'ST_GATE_R';
+				$validate = array_merge($validate, array(
+					array('GTOPHGT', 'require', '闸门开启高度必须填写！'),
+				));
+				$msg = '闸门启闭情况';
+				$return['type'] = 'Success';
+				break;
+			case 'SS':
+				$this->tableName = 'ST_SOIL_R';
+				$validate = array_merge($validate, array(
+					array('SLM20', 'require', '20cm深度含水量必须填写！'),
+					array('SLM40', 'require', '40cm深度含水量必须填写！'),
+					array('SLM60', 'require', '60cm深度含水量必须填写！'),
+				));
+				$msg = '土壤墒情';
+				$return['type'] = 'Success';
+				break;
+		}
+		if($return['type'] = 'Success'){
+			return $this->curd(array(
+				'validate'	=> $validate,
+				'type'		=> 'add',
+				'data'		=> $param['data'],
+				'msg'		=> $msg.'数据添加成功！'
+			));
+		}else{
+			return $return;
+		}*/
+		return array(
+			'type'	=> 'Success',
+			'msg'	=> '数据添加成功',
+			'data'	=> $param['data'],
+		);
+	}
 }

@@ -1,4 +1,3 @@
-
 <div class="col-md-12">
 	<div class="panel panel-warning">
 		<div class="panel-heading">
@@ -30,8 +29,8 @@
 									<lable for="select" class="col-md-4 col-sm-4 col-xs-4 control-label">选择日期</lable>
 									<div class="col-md-8 col-sm-8 col-xs-8 input-group">
 										<input type="text" class="form-control input-sm" uib-datepicker-popup="{{format}}" ng-model="dt"
-											   is-open="popupDay.opened" datepicker-options="dateOptions"
-											   ng-required="true" close-text="Close" alt-input-formats="altInputFormats" />
+											   is-open="popupDay.opened" datepicker-options="dateOptions" current-text="今天" close-text="关闭" clear-text="清除"
+											   ng-required="true" alt-input-formats="altInputFormats" />
 										<span class="input-group-btn">
 											<button type="button" class="btn btn-default btn-sm" ng-click="openDay()"><i
 													class="glyphicon glyphicon-calendar"></i></button>

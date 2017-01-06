@@ -117,12 +117,25 @@ define(function (require){
 			}
 		}).state('SamplingList', {
 			url: '/SamplingList',
-			templateUrl: 'templates/controller/Sampling/list.html',
-			controller: 'listCtrl',
+			templateUrl: 'templates/Sampling/SamplingList.html',
+			controller: 'SamplingListCtrl',
 			resolve: {
 				listCtrl:["$q", function($q){
 					var deferred = $q.defer();
-					require(['../javascript/controller/Sampling/listCtrl'], function(){	//异步加载controller／directive/filter/service
+					require(['../javascript/controller/Sampling/SamplingListCtrl'], function(){	//异步加载controller／directive/filter/service
+						deferred.resolve();
+					});
+					return deferred.promise;
+				}]
+			}
+		}).state('SamplingAdd', {
+			url: '/SamplingAdd',
+			templateUrl: 'templates/Sampling/SamplingAdd.html',
+			controller: 'SamplingAddCtrl',
+			resolve: {
+				listCtrl:["$q", function($q){
+					var deferred = $q.defer();
+					require(['../javascript/controller/Sampling/SamplingAddCtrl'], function(){	//异步加载controller／directive/filter/service
 						deferred.resolve();
 					});
 					return deferred.promise;

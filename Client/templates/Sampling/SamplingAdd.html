@@ -1,0 +1,92 @@
+<div class="col-md-12">
+	<div class="panel panel-warning">
+		<div class="panel-heading">
+			<i class="fa fa-plus-circle"></i> 添加新的{{tab.heading}}测站采集数据
+		</div>
+		<form class="form-horizontal" role="form" name="theForm" novalidate="novalidate">
+			<div class="panel-body">
+				<div cg-busy="{promise:promise, message: '请等待，正在向服务器请求数据...', backdrop:true, delay:0, minDuration:10}">
+					<div class="well">
+						<div class="row">
+							<div class="col-md-12">
+								<div class="form-group">
+									<label class="col-sm-1 control-label">测站编码</label>
+									<div class="col-sm-3"
+										 ng-class="{true: 'has-error', false: 'has-success'}[theForm.STCD.$invalid]">
+										<select ng-model="STCD" name="STCD" class="form-control input-sm"
+												ng-required="true" ng-change="mySTTP()"
+												ng-options="item.STNM group by item.STTP|stationType for item in STBPRP track by item.STCD">
+											<option value="">请选择一个报送任务数据的测站</option>
+										</select>
+									</div>
+									<label class="col-sm-1 control-label">采集日期</label>
+									<div class="col-sm-3">
+										<div class="input-group" 
+											 ng-class="{true: 'has-error', false: 'has-success'}[theForm.date.$invalid]">
+											<input type="text" class="form-control input-sm" 
+												   uib-datepicker-popup="{{format}}" name="date" ng-model="datetime.date" 
+												   current-text="今天" close-text="关闭" clear-text="清除"
+												   is-open="datetime.popup.opened" datepicker-options="datetime.options"
+												   ng-required="true" alt-input-formats="altInputFormats" />
+											<span class="input-group-btn">
+										<button type="button" class="btn btn-default btn-sm" 
+												ng-click="datetime.openDatepicker()">
+											<i class="glyphicon glyphicon-calendar"></i>
+										</button>
+									</span>
+										</div>
+									</div>
+									<label class="col-sm-1 control-label">采集时间</label>
+									<div class="col-sm-3" ng-class="{true: 'has-error', false: 'has-success'}[theForm.STCD.$invalid]">
+										<div uib-timepicker ng-model="datetime.time"
+											 hour-step="datetime.hstep" minute-step="datetime.mstep" show-meridian="datetime.ismeridian"
+											 template-url="node_modules/angular-ui-bootstrap/template/timepicker/timepicker-inline.html"></div>
+									</div>
+								</div>
+								<div class="form-group" ng-show="show.MM">
+									<label class="col-sm-1 control-label">时段降水量</label>
+									<div class="col-sm-11" 
+										 ng-class="{true: 'has-error', false: 'has-success'}[theForm.DRP0.$invalid]">
+										<input type="number" name="DRP0" ng-model="sampling.DRP" 
+											   class="form-control input-sm"
+											   placeholder="表示指定时段内的降水量，计量单位为mm。" ng-required="show.MM">
+									</div>
+								</div>
+								<div class="form-group" ng-show="show.ZQ">
+									<label class="col-sm-1 control-label">水位</label>
+									<div class="col-sm-5" ng-class="{true: 'has-error', false: 'has-success'}[theForm.Z.$invalid]">
+										<input type="number" name="Z" ng-model="sampling.Z" class="form-control input-sm"
+											   placeholder="测站断面相应时间的水位，计量单位为m。" ng-required="show.ZQ">
+									</div>
+									<label class="col-sm-1 control-label">流量</label>
+									<div class="col-sm-5" ng-class="{true: 'has-error', false: 'has-success'}[theForm.Q.$invalid]">
+										<input type="number" name="Q" ng-model="sampling.Q" class="form-control input-sm"
+											   placeholder="测站测验断面相应时间通过的流量，计量单位为m3/s。" ng-required="show.ZQ">
+									</div>
+								</div>
+								<div class="form-group" ng-show="show.RR">
+									<label class="col-sm-1 control-label">时段降水量</label>
+									<div class="col-sm-5" ng-class="{true: 'has-error', false: 'has-success'}[theForm.DRP.$invalid]">
+										<input type="number" name="DRP" ng-model="sampling.DRP" class="form-control input-sm"
+											   placeholder="表示指定时段内的降水量，计量单位为mm。" ng-required="show.RR">
+									</div>
+									<label class="col-sm-1 control-label">库上水位</label>
+									<div class="col-sm-5" ng-class="{true: 'has-error', false: 'has-success'}[theForm.RZ.$invalid]">
+										<input type="number" name="RZ" ng-model="sampling.RZ" class="form-control input-sm"
+											   placeholder="相应时间的库（坝）上水位，计量单位为m。" ng-required="show.RR">
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="panel-footer text-right">
+				<button class="btn btn-primary" type="button" ng-click="submit()"  ng-disabled="!theForm.$valid">
+					添加水质采样测站信息
+				</button>
+				<button class="btn btn-warning" type="button" ng-click="cancel()">取消</button>
+			</div>
+		</form>
+	</div>
+</div>

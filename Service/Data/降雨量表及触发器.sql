@@ -1,4 +1,4 @@
-USE [master]
+USE [Hydrology_pygq]
 GO
 
 SET ANSI_NULLS ON
@@ -29,12 +29,14 @@ CREATE TABLE [dbo].[ST_PPTN_R](
 	[PDR] [numeric](5, 2) NULL,
 	[DYP] [numeric](5, 1) NULL,
 	[WTH] [char](1) NULL,
+	[TKTP] [char](10) NULL,
 	CONSTRAINT [PK__ST_PPTN___952A629F035179CE] PRIMARY KEY CLUSTERED
 		(
 			[STCD] ASC,
 			[TM] ASC
 		)WITH (PAD_INDEX  = OFF, STATISTICS_NORECOMPUTE  = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS  = ON, ALLOW_PAGE_LOCKS  = ON) ON [PRIMARY]
 ) ON [PRIMARY]
+
 GO
 
 SET ANSI_PADDING OFF
@@ -43,17 +45,8 @@ GO
 ALTER TABLE [dbo].[ST_PPTN_R] ADD  CONSTRAINT [DF_ST_PPTN_R_TM]  DEFAULT (getdate()) FOR [TM]
 GO
 
-CREATE FUNCTION dbo.fn_get_month_lastday(@date DATETIME) 
-	returns INT
-AS
-BEGIN 
-	/* 根据指定的日期时间返回所在当月的最后一天 */
-	DECLARE @year INT, @month INT, @temp VARCHAR(20);
-	SET @year = DATENAME(year, @date);
-	SET @month = DATENAME(month, @date);
-	SELECT @temp = convert(VARCHAR(20), dateadd(d, -1, dateadd(m, 1, rtrim(@year) + '-' + rtrim(@month) + '-01')), 111);
-	return DATENAME(day, @temp);
-END
+ALTER TABLE [dbo].[ST_PPTN_R] ADD  CONSTRAINT [DF_ST_PPTN_R_TKTP]  DEFAULT ('auto') FOR [TKTP]
+GO
 
 	
 -- =============================================
@@ -62,38 +55,46 @@ END
 -- Create date: <Create Date,,>
 -- Description:	<Description,,>
 -- =============================================
-IF EXISTS(SELECT * FROM SYSOBJECTS WHERE [NAME] = 'ST_PPTN_R_insert_TR' AND [XTYPE] = 'TR')
+IF EXISTS(SELECT * FROM SYSOBJECTS WHERE [NAME] = 'ST_PPTN_R_INSERT_TR' AND [XTYPE] = 'TR')
 	DROP TRIGGER ST_PPTN_R_insert_TR
 GO
 
 CREATE TRIGGER ST_PPTN_R_INSERT_TR 
-   ON  ST_PPTN_R 
+   ON  [dbo].[ST_PPTN_R]
    AFTER INSERT
 AS 
 BEGIN
-	DECLARE @id int, 						-- 当前数据表pk
-		@stcd char(8),						-- 当前测站编码 
-		@today datetime, 					-- 今天的时间截
-		@yestday datetime,				-- 昨天的时间截
-		@tomorrow datetime, 			-- 明天的时间截
-		@tol NUMERIC(5, 1),				-- 当天及时总降雨量
-		@year int, 								-- 当前年份数
-		@month int, 							-- 当前月份数
-		@day int, 								-- 当前天数
-		@start_year int, 					-- 开始计算均值的年份数
-		@count int, 							-- 表单数据数
-		@num int, 								-- 算术平均数的分母
-		@mydavp NUMERIC(5, 1), 		-- 多年平均旬月降水量
-		@total NUMERIC(5, 1), 		-- 日降水量多年同期均值表中的同期降雨量总和
-		@average NUMERIC(5, 1),		-- 日降水量多年同期均值表中的平均值
-		@prdtp int;								-- 旬月标志：1--上旬， 2--中旬  3--下旬  4--全月
+	DECLARE @id int; 									-- 当前数据表pk
+	DECLARE @stcd char(8);						-- 当前测站编码 
+	DECLARE @stnm char(30);
+	DECLARE @sttp char(2);
+	DECLARE @tktp char(10);
+	DECLARE @tm DATETIME;
+	DECLARE @today datetime; 					-- 今天的时间截
+	DECLARE @yestday datetime;				-- 昨天的时间截
+	DECLARE @tomorrow datetime; 			-- 明天的时间截
+	DECLARE @tol NUMERIC(5, 1);				-- 当天及时总降雨量
+	DECLARE @year int; 								-- 当前年份数
+	DECLARE @month int; 							-- 当前月份数
+	DECLARE @day int; 								-- 当前天数
+	DECLARE @start_year int; 					-- 开始计算均值的年份数
+	DECLARE @count int; 							-- 表单数据数
+	DECLARE @num int; 								-- 算术平均数的分母
+	DECLARE @mydavp NUMERIC(5, 1); 		-- 多年平均旬月降水量
+	DECLARE @total NUMERIC(5, 1); 		-- 日降水量多年同期均值表中的同期降雨量总和
+	DECLARE @average NUMERIC(5, 1);		-- 日降水量多年同期均值表中的平均值
+	DECLARE @prdtp int;								-- 旬月标志：1--上旬， 2--中旬  3--下旬  4--全月
 	
 	/* 触发累计当天总降雨量 */
-	SELECT @id = [id], @stcd = [STCD] FROM inserted;
-	SELECT @today = today, @yestday = yestday, @tomorrow = tomorrow, @year = year, @month = month, @day = day	FROM openrowset('sqloledb','Trusted_Connection=yes','exec [dbo].[proc_get_datetime]');
+	SELECT @id = [id], @stcd = [STCD], @tm = [TM], @tktp = [TKTP] FROM inserted;
+	SELECT @today = today, @yestday = yestday, @tomorrow = tomorrow, @year = year, @month = month, @day = day
+	FROM openrowset('sqloledb','Trusted_Connection=yes','exec [Hydrology_pygq].[dbo].[proc_get_datetime]');
 	SELECT @tol = SUM([DRP]) FROM [dbo].[ST_PPTN_R] WHERE [STCD] = @stcd AND [TM] BETWEEN @today AND @tomorrow;
 	UPDATE [dbo].[ST_PPTN_R] SET [DYP] = @tol WHERE [id] = @id;
-	
+
+	SELECT @stnm = [STNM], @sttp = [STTP] FROM [dbo].[ST_STBPRP_B] WHERE [STCD] = @stcd;
+	INSERT [dbo].[ST_TASKLIST_D] ([RELATED], [PK], [STCD], [STNM], [STTP], [TKTP], [TM])
+		VALUES ('ST_PPTN_R', @id, @stcd, @stnm, @sttp, @tktp, @tm);
 	/* 计算并记录日降水量多年同期均值*/
 	SELECT TOP 1 @start_year = [BGYR] FROM [dbo].[ST_PDDMYAV_S] ORDER BY [MODITIME] DESC;
 	SELECT @num = count(*), @total = SUM([MYDAVP]) FROM [dbo].[ST_PDDMYAV_S] WHERE [MNTH] = @month AND [DAY] = @day;
@@ -208,32 +209,44 @@ ON  ST_PPTN_R
 AFTER DELETE
 AS
 BEGIN
-	-- SET NOCOUNT ON added to prevent extra result sets from
-	-- interfering with SELECT statements.
+	-- 降雨量表 DELETE 触发器， 用于累加日降雨量
 	SET NOCOUNT ON;
-	DECLARE @id int, 					-- 当前数据表pk
-	@stcd char(8),						-- 当前测站编码 
-	@tm DATETIME,							-- 所删除数据的时间截
-	@today datetime, 					-- 今天的时间截
-	@yestday datetime,				-- 昨天的时间截
-	@tomorrow datetime, 			-- 明天的时间截
-	@tol NUMERIC(5, 1),				-- 当天及时总降雨量
-	@year int, 								-- 当前年份数
-	@month int, 							-- 当前月份数
-	@day int, 								-- 当前天数
-	@drp NUMERIC(5, 1),				-- 删除的降雨量
-	@num int, 								-- 算术平均数的分母
-	@mydavp NUMERIC(5, 1), 		-- 多年平均旬月降水量
-	@total NUMERIC(5, 1), 		-- 日降水量多年同期均值表中的同期降雨量总和
-	@average NUMERIC(5, 1),		-- 日降水量多年同期均值表中的平均值
-	@prdtp int;								-- 旬月标志：1--上旬， 2--中旬  3--下旬  4--全月
+	DECLARE @id int; 									-- 当前数据表pk
+	DECLARE @stcd char(8);						-- 当前测站编码 
+	DECLARE @tm DATETIME;							-- 所删除数据的时间截
+	DECLARE @today datetime; 					-- 今天的时间截
+	DECLARE @yestday datetime;				-- 昨天的时间截
+	DECLARE @tomorrow datetime; 			-- 明天的时间截
+	DECLARE @tol NUMERIC(5, 1);				-- 当天及时总降雨量
+	DECLARE @year int; 								-- 当前年份数
+	DECLARE @month int; 							-- 当前月份数
+	DECLARE @day int; 								-- 当前天数
+	DECLARE @drp NUMERIC(5, 1);				-- 删除的降雨量
+	DECLARE @num int; 								-- 算术平均数的分母
+	DECLARE @mydavp NUMERIC(5, 1); 		-- 多年平均旬月降水量
+	DECLARE @total NUMERIC(5, 1); 		-- 日降水量多年同期均值表中的同期降雨量总和
+	DECLARE @average NUMERIC(5, 1);		-- 日降水量多年同期均值表中的平均值
+	DECLARE @prdtp int;								-- 旬月标志：1--上旬， 2--中旬  3--下旬  4--全月
+	DECLARE @sql NVARCHAR(1000);			-- 动态生成SQL字符串
 
 	/* 触发累计计算当天总降雨量 */
 	SELECT @id = [id], @stcd = [STCD], @drp = [DRP], @tm = [TM] FROM deleted;
-	SELECT @today = today, @yestday = yestday, @tomorrow = tomorrow, @year = year, @month = month, @day = day
-	FROM openrowset('sqloledb','Trusted_Connection=yes','exec [dbo].[proc_get_datetime] @getdate='+@tm);
+	SET @sql = 'insert INTO #Tb_frame SELECT * FROM openrowset(''sqloledb'',''Trusted_Connection=yes'',''exec [Hydrology_pygq].[dbo].[proc_get_time_frame] @getdate="' + @tm + '"'')';
+	IF OBJECT_ID('[dbo].[#Tb_frame]') IS NOT NULL
+		DROP TABLE [dbo].[#Tb_frame]
+	CREATE TABLE [dbo].[#Tb_frame](
+		[today] DATETIME,
+		[yestday] DATETIME,
+		[tomorrow] DATETIME,
+		[year] INT,
+		[month] INT,
+		[day] INT
+	)
+	EXECUTE sp_executesql @sql;
+	SELECT TOP 1 @today = today, @yestday = yestday, @tomorrow = tomorrow, @year = year, @month = month, @day = day FROM #Tb_frame;
 	SELECT @tol = SUM([DRP]) FROM [dbo].[ST_PPTN_R] WHERE [STCD] = @stcd AND [TM] BETWEEN @today AND @tomorrow;
 	UPDATE [dbo].[ST_PPTN_R] SET [DYP] = ([DYP] - @drp) WHERE [id] > @id AND [TM] <= @tomorrow;
+	DELETE [dbo].[ST_TASKLIST_D] WHERE [RELATED] = 'ST_PPTN_R' AND [PK] = @id;
 
 	/* 计算并记录日降水量多年同期均值*/
 	SELECT @num = count(*), @total = SUM([MYDAVP]) FROM [dbo].[ST_PDDMYAV_S] WHERE [STCD] = @stcd AND [MNTH] = @month AND [DAY] = @day;

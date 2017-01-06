@@ -1,4 +1,4 @@
-USE [master]
+USE [Hydrology_pygq]
 GO
 
 /****** Object:  StoredProcedure [dbo].[proc_get_datetime]    Script Date: 12/20/2016 13:27:30 ******/
@@ -17,36 +17,38 @@ GO
 IF EXISTS(SELECT * FROM SYSOBJECTS WHERE [NAME] = 'proc_get_datetime' AND [XTYPE] = 'P')
 	DROP PROCEDURE [dbo].[proc_get_datetime]
 GO
+
 CREATE PROCEDURE [dbo].[proc_get_datetime] 
-	@getdate datetime = GETDATE()
+	@getdate DATETIME = NULL
 AS
 BEGIN
 	SET NOCOUNT ON;
-	DECLARE @today datetime,		-- 给定时间的当天的时间截
-		@yestday datetime,				-- 给定时间的昨天的时间截
-		@tomorrow datetime, 			-- 给定时间的明天的时间截
-		@hour INT, 								-- 给定时间的小时数
-		@minute INT,							-- 给定时间的分钟数
-		@second INT,							-- 给定时间的秒数
-		@year INT, 								-- 给定时间的年份数
-		@month INT, 							-- 给定时间的月份数
-		@day INT, 								-- 给定时间的天数
-		@lastday VARCHAR(20);			-- 给定时间当月的最后一天天数
+	DECLARE @today DATETIME;		-- 给定时间的当天的时间截
+	DECLARE @yestday DATETIME;				-- 给定时间的昨天的时间截
+	DECLARE @tomorrow DATETIME; 			-- 给定时间的明天的时间截
+	DECLARE @hour INT; 								-- 给定时间的小时数
+	DECLARE @minute INT;							-- 给定时间的分钟数
+	DECLARE @second INT;							-- 给定时间的秒数
+	DECLARE @year INT; 								-- 给定时间的年份数
+	DECLARE @month INT; 							-- 给定时间的月份数
+	DECLARE @day INT; 								-- 给定时间的天数
+	DECLARE @lastday VARCHAR(20);			-- 给定时间当月的最后一天天数
+	SET @getdate = ISNULL(@getdate, GETDATE())
 	SET @hour = DATENAME(hour, @getdate);
 	SET @minute = DATENAME(minute, @getdate);
 	SET @second = DATENAME(second, @getdate);
   IF(@hour > 8)
-		begin
+		BEGIN
 			SET @yestday = CONVERT(varchar(100), @getdate-1, 23) + ' 08:00:00';
 			SET @today = CONVERT(varchar(100), @getdate, 23) + ' 08:00:00';
 			SET @tomorrow = CONVERT(varchar(100), @getdate+1, 23) + ' 08:00:00';
-		end
+		END
 	ELSE
-		begin
+		BEGIN
 			SET @yestday = CONVERT(varchar(100), @getdate-2, 23) + ' 08:00:00';
 			SET @today = CONVERT(varchar(100), @getdate-1, 23) + ' 08:00:00';
 			SET @tomorrow = CONVERT(varchar(100), @getdate, 23) + ' 08:00:00';
-		end
+		END
 	SET @year = DATENAME(year, @today);
 	SET @month = DATENAME(month, @today);
 	SET @day = DATENAME(day, @today);
@@ -161,3 +163,59 @@ AS
 			END
 	END
 GO
+
+-- =============================================
+-- 测站报送数据任务列表
+-- Author:		<Author,,Name>
+-- Create date: <Create Date,,>
+-- Description:	用于存储地表水水质监测站的特定信息
+-- =============================================
+IF EXISTS(SELECT TABLE_NAME FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_NAME = 'ST_TASKLIST_D')
+	DROP TABLE [dbo].[ST_TASKLIST_D]
+GO
+
+CREATE TABLE [dbo].[ST_TASKLIST_D](
+	[id] [int] IDENTITY(1,1) NOT NULL,
+	[RELATED] [char](30) NOT NULL,
+	[PK] [int] NOT NULL,
+	[STCD] [char](8) NOT NULL,
+	[STNM] [char](30) NOT NULL,
+	[STTP] [char](2) NOT NULL,
+	[TKTP] [char](8) NOT NULL,
+	[TM] [datetime] NOT NULL,
+	CONSTRAINT [PK_ST_TASKLIST_D] PRIMARY KEY CLUSTERED
+		(
+			[id] ASC,
+			[STCD] ASC,
+			[TM] ASC
+		)WITH (PAD_INDEX  = OFF, STATISTICS_NORECOMPUTE  = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS  = ON, ALLOW_PAGE_LOCKS  = ON) ON [PRIMARY]
+) ON [PRIMARY]
+
+SET ANSI_PADDING OFF
+GO
+
+EXEC sys.sp_addextendedproperty @name=N'MS_Description', @value=N'测站关联数据表' , @level0type=N'SCHEMA',@level0name=N'dbo', @level1type=N'TABLE',@level1name=N'ST_TASKLIST_D', @level2type=N'COLUMN',@level2name=N'RELATED'
+GO
+
+EXEC sys.sp_addextendedproperty @name=N'MS_Description', @value=N'关联数据表主键' , @level0type=N'SCHEMA',@level0name=N'dbo', @level1type=N'TABLE',@level1name=N'ST_TASKLIST_D', @level2type=N'COLUMN',@level2name=N'PK'
+GO
+
+EXEC sys.sp_addextendedproperty @name=N'MS_Description', @value=N'测站代码' , @level0type=N'SCHEMA',@level0name=N'dbo', @level1type=N'TABLE',@level1name=N'ST_TASKLIST_D', @level2type=N'COLUMN',@level2name=N'STCD'
+GO
+
+EXEC sys.sp_addextendedproperty @name=N'MS_Description', @value=N'测站名称' , @level0type=N'SCHEMA',@level0name=N'dbo', @level1type=N'TABLE',@level1name=N'ST_TASKLIST_D', @level2type=N'COLUMN',@level2name=N'STNM'
+GO
+
+EXEC sys.sp_addextendedproperty @name=N'MS_Description', @value=N'测站类型' , @level0type=N'SCHEMA',@level0name=N'dbo', @level1type=N'TABLE',@level1name=N'ST_TASKLIST_D', @level2type=N'COLUMN',@level2name=N'STTP'
+GO
+
+EXEC sys.sp_addextendedproperty @name=N'MS_Description', @value=N'数据报送类型' , @level0type=N'SCHEMA',@level0name=N'dbo', @level1type=N'TABLE',@level1name=N'ST_TASKLIST_D', @level2type=N'COLUMN',@level2name=N'TKTP'
+GO
+
+EXEC sys.sp_addextendedproperty @name=N'MS_Description', @value=N'报送时间' , @level0type=N'SCHEMA',@level0name=N'dbo', @level1type=N'TABLE',@level1name=N'ST_TASKLIST_D', @level2type=N'COLUMN',@level2name=N'TM'
+GO
+
+exec sp_configure 'show advanced options',1
+reconfigure
+exec sp_configure 'Ad Hoc Distributed Queries',1
+reconfigure
