@@ -172,6 +172,7 @@ class SamplingModel extends CommonModel{
 				break;
 			case 'DD':
 				$this->tableName = 'ST_GATE_R';
+				$param['data']['EXKEY'] = 'A';
 				$validate = array_merge($validate, array(
 					array('GTOPHGT', 'require', '闸门开启高度必须填写！'),
 				));
@@ -180,6 +181,7 @@ class SamplingModel extends CommonModel{
 				break;
 			case 'SS':
 				$this->tableName = 'ST_SOIL_R';
+				$param['data']['EXKEY'] = 'A';
 				$validate = array_merge($validate, array(
 					array('SLM20', 'require', '20cm深度含水量必须填写！'),
 					array('SLM40', 'require', '40cm深度含水量必须填写！'),

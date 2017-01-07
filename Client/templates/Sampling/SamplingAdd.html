@@ -76,6 +76,15 @@
 											   placeholder="相应时间的库（坝）上水位，计量单位为m。" ng-required="show.RR">
 									</div>
 								</div>
+								<div class="form-group" ng-show="show.DD">
+									<label class="col-sm-1 control-label">闸门开启高度</label>
+									<div class="col-sm-11"
+										 ng-class="{true: 'has-error', false: 'has-success'}[theForm.GTOPHGT.$invalid]">
+										<input type="number" name="GTOPHGT" ng-model="sampling.GTOPHGT"
+											   class="form-control input-sm"
+											   placeholder="表示闸门的开启高度，计量单位为m。" ng-required="show.DD">
+									</div>
+								</div>
 								<div class="form-group" ng-show="show.SS">
 									<label class="col-sm-1 control-label">20cm深度</label>
 									<div class="col-sm-3"  ng-class="{true: 'has-error', false: 'has-success'}[theForm.SLM20.$invalid]">
