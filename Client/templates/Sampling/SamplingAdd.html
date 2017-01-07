@@ -76,6 +76,23 @@
 											   placeholder="相应时间的库（坝）上水位，计量单位为m。" ng-required="show.RR">
 									</div>
 								</div>
+								<div class="form-group" ng-show="show.SS">
+									<label class="col-sm-1 control-label">20cm深度含水量</label>
+									<div class="col-sm-3"  ng-class="{true: 'has-error', false: 'has-success'}[theForm.SLM20.$invalid]">
+										<input type="number" name="SLM20" ng-model="sampling.SLM20"
+											   class="form-control input-sm" placeholder="20cm深度含水量，计量单位为%。" ng-required="show.SS">
+									</div>
+									<label class="col-sm-1 control-label">40cm深度含水量</label>
+									<div class="col-sm-3"  ng-class="{true: 'has-error', false: 'has-success'}[theForm.SLM40.$invalid]">
+										<input type="number" name="SLM40" ng-model="sampling.SLM40"
+											   class="form-control input-sm" placeholder="40cm深度含水量，计量单位为%。" ng-required="show.SS">
+									</div>
+									<label class="col-sm-1 control-label">60cm深度含水量</label>
+									<div class="col-sm-3"  ng-class="{true: 'has-error', false: 'has-success'}[theForm.SLM60.$invalid]">
+										<input type="number" name="SLM60" ng-model="sampling.SLM60"
+											   class="form-control input-sm" placeholder="60cm深度含水量，计量单位为%。" ng-required="show.SS">
+									</div>
+								</div>
 							</div>
 						</div>
 					</div>

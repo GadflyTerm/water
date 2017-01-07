@@ -102,8 +102,8 @@ BEGIN
 	/* 计算并记录日降水量多年同期均值*/
 	SELECT TOP 1 @start_year = [BGYR] FROM [dbo].[ST_PDDMYAV_S] ORDER BY [MODITIME] DESC;
 	SET @start_year = ISNULL(@start_year, @year);
-	SELECT @num = count(*), @total = SUM([MYDAVP]) FROM [dbo].[ST_PDDMYAV_S] WHERE [MNTH] = @month AND [DAY] = @day;
-	SELECT @count = count(*) FROM [dbo].[ST_PDDMYAV_S] WHERE [MNTH] = @month AND [DAY] = @day AND [EDYR] = @year;
+	SELECT @num = count(*), @total = SUM([MYDAVP]) FROM [dbo].[ST_PDDMYAV_S] WHERE [STCD] = @stcd AND [MNTH] = @month AND [DAY] = @day;
+	SELECT @count = count(*) FROM [dbo].[ST_PDDMYAV_S] WHERE [STCD] = @stcd AND [MNTH] = @month AND [DAY] = @day AND [EDYR] = @year;
 	IF(@count > 0)
 		BEGIN
 			IF(@num > 0)
