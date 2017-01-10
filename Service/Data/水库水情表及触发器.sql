@@ -1,4 +1,4 @@
-USE [master]
+USE [Hydrology_pygq]
 GO
 
 SET ANSI_NULLS ON
@@ -33,8 +33,10 @@ CREATE TABLE [dbo].[ST_RSVR_R](
 	[RWPTN] [char](1) NULL,
 	[INQDR] [numeric](5, 2) NULL,
 	[MSQMT] [char](1) NULL,
-	CONSTRAINT [PK__ST_RSVR___952A629F16644E42] PRIMARY KEY CLUSTERED
+	[TKTP] [char](10) NULL,
+	CONSTRAINT [PK_ST_RSVR_R] PRIMARY KEY CLUSTERED
 		(
+			[id] ASC,
 			[STCD] ASC,
 			[TM] ASC
 		)WITH (PAD_INDEX  = OFF, STATISTICS_NORECOMPUTE  = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS  = ON, ALLOW_PAGE_LOCKS  = ON) ON [PRIMARY]
@@ -44,6 +46,11 @@ GO
 SET ANSI_PADDING OFF
 GO
 
+ALTER TABLE [dbo].[ST_RSVR_R] ADD  CONSTRAINT [DF_ST_RSVR_R_TM]  DEFAULT (getdate()) FOR [TM]
+GO
+
+ALTER TABLE [dbo].[ST_RSVR_R] ADD  CONSTRAINT [DF_ST_RSVR_R_TKTP]  DEFAULT ('auto') FOR [TKTP]
+GO
 
 -- =============================================
 -- 根据统计时段, 计算水库平均水位和平均蓄水量
@@ -166,16 +173,24 @@ CREATE TRIGGER ST_RSVR_R_INSERT_TR
 AFTER INSERT
 AS
 	BEGIN
-		DECLARE @id int, 						-- 当前数据表pk
-			@stcd char(8),						-- 当前测站编码 
-			@now datetime, 						-- 当前时间截
-			@rz numeric(7, 3), 				-- 当前库上水位
-			@last_rz numeric(7, 3), 	-- 上一次记录的库上水位
-			@rw CHAR, 								-- 对比上一次记录的库水水势
-			@w NUMERIC(9, 3);					-- 当前库上水位所对应的蓄水量
+		DECLARE @id INT; 									-- 当前数据表pk
+		DECLARE	@stcd CHAR(8);						-- 当前测站编码 
+		DECLARE	@now DATETIME; 						-- 当前时间截
+		DECLARE	@rz NUMERIC(7, 3); 				-- 当前库上水位
+		DECLARE	@last_rz NUMERIC(7, 3); 	-- 上一次记录的库上水位
+		DECLARE	@rw CHAR(2); 							-- 对比上一次记录的库水水势
+		DECLARE	@w NUMERIC(9, 3);					-- 当前库上水位所对应的蓄水量
+		DECLARE @tktp CHAR(10);
+		DECLARE @tm DATETIME;
+		DECLARE @stnm CHAR(30);
+		DECLARE @sttp CHAR(2);
 
 		/* 触发器根据INSERT数据对比上一条记录生成库水水势；对照库容曲线表查询生成当前水位的蓄水量 */
-		SELECT @id = [id], @stcd = [STCD], @now = [TM], @rz = [RZ] FROM inserted;
+		SELECT @id = [id], @stcd = [STCD], @now = [TM], @rz = [RZ], @tm = [TM], @tktp = [TKTP] FROM inserted;
+		SELECT @stnm = [STNM], @sttp = [STTP] FROM [dbo].[ST_STBPRP_B] WHERE [STCD] = @stcd;
+		INSERT [dbo].[ST_TASKLIST_D] ([RELATED], [PK], [STCD], [STNM], [STTP], [TKTP], [TM])
+		VALUES ('ST_RSVR_R', @id, @stcd, @stnm, @sttp, @tktp, @tm);
+		
 		SELECT TOP 1 @last_rz = [RZ] FROM [dbo].[ST_RSVR_R] WHERE [STCD] = @stcd AND [TM] < @now ORDER BY [TM] DESC;
 		SELECT @w = [W] FROM [dbo].[ST_ZVARL_B] WHERE [STCD] = @stcd AND [RZ] = @rz;
 		IF(@last_rz > @rz)

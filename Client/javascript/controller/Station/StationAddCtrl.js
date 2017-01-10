@@ -113,6 +113,7 @@ define(function (require){
 						heading: '堰闸水文',
 						STBPRP_title: $scope.station.STBPRP.STTP.lable + '基础信息'
 					}
+					$
 					break;
 				case 'PP':
 					$scope.tab = {

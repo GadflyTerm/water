@@ -1,6 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="SqlDialectMappings">
+    <file url="file://$PROJECT_DIR$/Service/Data/common" dialect="TSQL" />
+    <file url="file://$PROJECT_DIR$/Service/Data/土壤墒情数据表及触发器.sql" dialect="TSQL" />
     <file url="file://$PROJECT_DIR$/Service/Data/水库水情表及触发器.sql" dialect="TSQL" />
+    <file url="file://$PROJECT_DIR$/Service/Data/水质录入信息数据表.sql" dialect="TSQL" />
+    <file url="file://$PROJECT_DIR$/Service/Data/河道水情表及触发器.sql" dialect="TSQL" />
+    <file url="file://$PROJECT_DIR$/Service/Data/闸门启闭情况表及触发器.sql" dialect="TSQL" />
+    <file url="file://$PROJECT_DIR$/Service/Data/降雨量表及触发器.sql" dialect="TSQL" />
   </component>
 </project>

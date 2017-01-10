@@ -1,4 +1,4 @@
-USE [master]
+USE [Hydrology_pygq]
 GO
 
 /****** Object:  Table [dbo].[ST_RIVER_R]    Script Date: 12/22/2016 09:45:50 ******/
@@ -9,6 +9,10 @@ SET QUOTED_IDENTIFIER ON
 GO
 
 SET ANSI_PADDING ON
+GO
+
+IF EXISTS(SELECT TABLE_NAME FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_NAME = 'ST_RIVER_R')
+	DROP TABLE [dbo].[ST_RIVER_R]
 GO
 
 CREATE TABLE [dbo].[ST_RIVER_R](
@@ -25,8 +29,10 @@ CREATE TABLE [dbo].[ST_RIVER_R](
 	[MSQMT] [char](1) NULL,
 	[MSAMT] [char](1) NULL,
 	[MSVMT] [char](1) NULL,
-	CONSTRAINT [PK__ST_RIVER__952A629F1293BD5E] PRIMARY KEY CLUSTERED
+	[TKTP] [char](10) NULL,
+	CONSTRAINT [PK_ST_RIVER_R] PRIMARY KEY CLUSTERED
 		(
+			[id] ASC,
 			[STCD] ASC,
 			[TM] ASC
 		)WITH (PAD_INDEX  = OFF, STATISTICS_NORECOMPUTE  = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS  = ON, ALLOW_PAGE_LOCKS  = ON) ON [PRIMARY]
@@ -36,6 +42,11 @@ GO
 SET ANSI_PADDING OFF
 GO
 
+ALTER TABLE [dbo].[ST_RIVER_R] ADD  CONSTRAINT [DF_ST_RIVER_R_TM]  DEFAULT (getdate()) FOR [TM]
+GO
+
+ALTER TABLE [dbo].[ST_RIVER_R] ADD  CONSTRAINT [DF_ST_RIVER_R_TKTP]  DEFAULT ('auto') FOR [TKTP]
+GO
 
 -- =============================================
 -- 根据统计时段, 计算河道水情多日均值
@@ -46,6 +57,7 @@ GO
 IF EXISTS(SELECT * FROM SYSOBJECTS WHERE [NAME] = 'proc_set_rvav' AND [XTYPE] = 'P')
 	DROP PROCEDURE [dbo].[proc_set_rvav]
 GO
+
 CREATE PROCEDURE [dbo].[proc_set_rvav]
 		@stcd char(8),
 		@tm DATETIME = NULL
@@ -89,15 +101,16 @@ AS
 	END
 
 	
-	-- =============================================
-	-- 根据统计时段, 计算河道水情极值
-	-- Author:		<Author,,Name>
-	-- Create date: <Create Date,,>
-	-- Description:	河道水情极值表用于存储测站时段水文要素的最大（高）、最小（低）值及其发生的时间。
-	-- =============================================
-	IF EXISTS(SELECT * FROM SYSOBJECTS WHERE [NAME] = 'proc_set_rvevs' AND [XTYPE] = 'P')
-		DROP PROCEDURE [dbo].[proc_set_rvevs]
+-- =============================================
+-- 根据统计时段, 计算河道水情极值
+-- Author:		<Author,,Name>
+-- Create date: <Create Date,,>
+-- Description:	河道水情极值表用于存储测站时段水文要素的最大（高）、最小（低）值及其发生的时间。
+-- =============================================
+IF EXISTS(SELECT * FROM SYSOBJECTS WHERE [NAME] = 'proc_set_rvevs' AND [XTYPE] = 'P')
+	DROP PROCEDURE [dbo].[proc_set_rvevs]
 GO
+
 CREATE PROCEDURE [dbo].[proc_set_rvevs]
 		@stcd char(8),
 		@tm DATETIME = NULL
@@ -154,6 +167,7 @@ AS
 IF EXISTS(SELECT * FROM SYSOBJECTS WHERE [NAME] = 'ST_RIVER_R_INSERT_TR' AND [XTYPE] = 'TR')
 	DROP TRIGGER ST_RIVER_R_INSERT_TR
 GO
+
 CREATE TRIGGER ST_RIVER_R_INSERT_TR
 	ON  ST_RIVER_R
 AFTER INSERT
@@ -166,9 +180,15 @@ AS
 		DECLARE @q NUMERIC(9, 3);				-- 当前流量
 		DECLARE @wptn CHAR(1);					-- 当前流量
 		DECLARE @last_z NUMERIC(7, 3);	-- 上一条记录的水位
+		DECLARE @stnm CHAR(30);
+		DECLARE @sttp CHAR(2);
+		DECLARE @tktp CHAR(10);
 		/* 触发器根据INSERT数据对比上一条记录生成河道水水势 */
-		SELECT @id = [id], @stcd = [STCD], @tm = [TM], @z = [Z], @q = [Q] FROM inserted;
-		SELECT TOP 1 @last_z = [RZ] FROM [dbo].[ST_RIVER_R] WHERE [STCD] = @stcd AND [TM] < @tm ORDER BY [TM] DESC;
+		SELECT @id = [id], @stcd = [STCD], @tm = [TM], @z = [Z], @q = [Q], @tktp = [TKTP] FROM inserted;
+		SELECT @stnm = [STNM], @sttp = [STTP] FROM [dbo].[ST_STBPRP_B] WHERE [STCD] = @stcd;
+		INSERT [dbo].[ST_TASKLIST_D] ([RELATED], [PK], [STCD], [STNM], [STTP], [TKTP], [TM])
+		VALUES ('ST_RIVER_R', @id, @stcd, @stnm, @sttp, @tktp, @tm);
+		SELECT TOP 1 @last_z = [Z] FROM [dbo].[ST_RIVER_R] WHERE [STCD] = @stcd AND [TM] < @tm ORDER BY [TM] DESC;
 		IF(@last_z > @z)
 			BEGIN
 				SET @wptn = 4;
@@ -201,7 +221,7 @@ AS
 		DECLARE @tm DATETIME; 						-- 当前时间截
 		DECLARE @z NUMERIC(7, 3); 				-- 当前库上水位
 		DECLARE @last_z NUMERIC(7, 3); 		-- 上一次记录的库上水位
-		DECLARE @wptn CHAR; 							-- 对比上一次记录的库水水势
+		DECLARE @wptn CHAR(2); 							-- 对比上一次记录的库水水势
 
 		/* 触发器根据INSERT数据对比上一条记录生成河道水势 */
 		SELECT @stcd = [STCD], @tm = [TM], @z = [Z] FROM deleted;
