@@ -91,7 +91,7 @@ AS
 		@sql NVARCHAR(1000),			-- 动态生成SQL字符串
 		@tomorrow datetime; 			-- 明天的时间截
 		SET @param = CONVERT(varchar(100), ISNULL(@getdate, GETDATE()), 20);
-		SET @sql = 'insert INTO #Tb_datetime SELECT * FROM openrowset(''sqloledb'',''Trusted_Connection=yes'',''exec [dbo].[proc_get_datetime] @getdate="' + @param + '"'')';
+		SET @sql = 'insert INTO #Tb_datetime SELECT * FROM openrowset(''sqloledb'',''Trusted_Connection=yes'',''exec [Hydrology_pygq].[dbo].[proc_get_datetime] @getdate="' + @param + '"'')';
 		IF OBJECT_ID('[dbo].[#Tb_datetime]') IS NOT NULL
 			DROP TABLE [dbo].[#Tb_datetime]
 		CREATE TABLE [dbo].[#Tb_datetime](
