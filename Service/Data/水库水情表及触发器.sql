@@ -132,7 +132,7 @@ AS
 		DECLARE @sql NVARCHAR(1000);			-- 动态生成SQL字符串
 		DECLARE @count INT; 							-- 表单数据数
 		SET @param = CONVERT(varchar(100), ISNULL(@now, GETDATE()), 20);
-		SET @sql = 'insert INTO #Tb_frame SELECT * FROM openrowset(''sqloledb'',''Trusted_Connection=yes'',''exec [dbo].[proc_get_time_frame] @getdate="' + @param + '"'')';
+		SET @sql = 'insert INTO #Tb_frame SELECT * FROM openrowset(''sqloledb'',''Trusted_Connection=yes'',''exec [Hydrology_pygq].[dbo].[proc_get_time_frame] @getdate="' + @param + '"'')';
 		IF OBJECT_ID('[dbo].[#Tb_frame]') IS NOT NULL
 			DROP TABLE [dbo].[#Tb_frame]
 		CREATE TABLE [dbo].[#Tb_frame](
