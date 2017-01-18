@@ -47,19 +47,19 @@ define(function (require){
 		
 		$scope.Reservoirlists = [{
 			id:1,
-			Rname:'江川水库',
+			Rname:'TEST水库',
 			Dtime:'2016-12-08',
 			wline:'19',
 			Rfall:'25',
 		},{
 			id:2,
-			Rname:'丙间水库',
+			Rname:'TEST水库2',
 			Dtime:'2016-12-02',
 			wline:'18',
 			Rfall:'19',
 		},{
 			id:3,
-			Rname:'红河水库',
+			Rname:'TEST水库3',
 			Dtime:'2016-12-07',
 			wline:'17',
 			Rfall:'26',

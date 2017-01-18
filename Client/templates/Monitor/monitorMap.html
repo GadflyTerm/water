@@ -57,21 +57,12 @@
 			<div class="row">
 				<div class="col-md-6">
 					<table class="table table-bordered table-hover table-condensed">
-						<tr class="D-center">
-							<th>丙间水库</th>
-							<th>丙间水库</th>
-						</tr>
-						<tr>
-							<td>降水时间</td>
-							<td>10-23 8：00：00</td>
-						</tr>
-						<tr>
-							<td>时段降水量（mm）</td>
-							<td>15</td>
-						</tr>
-						<tr>
-							<td>当前累积降水量（mm）</td>
-							<td>30</td>
+						<tr class="D-center" ng-repeat="vo in Reservoirlists[currentPage-1]">
+							<tr class="D-center">
+							<th>{{vo.Rname}}</th>
+							<th>{{vo.Dtime}}</th>
+							<th>{{vo.wline}}</th>
+							<th>{{vo.Rfall}}</th>
 						</tr>
 						<tr ng-if="lists.length == 0">
 							<td colspan="4" class="text-center">没有数据</td>

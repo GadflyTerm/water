@@ -154,14 +154,16 @@ class SamplingModel extends CommonModel{
 					'DRP'	=> $param['data']['DRP'],
 					'TKTP'	=> $param['data']['TKTP'],
 				);
-				$return = $this->curd(array(
-					'model'		=> 'StPptnR',
-					'validate'	=> array_merge($validate, array(array('DRP', 'require', '时段降水量必须填写！'))),
-					'type'		=> 'add',
-					'data'		=> $data,
-					'msg'		=> '时段降水量数据添加成功！'
-				));
-				if($return['type'] = 'Success'){
+				// $return = $this->curd(array(
+				// 	'model'		=> '',
+				// 	'validate'	=> array_merge($validate, array(array('DRP', 'require', '时段降水量必须填写！'))),
+				// 	'type'		=> 'add',
+				// 	'data'		=> $data,
+				// 	'msg'		=> '时段降水量数据添加成功！'
+				// ));
+				$res = M('st_pptn_r')->add($data);
+
+				if($res){
 					$this->tableName = 'ST_RSVR_R';
 					unset($param['data']['DRP']);
 					$validate = array_merge($validate, array(
@@ -207,6 +209,7 @@ class SamplingModel extends CommonModel{
 		$this->tableName = 'ST_TASKLIST_D';
 		return $this->curd(array(
 			'type'	=> 'select',
+			'order' => 'id DESC',
 			'msg'	=> '水质采样数据读取成功！'
 		));
 	}
