@@ -54,11 +54,11 @@
 									<th>水位</th>
 									<th>库容</th>
 								</tr>
-								<tr ng-repeat="vo in Reservoirlists">
-									<td>{{vo.Rname}}</td>
-									<td>{{vo.Dtime}}</td>
-									<td>{{vo.wline}}</td>
-									<td>{{vo.Rfall}}</td>
+								<tr ng-repeat="vo in allItem[currentPage-1]">
+									<td>{{vo.STNM}}</td>
+									<td>{{vo.IDTM}}</td>
+									<td>{{vo.AVRZ}}</td>
+									<td>{{vo.AVW}}</td>
 								</tr>
 								<tr ng-if="lists.length == 0">
 									<td colspan="4" class="text-center">没有数据</td>

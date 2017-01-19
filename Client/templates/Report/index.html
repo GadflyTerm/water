@@ -2,152 +2,275 @@
 	<div class="panel panel-warning">
 		<div class="panel-heading">
 			<div class="row">
-				<h4 class="col-md-10"><i class="fa fa-list-alt"></i> 灌区管理报表</h4>
+				<h4 class="col-md-10">
+					<i class="fa fa-list-alt">
+					</i>
+					灌区管理报表
+				</h4>
 				<div class="col-md-2 col-sm-2 col-xs-2 text-right">
-					<a href="" class="btn">导出数据 <i class="fa fa-mail-forward"></i></a>
+					<a href="" class="btn">
+						导出数据
+						<i class="fa fa-mail-forward">
+						</i>
+					</a>
 				</div>
 			</div>
 		</div>
 		<div class="panel-body">
-			<!--=== 选择 ===-->
+			<!-- === 选择 === -->
 			<div class="actions">
 				<div class="row mtb15">
 					<div class="col-md-8">
 						<div class="btn-group">
-							<label class="btn btn-primary btn-sm" ng-model="radioReport" ng-change="changeReport()" 
-								   uib-btn-radio="'day'">日报表</label>
 							<label class="btn btn-primary btn-sm" ng-model="radioReport" ng-change="changeReport()"
-								   uib-btn-radio="'month'">月报表</label>
+								uib-btn-radio="'day'">
+								日报表
+							</label>
 							<label class="btn btn-primary btn-sm" ng-model="radioReport" ng-change="changeReport()"
-								   uib-btn-radio="'year'">年报表</label>
+								uib-btn-radio="'month'">
+								月报表
+							</label>
+							<label class="btn btn-primary btn-sm" ng-model="radioReport" ng-change="changeReport()"
+								uib-btn-radio="'year'">
+								年报表
+							</label>
 						</div>
 					</div>
 					<div class="col-md-4 text-right">
 						<div class="select" ng-show="showTab.day">
 							<form action="" class="form-horizontal">
 								<div class="form-group">
-									<lable for="select" class="col-md-4 col-sm-4 col-xs-4 control-label">选择日期</lable>
+									<lable for="select" class="col-md-4 col-sm-4 col-xs-4 control-label">
+										选择日期
+									</lable>
 									<div class="col-md-8 col-sm-8 col-xs-8 input-group">
 										<input type="text" class="form-control input-sm" uib-datepicker-popup="{{format}}" ng-model="dt"
-											   is-open="popupDay.opened" datepicker-options="dateOptions" current-text="今天" close-text="关闭" clear-text="清除"
-											   ng-required="true" alt-input-formats="altInputFormats" />
-										<span class="input-group-btn">
-											<button type="button" class="btn btn-default btn-sm" ng-click="openDay()"><i
-													class="glyphicon glyphicon-calendar"></i></button>
-										</span>
+											is-open="popupDay.opened" datepicker-options="dateOptions" current-text="今天" close-text="关闭" clear-text="清除"
+											ng-required="true" alt-input-formats="altInputFormats" />
+											<span class="input-group-btn">
+												<button type="button" class="btn btn-default btn-sm" ng-click="openDay()">
+													<i
+														class="glyphicon glyphicon-calendar">
+													</i>
+												</button>
+											</span>
+										</div>
 									</div>
-								</div>
-							</form>
-						</div>
-						<div class="select" ng-show="showTab.month">
-							<form action="#" class="form-horizontal">
-								<div class="form-group">
-									<lable class="col-md-5 col-sm-4 col-xs-5 control-label">选择月份</lable>
-									<div class="col-md-7 col-sm-8 col-xs-7 input-group input-medium date date-picker">
+								</form>
+							</div>
+							<div class="select" ng-show="showTab.month">
+								<form action="#" class="form-horizontal">
+									<div class="form-group">
+										<lable class="col-md-5 col-sm-4 col-xs-5 control-label">
+											选择月份
+										</lable>
+										<div class="col-md-7 col-sm-8 col-xs-7 input-group input-medium date date-picker">
+											<div class="col-md-8 col-sm-8 col-xs-8">
+												<select class="form-control input-sm">
+													<option>
+														1月
+													</option>
+													<option>
+														2月
+													</option>
+													<option>
+														3月
+													</option>
+													<option>
+														4月
+													</option>
+													<option>
+														5月
+													</option>
+													<option>
+														6月
+													</option>
+													<option>
+														7月
+													</option>
+													<option>
+														8月
+													</option>
+													<option>
+														9月
+													</option>
+													<option>
+														10月
+													</option>
+													<option>
+														11月
+													</option>
+													<option>
+														12月
+													</option>
+												</select>
+											</div>
+										</div>
+									</div>
+								</form>
+							</div>
+							<div class="select" ng-show="showTab.year">
+								<form action="" class="form-horizontal">
+									<div class="form-group">
+										<lable for="select" class="col-md-4 col-sm-4 col-xs-4 control-label">
+											选择年份
+										</lable>
 										<div class="col-md-8 col-sm-8 col-xs-8">
-											<select class="form-control input-sm">
-												<option>1月</option>
-												<option>2月</option>
-												<option>3月</option>
-												<option>4月</option>
-												<option>5月</option>
-												<option>6月</option>
-												<option>7月</option>
-												<option>8月</option>
-												<option>9月</option>
-												<option>10月</option>
-												<option>11月</option>
-												<option>12月</option>
+											<select class="form-control input-sm" id="select">
+												<option>
+													2016
+												</option>
+												<option>
+													2015
+												</option>
+												<option>
+													2014
+												</option>
+												<option>
+													2013
+												</option>
+												<option>
+													2012
+												</option>
+												<option>
+													2011
+												</option>
+												<option>
+													2010
+												</option>
+												<option>
+													2009
+												</option>
+												<option>
+													2008
+												</option>
+												<option>
+													2007
+												</option>
+												<option>
+													2006
+												</option>
+												<option>
+													2005
+												</option>
 											</select>
 										</div>
-
 									</div>
-								</div>
-							</form>
-						</div>
-						<div class="select" ng-show="showTab.year">
-							<form action="" class="form-horizontal">
-								<div class="form-group">
-									<lable for="select" class="col-md-4 col-sm-4 col-xs-4 control-label">选择年份</lable>
-									<div class="col-md-8 col-sm-8 col-xs-8">
-										<select class="form-control input-sm" id="select">
-											<option>2016</option>
-											<option>2015</option>
-											<option>2014</option>
-											<option>2013</option>
-											<option>2012</option>
-											<option>2011</option>
-											<option>2010</option>
-											<option>2009</option>
-											<option>2008</option>
-											<option>2007</option>
-											<option>2006</option>
-											<option>2005</option>
-										</select>
-									</div>
-								</div>
-							</form>
+								</form>
+							</div>
 						</div>
 					</div>
 				</div>
+				<!-- === \ 选择 === -->
+				<!-- === 表格 === -->
+				<div class="well">
+					<div class="table-scrollable table-scrollable-borderless">
+						<table class="table table-bordered table-hover table-condensed">
+							<tr>
+								<th class="text-center">
+									水库名称
+								</th>
+								<th class="text-center">
+									降雨量
+								</th>
+								<th class="text-center">
+									蒸发量
+								</th>
+								<th class="text-center">
+									库水位
+								</th>
+								<th class="text-center">
+									蓄水量
+								</th>
+								<th class="text-center">
+									总库容
+								</th>
+								<th class="text-center">
+									死库容
+								</th>
+								<th class="text-center">
+									可供水量
+								</th>
+								<th class="text-center">
+									进水量
+								</th>
+								<th class="text-center">
+									供水量
+								</th>
+								<th class="text-center">
+									排洪量
+								</th>
+							</tr>
+							<tr ng-repeat="vo in allItem[currentPage-1]">
+								<td>
+									<a ui-sref="ReportReservoir({id:vo.SID})">
+										{{vo.STNM}}
+									</a>
+								</td>
+								<td>
+									{{vo.AVPP}}
+								</td>
+								<td>
+									N/A
+								</td>
+								<td>
+									{{vo.AVRZ}}
+								</td>
+								<td>
+									{{vo.AVW}}
+								</td>
+								<td>
+									{{vo.TTCP}}
+								</td>
+								<td>
+									{{vo.DDCP}}
+								</td>
+								<td>
+									{{vo.AVW-vo.DDCP}}
+								</td>
+								<td>
+									{{vo.AVINQ}}
+								</td>
+								<td>
+									{{vo.AVOTQ}}
+								</td>
+								<td>
+									N/A
+								</td>
+							</tr>
+							<tr ng-if="lists.length == 0">
+								<td colspan="7" class="text-center">
+									没有数据
+								</td>
+							</tr>
+						</table>
+					</div>
+				</div>
+				<!-- === \ 表格 === -->
 			</div>
-			<!--=== \ 选择 ===-->
-			<!--=== 表格 ===-->
-			<div class="well">
-				<div class="table-scrollable table-scrollable-borderless">
-					<table class="table table-bordered table-hover table-condensed">
-						<tr>
-							<th class="text-center" style="width: 45px;">序号</th>
-							<th class="text-center">水库名称</th>
-							<th class="text-center">降雨量</th>
-							<th class="text-center">蒸发量</th>
-							<th class="text-center">库水位</th>
-							<th class="text-center">蓄水量</th>
-							<th class="text-center">总库容</th>
-							<th class="text-center">死库容</th>
-							<th class="text-center">可供水量</th>
-							<th class="text-center">进水量</th>
-							<th class="text-center">供水量</th>
-							<th class="text-center">排洪量</th>
-						</tr>
-						<tr ng-repeat="vo in lists">
-							<td class="text-center">{{vo.id}}</td>
-							<!--<td><a href="#">{{vo.rsvname}}</a></td>-->
-							<td><a ui-sref="ReportReservoir({id:vo.id})">{{vo.rsvname}}</a></td>
-							<td>{{vo.Rfall}}</td>
-							<td>{{vo.Ept}}</td>
-							<td>{{vo.WLevel}}</td>
-							<td>{{vo.Rsv}}</td>
-							<td>{{vo.TCPcity}}</td>
-							<td>{{vo.DCPcity}}</td>
-							<td>{{vo.AWSupply}}</td>
-							<td>{{vo.WIntake}}</td>
-							<td>{{vo.WSupply}}</td>
-							<td>{{vo.WOutake}}</td>
-						</tr>
-						<tr ng-if="lists.length == 0">
-							<td colspan="7" class="text-center">没有数据</td>
-						</tr>
-					</table>
+			<div class="panel-footer">
+				<div class="row">
+					<div class="col-md-10">
+						<ul uib-pagination class="pagination-sm embed-responsive-item" style="float:right;margin: 0 15px 0 0;"
+							total-items="totalItems"
+							max-size="maxSize"
+							items-per-page="itemsPerPage"
+							num-pages="numPages"
+							force-ellipses="true"
+							ng-model="currentPage"
+							previous-text="上一页"
+							next-text="下一页"
+							first-text="首页"
+							last-text="尾页"
+							boundary-links="true"
+							boundary-link-numbers="true"
+							rotate="false">
+						</ul>
+					</div>
+					<div class="col-md-2">
+						<input type="text" class="form-control input-sm" value="Page: {{currentPage}} / {{numPages}}" readonly/>
+					</div>
 				</div>
 			</div>
-			
-			<!--=== \ 表格 ===-->
-		</div>
-		<div class="panel-footer">
-			<nav class="row">
-				<ul class="pagination pagination-sm pull-right" style="margin: 0; padding-right: 10px;">
-					<li><a href="#">第一页</a></li>
-					<li><a href="#">上一页</a></li>
-					<li><a href="#">1</a></li>
-					<li><a href="#">2</a></li>
-					<li><a href="#">3</a></li>
-					<li><a href="#">4</a></li>
-					<li><a href="#">5</a></li>
-					<li><a href="#">下一页</a></li>
-					<li><a href="#">最后一页</a></li>
-				</ul>
-			</nav>
 		</div>
 	</div>
-</div>

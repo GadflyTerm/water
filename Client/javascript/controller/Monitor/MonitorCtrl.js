@@ -44,8 +44,17 @@ define(function (require){
 				controllerAs: '$scope',
 			});
 		}
-		
-		$scope.Reservoirlists = [{
+    $scope.currentPage =1;		// 初始当前页
+	$scope.allitem=[];			// 存放所有页
+    $scope.promise = xhr.getList({model: 'Monitor', module: 'get_sk_list',data:{STTDRCD:'1'}}, {}, function(resp){
+			$scope.totalItems = resp.pagination.totalItems;
+			$scope.allItem = resp.pagination.allItem;
+			$scope.currentPage = resp.pagination.currentPage;
+			$scope.itemsPerPage = resp.pagination.itemsPerPage;
+			$scope.numPages = resp.pagination.numPages;
+			$scope.maxSize = resp.pagination.maxSize;
+	  });
+	$scope.Reservoirlists = [{
 			id:1,
 			Rname:'TEST水库',
 			Dtime:'2016-12-08',

@@ -101,57 +101,67 @@
 			</div>
 			<!--=== \ 选择 ===-->
 			<!--=== 表格 ===-->
-			<h4 class="text-center">{{vo.rsvname}}管理月报表 </h4>
 			<div class="well">
-				<table class="table table-bordered table-hover table-condensed">
-					<tr>
-						<th class="text-center">时间</th>
-						<th class="text-center">降雨量</th>
-						<th class="text-center">蒸发量</th>
-						<th class="text-center">库水位</th>
-						<th class="text-center">蓄水量</th>
-						<th class="text-center">总库容</th>
-						<th class="text-center">死库容</th>
-						<th class="text-center">可供水量</th>
-						<th class="text-center">进水量</th>
-						<th class="text-center">供水量</th>
-						<th class="text-center">排洪量</th>
-					</tr>
-					<tr ng-repeat="vo in lists">
-						<td><a href="#">{{vo.date}}</a></td>
-						<td>{{vo.Rfall}}</td>
-						<td>{{vo.Ept}}</td>
-						<td>{{vo.WLevel}}</td>
-						<td>{{vo.Rsv}}</td>
-						<td>{{vo.TCPcity}}</td>
-						<td>{{vo.DCPcity}}</td>
-						<td>{{vo.AWSupply}}</td>
-						<td>{{vo.WIntake}}</td>
-						<td>{{vo.WSupply}}</td>
-						<td>{{vo.WOutake}}</td>
-					</tr>
-					<tr ng-if="lists.length == 0">
-						<td colspan="7" class="text-center">没有数据</td>
-					</tr>
-				</table>
-
+				<div class="table-scrollable table-scrollable-borderless">
+					<table class="table table-bordered table-hover table-condensed">
+						<tr>
+							<th class="text-center">水库名称</th>
+							<th class="text-center">降雨量</th>
+							<th class="text-center">蒸发量</th>
+							<th class="text-center">库水位</th>
+							<th class="text-center">蓄水量</th>
+							<th class="text-center">总库容</th>
+							<th class="text-center">死库容</th>
+							<th class="text-center">可供水量</th>
+							<th class="text-center">进水量</th>
+							<th class="text-center">供水量</th>
+							<th class="text-center">排洪量</th>
+						</tr>
+						<tr ng-repeat="vo in allItem[currentPage-1]">
+							<td><a ui-sref="ReportReservoir({id:vo.id})">{{vo.STNM}}</a></td>
+							<td>{{vo.AVPP}}</td>
+							<td>N/A</td>
+							<td>{{vo.AVRZ}}</td>
+							<td>{{vo.AVW}}</td>
+							<td>{{vo.TTCP}}</td>
+							<td>{{vo.DDCP}}</td>
+							<td>{{vo.AVW-vo.DDCP}}</td>
+							<td>{{vo.AVINQ}}</td>
+							<td>{{vo.AVOTQ}}</td>
+							<td>N/A</td>
+						</tr>
+						<tr ng-if="lists.length == 0">
+							<td colspan="7" class="text-center">没有数据</td>
+						</tr>
+					</table>
+				</div>
 			</div>
+			
 			<!--=== \ 表格 ===-->
 		</div>
-		<div class="panel-footer">
-			<nav class="row">
-				<ul class="pagination pagination-sm pull-right" style="margin: 0; padding-right: 10px;">
-					<li><a href="#">第一页</a></li>
-					<li><a href="#">上一页</a></li>
-					<li><a href="#">1</a></li>
-					<li><a href="#">2</a></li>
-					<li><a href="#">3</a></li>
-					<li><a href="#">4</a></li>
-					<li><a href="#">5</a></li>
-					<li><a href="#">下一页</a></li>
-					<li><a href="#">最后一页</a></li>
-				</ul>
-			</nav>
+				<div class="panel-footer">
+			<div class="row">
+				<div class="col-md-10">
+					<ul uib-pagination class="pagination-sm embed-responsive-item" style="float:right;margin: 0 15px 0 0;"
+						total-items="totalItems"
+						max-size="maxSize"
+						items-per-page="itemsPerPage"
+						num-pages="numPages"
+						force-ellipses="true"
+						ng-model="currentPage"
+						previous-text="上一页"
+						next-text="下一页"
+						first-text="首页"
+						last-text="尾页"
+						boundary-links="true"
+						boundary-link-numbers="true"
+						rotate="false">
+					</ul>
+				</div>
+				<div class="col-md-2">
+					<input type="text" class="form-control input-sm" value="Page: {{currentPage}} / {{numPages}}" readonly>
+				</div>
+			</div>
 		</div>
 	</div>
 </div>
