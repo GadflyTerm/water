@@ -1,0 +1,81 @@
+.layer-box {
+	width: 600px;
+	margin: auto;
+}
+
+.layer-top {
+	width: 100%;
+	display: -webkit-box;
+	display: -webkit-flex;
+	display: flex;
+}
+
+.water-data {
+	display: -webkit-box;
+	display: -webkit-flex;
+	display: flex;
+	-webkit-box: 1;
+	-webkit-box-flex: 1;
+	flex: 1;
+	font-family: 'Arial Normal', 'Arial';
+	font-weight: 400;
+	font-style: normal;
+	font-size: 13px;
+	color: #333333;
+	text-align: center;
+	line-height: normal;
+	border: solid 1px #797979;
+}
+
+.data-name {
+	-webkit-box: 1;
+	-webkit-box-flex: 1;
+	flex: 1;
+	text-align: center;
+	border-right: solid 1px #797979;
+}
+
+.data-name div,
+.data-detail div {
+	padding: 10px 0;
+	height: 30px;
+	line-height: 30px;
+}
+
+.data-name div:nth-child(1),
+.data-detail div:nth-child(1) {
+	border-bottom: solid 1px #797979;
+}
+
+.data-name div:nth-child(2),
+.data-detail div:nth-child(2) {
+	border-bottom: solid 1px #797979;
+}
+
+.data-name div:nth-child(3),
+.data-detail div:nth-child(3) {
+	border-bottom: solid 1px #797979;
+}
+
+.data-detail {
+	-webkit-box: 1;
+	-webkit-box-flex: 1;
+	flex: 1;
+	text-align: center;
+}
+
+.water-charts {
+	-webkit-box: 1;
+	-webkit-box-flex: 1;
+	flex: 1;
+	margin-left: 10px;
+	border: solid 1px #777777;
+	width: 300px;
+	height: 300px;
+}
+
+.layer-bottom {
+	width: 100%;
+	height: 300px;
+	border: solid 1px #777777;
+}
