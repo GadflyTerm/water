@@ -53,12 +53,12 @@
 								<th>瞬时流量m3/s</th>
 								<th>累积流量m3/s</th>
 							</tr>
-							<tr>
-								<td>站点名称</td>
-								<td>10-23 8：00：00</td>
-								<td>10</td>
-								<td>1</td>
-								<td>1</td>
+							<tr ng-repeat="vo in YZallItem[YZcurrentPage-1]">
+									<td>{{vo.STNM}}</td>
+									<td>{{vo.TM|dateFormat}}</td>
+									<td>{{vo.GTOPHGT}}</td>
+									<td>{{vo.GTQ}}</td>
+									<td>{{vo.TGTQ}}</td>
 							</tr>
 							<tr ng-if="lists.length == 0">
 								<td colspan="4" class="text-center">没有数据</td>
@@ -69,25 +69,18 @@
 					<div class="tab-pane" id="tab_2">
 						<table class="table table-bordered table-hover table-condensed">
 							<tr>
-								<th>名称</th>
+								<th>测站名称</th>
 								<th>时间</th>
-								<th>20cm含水量</th>
-								<th>40cm含水量</th>
-								<th>60cm含水量</th>
+								<th>20cm</th>
+								<th>40cm</th>
+								<th>60cm</th>
 							</tr>
-							<tr>
-								<td>墒情站名称</td>
-								<td>110-23 8：00 00</td>
-								<td>2.3</td>
-								<td>2.0</td>
-								<td>1.8</td>
-							</tr>
-							<tr>
-								<td>墒情站名称</td>
-								<td>110-23 8：00 00</td>
-								<td>3.3</td>
-								<td>2.5</td>
-								<td>1.5</td>
+							<tr ng-repeat="vo in SQallItem[SQcurrentPage-1]">
+									<td>{{vo.STNM}}</td>
+									<td>{{vo.TM|dateFormat}}</td>
+									<td>{{vo.SLM20}}</td>
+									<td>{{vo.SLM40}}</td>
+									<td>{{vo.SLM60}}</td>
 							</tr>
 							<tr ng-if="lists.length == 0">
 								<td colspan="4" class="text-center">没有数据</td>
@@ -103,17 +96,11 @@
 								<th>水位（m）</th>
 								<th>库容(万m3)</th>
 							</tr>
-							<tr>
-								<td>站点名称</td>
-								<td>12-23 8：00：00</td>
-								<td>2.3</td>
-								<td>2.1</td>
-							</tr>
-							<tr>
-								<td>站点名称</td>
-								<td>12-23 8：00：00</td>
-								<td>3.0</td>
-								<td>1.3</td>
+							<tr ng-repeat="vo in SKallItem[SKcurrentPage-1]">
+								<td>{{vo.STNM}}</td>
+								<td>{{vo.TM|dateFormat}}</td>
+								<td>{{vo.RZ}}</td>
+								<td>{{vo.W}}</td>
 							</tr>
 							<tr ng-if="lists.length == 0">
 								<td colspan="4" class="text-center">没有数据</td>
@@ -129,11 +116,11 @@
 								<th>瞬时流量(m3)</th>
 								<th>瞬时流量(m3)</th>
 							</tr>
-							<tr>
-								<td>闸门名称</td>
-								<td>1</td>
-								<td>3</td>
-								<td>5</td>
+							<tr ng-repeat="vo in YZallItem[YZcurrentPage-1]">
+									<td>{{vo.STNM}}</td>
+									<td>{{vo.GTOPHGT}}</td>
+									<td>{{vo.GTQ}}</td>
+									<td>{{vo.TGTQ}}</td>
 							</tr>
 							<tr ng-if="lists.length == 0">
 								<td colspan="4" class="text-center">没有数据</td>
@@ -149,15 +136,15 @@
 								<th>水位(m)</th>
 								<th>库容(万m3)</th>
 							</tr>
-							<tr >
-								<td>站点名称</td>
-								<td>10-23 8：00：00</td>
-								<td>23</td>
-								<td>150</td>
-							</tr>
-							<tr ng-if="lists.length == 0">
-								<td colspan="4" class="text-center">没有数据</td>
-							</tr>
+							<tr ng-repeat="vo in SKallItem[SKcurrentPage-1]">
+									<td>{{vo.STNM}}</td>
+									<td>{{vo.TM|dateFormat}}</td>
+									<td>{{vo.RZ}}</td>
+									<td>{{vo.W}}</td>
+								</tr>
+								<tr ng-if="lists.length == 0">
+									<td colspan="4" class="text-center">没有数据</td>
+								</tr>
 						</table>
 					</div>
 				</div>

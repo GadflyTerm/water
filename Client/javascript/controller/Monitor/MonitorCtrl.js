@@ -4,6 +4,12 @@
 define(function (require){
 	var app = require('../../app');
 	//var app = require('quick_sidebar');
+	app.filter('dateFormat', function(){
+		return function(param){
+			var dt = new Date(param);
+			return dt.getFullYear()+'-'+(dt.getMonth()+1)+'-'+dt.getDate()+' '+dt.getHours()+':'+dt.getMinutes();
+		}
+	});
 	app.controller('MonitorCtrl', function($scope, $log, $uibModal, xhr){
 		/*xhr.service('post', {action: 'ac'}, function(resp){
 		 $scope.myData = resp.data;
@@ -44,89 +50,63 @@ define(function (require){
 				controllerAs: '$scope',
 			});
 		}
-    $scope.currentPage =1;		// 初始当前页
-	$scope.allitem=[];			// 存放所有页
-    $scope.promise = xhr.getList({model: 'Monitor', module: 'get_sk_list',data:{STTDRCD:'1'}}, {}, function(resp){
-			$scope.totalItems = resp.pagination.totalItems;
-			$scope.allItem = resp.pagination.allItem;
-			$scope.currentPage = resp.pagination.currentPage;
-			$scope.itemsPerPage = resp.pagination.itemsPerPage;
-			$scope.numPages = resp.pagination.numPages;
-			$scope.maxSize = resp.pagination.maxSize;
-	  });
-	$scope.Reservoirlists = [{
-			id:1,
-			Rname:'TEST水库',
-			Dtime:'2016-12-08',
-			wline:'19',
-			Rfall:'25',
-		},{
-			id:2,
-			Rname:'TEST水库2',
-			Dtime:'2016-12-02',
-			wline:'18',
-			Rfall:'19',
-		},{
-			id:3,
-			Rname:'TEST水库3',
-			Dtime:'2016-12-07',
-			wline:'17',
-			Rfall:'26',
-		},]
-		$scope.Rainfalllists = [{
-			id:1,
-			Rname:'江川站',
-			Dtime:'2016-12-08',
-			TRline:'20',
-			ARfall:'66',
-		},{
-			id:2,
-			Rname:'红河站',
-			Dtime:'2016-12-08',
-			TRline:'20',
-			ARfall:'66',
-		}]
-		$scope.Gateslists = [{
-			id:1,
-			Gname:'开合闸',
-			open:'2m',
-			Sfall:'120',
-			ARfall:'10-33',
-		},{
-			id:2,
-			Gname:'姚丰闸',
-			open:'2m',
-			Sfall:'110',
-			ARfall:'10-33',
-		}]
-		$scope.FlowLlists = [{
-			id:1,
-			Rname:'成功站',
-			Dtime:'2016-12-08',
-			Wline:'20',
-			Sfall:'10-25',
-		},{
-			id:2,
-			Rname:'理想站',
-			Dtime:'2016-12-08',
-			Wline:'20',
-			Sfall:'10-25',
-		}]
-		$scope.Moisturelists = [{
-			id:1,
-			Rname:'成功站',
-			Dtime:'2016-12-12',
-			Rt:'60',
-			Rf:'25',
-			Rs:'10-26',
-		},{
-			id:1,
-			Rname:'姚丰站',
-			Dtime:'2016-12-11',
-			Rt:'60',
-			Rf:'25',
-			Rs:'10-26',
-		}]
+		$scope.RR_LIST = xhr.getList({
+	      model: 'Monitor',
+	      module: 'get_sk_list',
+	    }, {}, function(resp) {
+	      $scope.SKtotalItems = resp.pagination.totalItems;
+	      $scope.SKallItem = resp.pagination.allItem;
+	      $scope.SKcurrentPage = resp.pagination.currentPage;
+	      $scope.SKitemsPerPage = resp.pagination.itemsPerPage;
+	      $scope.SKnumPages = resp.pagination.numPages;
+	      $scope.SKmaxSize = resp.pagination.maxSize;
+	    });
+	    $scope.PP_LIST = xhr.getList({
+	      model: 'Monitor',
+	      module: 'get_yl_list',
+	    }, {}, function(resp) {
+	      $scope.YLtotalItems = resp.pagination.totalItems;
+	      $scope.YLallItem = resp.pagination.allItem;
+	      $scope.YLcurrentPage = resp.pagination.currentPage;
+	      $scope.YLitemsPerPage = resp.pagination.itemsPerPage;
+	      $scope.YLnumPages = resp.pagination.numPages;
+	      $scope.YLmaxSize = resp.pagination.maxSize;
+	    });
+	    $scope.YZ_LIST = xhr.getList({
+	      model: 'Monitor',
+	      module: 'get_yz_list',
+	    }, {}, function(resp) {
+	      $scope.YZtotalItems = resp.pagination.totalItems;
+	      $scope.YZallItem = resp.pagination.allItem;
+	      $scope.YZcurrentPage = resp.pagination.currentPage;
+	      $scope.YZitemsPerPage = resp.pagination.itemsPerPage;
+	      $scope.YZnumPages = resp.pagination.numPages;
+	      $scope.YZmaxSize = resp.pagination.maxSize;
+	    });
+	    $scope.LL_LIST = xhr.getList({
+	      model: 'Monitor',
+	      module: 'get_ll_list',
+	    }, {}, function(resp) {
+	      $scope.LLtotalItems = resp.pagination.totalItems;
+	      $scope.LLallItem = resp.pagination.allItem;
+	      $scope.LLcurrentPage = resp.pagination.currentPage;
+	      $scope.LLitemsPerPage = resp.pagination.itemsPerPage;
+	      $scope.LLnumPages = resp.pagination.numPages;
+	      $scope.LLmaxSize = resp.pagination.maxSize;
+	    });
+	    $scope.SQ_LIST = xhr.getList({
+	      model: 'Monitor',
+	      module: 'get_sq_list',
+	    }, {}, function(resp) {
+	      $scope.SQtotalItems = resp.pagination.totalItems;
+	      $scope.SQallItem = resp.pagination.allItem;
+	      $scope.SQcurrentPage = resp.pagination.currentPage;
+	      $scope.SQitemsPerPage = resp.pagination.itemsPerPage;
+	      $scope.SQnumPages = resp.pagination.numPages;
+	      $scope.SQmaxSize = resp.pagination.maxSize;
+	    });
+
+		
 		
 	});
 

@@ -10,7 +10,7 @@ define(function(require) {
   ;
   app.controller('ReportCtrl', function($scope, xhr) {
     /*xhr.service('post', {action: 'ac'}, function(resp){
-    	$scope.myData = resp.data;
+      $scope.myData = resp.data;
     });*/
     $scope.nav = {
       home: {
@@ -33,17 +33,22 @@ define(function(require) {
       id: '3',
       text: '日',
     }]
-    
-    $scope.currentPage =1;		// 初始当前页
-	  $scope.allitem=[];			// 存放所有页
-    $scope.promise = xhr.getList({model: 'Monitor', module: 'get_skavg_list',data:{STTDRCD:'1'}}, {}, function(resp){
-			$scope.totalItems = resp.pagination.totalItems;
-			$scope.allItem = resp.pagination.allItem;
-			$scope.currentPage = resp.pagination.currentPage;
-			$scope.itemsPerPage = resp.pagination.itemsPerPage;
-			$scope.numPages = resp.pagination.numPages;
-			$scope.maxSize = resp.pagination.maxSize;
-	  });
+    $scope.currentPage = 1; // 初始当前页
+    $scope.allitem = []; // 存放所有页
+    $scope.promise = xhr.getList({
+      model: 'Monitor',
+      module: 'get_skavg_list',
+      data: {
+        STTDRCD: '1'
+      }
+    }, {}, function(resp) {
+      $scope.totalItems = resp.pagination.totalItems;
+      $scope.allItem = resp.pagination.allItem;
+      $scope.currentPage = resp.pagination.currentPage;
+      $scope.itemsPerPage = resp.pagination.itemsPerPage;
+      $scope.numPages = resp.pagination.numPages;
+      $scope.maxSize = resp.pagination.maxSize;
+    });
 
     function ctr($scope) {
       $scope.isActive = true;
@@ -72,14 +77,20 @@ define(function(require) {
             mouth: false,
             day: true
           };
-           $scope.promise = xhr.getList({model: 'Monitor', module: 'get_skavg_list',data:{STTDRCD:'1'}}, {}, function(resp){
-			$scope.totalItems = resp.pagination.totalItems;
-			$scope.allItem = resp.pagination.allItem;
-			$scope.currentPage = resp.pagination.currentPage;
-			$scope.itemsPerPage = resp.pagination.itemsPerPage;
-			$scope.numPages = resp.pagination.numPages;
-			$scope.maxSize = resp.pagination.maxSize;
-		 });
+          $scope.promise = xhr.getList({
+            model: 'Monitor',
+            module: 'get_skavg_list',
+            data: {
+              STTDRCD: '1'
+            }
+          }, {}, function(resp) {
+            $scope.totalItems = resp.pagination.totalItems;
+            $scope.allItem = resp.pagination.allItem;
+            $scope.currentPage = resp.pagination.currentPage;
+            $scope.itemsPerPage = resp.pagination.itemsPerPage;
+            $scope.numPages = resp.pagination.numPages;
+            $scope.maxSize = resp.pagination.maxSize;
+          });
           break;
         case 'month':
           $scope.showTab = {
@@ -87,14 +98,20 @@ define(function(require) {
             month: true,
             day: false
           }
-           $scope.promise = xhr.getList({model: 'Monitor', module: 'get_skavg_list',data:{STTDRCD:'5'}}, {}, function(resp){
-			$scope.totalItems = resp.pagination.totalItems;
-			$scope.allItem = resp.pagination.allItem;
-			$scope.currentPage = resp.pagination.currentPage;
-			$scope.itemsPerPage = resp.pagination.itemsPerPage;
-			$scope.numPages = resp.pagination.numPages;
-			$scope.maxSize = resp.pagination.maxSize;
-			});
+          $scope.promise = xhr.getList({
+            model: 'Monitor',
+            module: 'get_skavg_list',
+            data: {
+              STTDRCD: '5'
+            }
+          }, {}, function(resp) {
+            $scope.totalItems = resp.pagination.totalItems;
+            $scope.allItem = resp.pagination.allItem;
+            $scope.currentPage = resp.pagination.currentPage;
+            $scope.itemsPerPage = resp.pagination.itemsPerPage;
+            $scope.numPages = resp.pagination.numPages;
+            $scope.maxSize = resp.pagination.maxSize;
+          });
           break;
         case 'year':
           $scope.showTab = {
@@ -102,14 +119,20 @@ define(function(require) {
             month: false,
             day: false
           }
-           $scope.promise = xhr.getList({model: 'Monitor', module: 'get_skavg_list',data:{STTDRCD:'6'}}, {}, function(resp){
-			$scope.totalItems = resp.pagination.totalItems;
-			$scope.allItem = resp.pagination.allItem;
-			$scope.currentPage = resp.pagination.currentPage;
-			$scope.itemsPerPage = resp.pagination.itemsPerPage;
-			$scope.numPages = resp.pagination.numPages;
-			$scope.maxSize = resp.pagination.maxSize;
-			});
+          $scope.promise = xhr.getList({
+            model: 'Monitor',
+            module: 'get_skavg_list',
+            data: {
+              STTDRCD: '6'
+            }
+          }, {}, function(resp) {
+            $scope.totalItems = resp.pagination.totalItems;
+            $scope.allItem = resp.pagination.allItem;
+            $scope.currentPage = resp.pagination.currentPage;
+            $scope.itemsPerPage = resp.pagination.itemsPerPage;
+            $scope.numPages = resp.pagination.numPages;
+            $scope.maxSize = resp.pagination.maxSize;
+          });
           break;
       }
     }
