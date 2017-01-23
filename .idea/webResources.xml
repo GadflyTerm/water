@@ -9,6 +9,27 @@
           </resourceRoots>
         </entryData>
       </entry>
+      <entry url="file://$PROJECT_DIR$/../a.mywoka.com">
+        <entryData>
+          <resourceRoots>
+            <path value="file://$PROJECT_DIR$/../a.mywoka.com" />
+          </resourceRoots>
+        </entryData>
+      </entry>
+      <entry url="file://$PROJECT_DIR$/../docs.cn">
+        <entryData>
+          <resourceRoots>
+            <path value="file://$PROJECT_DIR$/../docs.cn" />
+          </resourceRoots>
+        </entryData>
+      </entry>
+      <entry url="file://$PROJECT_DIR$/../lock">
+        <entryData>
+          <resourceRoots>
+            <path value="file://$PROJECT_DIR$/../lock" />
+          </resourceRoots>
+        </entryData>
+      </entry>
     </contentEntries>
   </component>
 </project>
